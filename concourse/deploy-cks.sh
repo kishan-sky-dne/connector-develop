@@ -47,10 +47,16 @@ chmod 600 /tmp/kubeconfig
 ###########################################
 
 echo "Testing kubectl access..."
+echo "Current kubectl context:"
 kubectl config get-contexts > /tmp/get-contect
 cat /tmp/get-contect
+echo "Current namespace:"
 kubectl get ns > /tmp/get-ns
 cat /tmp/get-ns
+echo "Testing access to target namespace '${NAMESPACE}' by listing pods..."
+kubectl get pods -n dne-develop > /tmp/get-pods
+cat /tmp/get-pods
+
 if ! kubectl get pods -n ${NAMESPACE} 2>&1; then
   echo "ERROR: Cannot access namespace ${NAMESPACE}"
   kubectl version --client
