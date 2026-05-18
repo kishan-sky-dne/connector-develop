@@ -182,4 +182,4 @@ jobs:
         params:
           <<: *params-develop-cks-deploy-base
           DATACENTER: sce
-          KUBECONFIG_CONTENT: ((develop-sce-kubeconfig))
+          KUBECONFIG_CONTENT: ((develop-sce-kubeconfig-new))
