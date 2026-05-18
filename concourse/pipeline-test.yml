@@ -11,10 +11,10 @@ resources:
     check_every: 1m
     webhook_token: &webhook-token ((common-creds.webhook_token))
     source: &git-source
-      uri: https://github.com/sky-uk/dne-connectors.git
+      uri: https://github.com/kishan-sky-dne/connector-develop.git
       username: ((common-creds.github_username))
       password: ((common-creds.github_personal_access_token))
-      branch: test
+      branch: main
 
 groups:
   - name: all
