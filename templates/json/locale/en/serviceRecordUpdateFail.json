@@ -1,0 +1,12 @@
+{
+  "template": "serviceRecordUpdateFail",
+  "language": "en",
+  "htmlTemplate": "orderTemplate",
+  "glossary": {
+    "requiredParams": "orderType, orderNumber, taskName, siteId, url",
+    "subject": "Service Record update failed for DNE Order No: {{ mappings.orderNumber }}",
+    "title": "",
+    "subtitle": "<p>Hello,</p> {{ mappings.orderType }} order has been assigned to your team at {{mappings.taskName}} step.</br></br> NIT team had manually rollback the config, but Service Record Update by Orchestrator API call has been failed.</br></br> Order no: {{ mappings.orderNumber }}  </br> Site id: {{ mappings.siteId }}  </br> Step: {{ mappings.taskName }}</br></br> </br>Please check order tracking section in <a href= {{ mappings.url }}> {{ mappings.url }} </a> with order number for more information. </br>  <br><p>Thank You</p>",
+    "footerText": "This is an automated email. Please do not reply to this email."
+  }
+}

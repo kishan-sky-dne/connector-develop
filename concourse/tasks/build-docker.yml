@@ -1,0 +1,115 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: docker
+    tag: dind
+
+inputs:
+  - name: repo
+
+params:
+  HARBOR_REGISTRY: ((common-creds.harbor_registry))
+  HARBOR_USERNAME: ((common-creds.harbor_username))
+  HARBOR_PASSWORD: ((common-creds.harbor_password))
+  IMAGE_NAME: ipnd-dne/connectors
+  IMAGE_TAG: develop
+
+run:
+  dir: repo
+  path: sh
+  args:
+    - -exc
+    - |
+      apk add --no-cache curl make python3 git py3-pip
+      ln -sf /usr/bin/python3 /usr/bin/python
+
+      # Concourse task containers do not auto-start dockerd even with docker:dind image.
+      dockerd-entrypoint.sh >/tmp/dockerd.log 2>&1 &
+      for i in $(seq 1 30); do
+        if docker info >/dev/null 2>&1; then
+          break
+        fi
+        sleep 1
+      done
+      docker info >/dev/null
+
+      # Provide GitLab-style variables expected by existing script/Makefile.
+      export FC_REGISTRY="${HARBOR_REGISTRY}"
+      export FC_USERNAME="${HARBOR_USERNAME}"
+      export FC_PASSWORD="${HARBOR_PASSWORD}"
+      export CI_COMMIT_REF_NAME="${IMAGE_TAG}"
+      export CI_PROJECT_NAME="${IMAGE_NAME##*/}"
+      export CONNECTORS_BRANCH="${IMAGE_TAG}"
+      export BRANCH_NAME="${IMAGE_TAG}"
+      export PROJECT_NAME="${IMAGE_NAME##*/}"
+      export REGISTRY="${HARBOR_REGISTRY}/ipnd-dne/${PROJECT_NAME}"
+
+      docker login ${HARBOR_REGISTRY} -u ${HARBOR_USERNAME} -p ${HARBOR_PASSWORD}
+
+      echo "Applying environment changes"
+      if [ "${BRANCH_NAME}" = "master" ]; then
+        sed -i "s#tokenUrl.*#tokenUrl: ${MASTER_OAUTH_URL}#" openapi/openapi.yaml
+        sed -i "s#jwt_pub_key.*#jwt_pub_key=/app/jwt-key-master.pub#" docker/connectors/config/connectors.conf
+        sed -i "s#auth.ts.isp.sky.com#cauth.bmtapps.bskyb.com#" docker/connectors/config/connectors.conf
+      fi
+
+      echo "Building ${PROJECT_NAME} image"
+      docker rm -f connectors-develop || true
+      mkdir -p dist
+      python3 -m pip download --no-deps -d dist/ -r scm_requirements.txt
+      
+      echo "Running docker build"
+      docker build -t ${REGISTRY}:${BRANCH_NAME} --build-arg https_proxy=${https_proxy} --build-arg http_proxy=${http_proxy} -f docker/Dockerfile . --no-cache
+
+      if [ "${BRANCH_NAME}" = "develop" ]; then
+        echo "Running docker container for healthcheck"
+        docker run --rm -d --name=connectors-${BRANCH_NAME} \
+          -e CONNECTORS_ITSM_SUBSCRIPTION_KEY="${CONNECTORS_ITSM_SUBSCRIPTION_KEY}" \
+          -e CONNECTORS_CAUTH_USERNAME="${CONNECTORS_CAUTH_USERNAME}" \
+          -e CONNECTORS_AD_PASSWORD="${CONNECTORS_AD_PASSWORD}" \
+          -e CONNECTORS_CAUTH_PASSWORD="${CONNECTORS_CAUTH_PASSWORD}" \
+          -e CONNECTORS_AD_USERNAME="${CONNECTORS_AD_USERNAME}" \
+          -e CONNECTORS_OAUTH_PASSWORD="${CONNECTORS_OAUTH_PASSWORD}" \
+          -e CONNECTORS_OAUTH_USERNAME="${CONNECTORS_OAUTH_USERNAME}" \
+          -p 5000:5000 ${REGISTRY}:${BRANCH_NAME}
+
+        address="$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' connectors-${BRANCH_NAME})"
+        echo "Connecting to ${PROJECT_NAME} on ${address}"
+
+        HEALTH_OK=0
+        for try in $(seq 1 180); do
+          echo "Retrying ${try} time"
+          HTTP_STATUS_CODE="$(curl --noproxy "*" -k -s -L -o /dev/null -I -w "%{http_code}" -m 15 http://${address}:5000/api/v1/healthcheck || true)"
+          echo "HTTP Status Code: ${HTTP_STATUS_CODE}"
+
+          if [ "${HTTP_STATUS_CODE}" = "200" ]; then
+            echo "Successfully connected to ${PROJECT_NAME} container"
+            HEALTH_OK=1
+            break
+          fi
+
+          if [ "${HTTP_STATUS_CODE}" = "502" ] || [ -z "${HTTP_STATUS_CODE}" ]; then
+            echo "Container not ready yet; retrying after 10 seconds"
+            sleep 10
+            continue
+          fi
+
+          echo "Could not connect to ${PROJECT_NAME}; printing container logs"
+          docker logs connectors-${BRANCH_NAME} || true
+          exit 1
+        done
+
+        if [ "${HEALTH_OK}" -ne 1 ]; then
+          echo "Healthcheck did not pass in time"
+          docker logs connectors-${BRANCH_NAME} || true
+          exit 1
+        fi
+
+        docker kill connectors-${BRANCH_NAME} || true
+      fi
+
+      echo "Pushing ${PROJECT_NAME} image to registry with tag ${BRANCH_NAME}"
+      docker push ${REGISTRY}:${BRANCH_NAME}

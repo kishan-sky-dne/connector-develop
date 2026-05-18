@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Wholesale Request Schema For interconnect cease",
+  "required": [
+    "asset-id",
+    "cease-date"
+  ],
+  "properties": {
+    "asset-id": {
+      "$id": "#/properties/asset-id",
+      "type": "string",
+      "title": "asset-id",
+      "minLength": 1,
+      "maxLength": 20,
+      "example": "SKY-LNTW-FLDA-1"
+    },
+    "cease-date": {
+      "$id": "#/properties/cease-date",
+      "type": "string",
+      "title": "cease-date"
+    }
+  }
+}

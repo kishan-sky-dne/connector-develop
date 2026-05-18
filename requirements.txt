@@ -1,0 +1,43 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+confluent-kafka==2.3.0
+connexion==2.14.1
+elasticsearch==7.17.9
+Flask==2.2.5
+Jinja2==3.1.3
+jsonschema==4.4.0
+msal==1.27.0
+more-itertools==7.2.0
+openapi-spec-validator==0.4.0
+pyjwt==2.5.0
+pymongo~=3.12.0
+pytest~=6.2.5
+python-dateutil==2.8.0
+python-json-logger==0.1.11
+PyMySQL==1.1.1
+pytz==2023.3
+PyYAML==6.0
+requests==2.31.0
+sqlalchemy==1.3.20
+swagger-ui-bundle==0.0.6
+uwsgi==2.0.21
+Werkzeug==2.3.8
+xlrd~=1.2.0
+xlutils~=2.0.0
+aiohttp==3.9.4
+backoff==2.2.1
+psycopg2-binary==2.9.6
+pydantic==2.4.2
+nested_lookup==0.2.25
+minio==7.2.11
+zstd==1.5.5.1
+pycryptodome==3.20.0

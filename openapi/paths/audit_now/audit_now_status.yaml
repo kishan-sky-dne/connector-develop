@@ -1,0 +1,32 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - AuditNow
+  summary: Check AuditNow Thread Status
+  description: Checks AuditNow Thread Status
+  security:
+      - oAuth2ClientCredentials:
+        - connector:read
+  x-openapi-router-controller: "connectors.webserver.audit_now.audit_now"
+  operationId: audit_now_status
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              info:
+                type: string
+                example: "AuditNow is running"
+      description: Expected response for AuditNow status 

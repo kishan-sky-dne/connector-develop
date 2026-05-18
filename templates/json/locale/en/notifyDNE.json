@@ -1,0 +1,12 @@
+{
+    "template": "notifyDNE",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, stateName, taskName, errorDetails, url",
+        "subject": "DNE Issue: ACTION REQUIRED FROM DNE SUPPORT",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  An issue has occured in DNE. The DNE user has opt to complete this section of the process manually. Please investigate and resolve the issue so the DNE automation process can continue to be used going forward. </br></br> Order type: {{ mappings.orderType }} </br> Order no: {{ mappings.orderNumber }} </br> State name: {{ mappings.stateName }} </br> Task name: {{ mappings.taskName }} </br> Error Details: {{ mappings.errorDetails }} <br>Please check the <a href= {{ mappings.url }}> {{ mappings.url }} </a> with the order number for more information. </br> </br> <p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

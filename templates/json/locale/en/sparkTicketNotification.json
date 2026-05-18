@@ -1,0 +1,12 @@
+{
+    "template": "sparkTicketNotification",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, ticketNumber, url, siteId, xDays",
+        "subject": "Spark ticket notification for {{mappings.orderType}} (No: {{mappings.orderNumber}}, Ticket: {{mappings.ticketNumber}}, Days away: {{mappings.xDays}} & Site id: {{mappings.siteId}})",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  Spark ticket <b>{{mappings.ticketNumber}}</b> implementation is <b>{{mappings.xDays}}</b> days away for the following <b>{{mappings.orderType}}</b> order. Please ensure the spark ticket is approved and authorized before the start of change window.</br></br>Order no: <b> {{ mappings.orderNumber }} </b></br>Site id: <b> {{ mappings.siteId }} </b></br>Ticket number: <b> {{ mappings.ticketNumber }} </b></br>   </br>Please check order <a href= {{ mappings.url }}> {{ mappings.url }} </a> for more details. </br></br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

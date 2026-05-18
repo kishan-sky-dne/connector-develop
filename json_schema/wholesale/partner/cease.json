@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Wholesale Request Schema For Partner Cease",
+  "required": [
+    "partner-code",
+    "partner-cease-date"
+  ],
+  "properties": {
+    "partner-code": {
+      "$id": "#/properties/partner-code",
+      "type": "string",
+      "title": "partner-code",
+      "minLength": 1,
+      "maxLength": 20,
+      "example": "OFNL"
+    },
+    "partner-cease-date": {
+      "$id": "#/properties/partner-cease-date",
+      "type": "string",
+      "title": "partner-cease-date",
+      "example": "31-Dec-2022"
+    }
+  }
+}

@@ -1,0 +1,261 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - Upgrade
+  description: |
+      Used to view the current upgrade and image details records.
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  operationId: read_upgrade_details
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.read_upgrade"
+  parameters:
+    - name: 'limit'
+      in: query
+      required: false
+      description:  |
+          How many entries to be queried in the sorted List.
+          Sorting order will be on the time of image detail creation, latest version, version state.
+      schema:
+        type: integer
+        minimum: 1
+    - name: 'offset'
+      in: query
+      required: false
+      description:  |
+          Page offset of the sorted list.
+      schema:
+        type: integer
+        minimum: 0
+    - name: '_include'
+      in: query
+      required: false
+      description: |
+        If present then the possible values are
+        1) brief: this can be used with any of the search combination.
+        2) trafficDiversion: this field will be used to get the traffic diversion protocols.
+        3) serviceChecks: to get service checks details for device and role
+        4) imageDetail: this can be used to get all the image details.
+      schema:
+        type: string
+        enum:
+          - brief
+          - trafficDiversion
+          - serviceChecks
+          - imageDetail
+    - name: 'region'
+      in: query
+      required: false
+      description:  |
+        Regions where these devices are present.
+      schema:
+        type: string
+        enum:
+          - UK
+          - IT
+          - DE
+          - IE
+        minLength: 1
+        maxLength: 10
+    - name: 'deviceVendor'
+      in: query
+      required: false
+      description: |
+        This field contains Device Vendor like Cisco, Huawei, Nokia,
+      schema:
+        type: string
+        enum:
+          - CISCO
+          - HUAWEI
+          - NOKIA
+        minLength: 1
+        maxLength: 50
+    - name: 'deviceModel'
+      in: query
+      required: false
+      description: |
+        Device hardware models for a given vendor ex NCS5k, ASR9K
+      schema:
+        type: string
+        enum:
+          - NCS5K
+          - ASR9K
+          - NCS540
+          - NCS1K
+          - NCS540L
+          - N540-24Q2C2DD-SYS
+        minLength: 1
+        maxLength: 50
+    - name: 'currentState'
+      in: query
+      required: false
+      description: |
+        Current State of the OS in the given region
+      schema:
+        type: string
+        enum:
+          - Deprecated
+          - Current
+          - Under_test
+          - Decommissioned
+        minLength: 1
+        maxLength: 50
+    - name: 'targetState'
+      in: query
+      required: false
+      description: |
+       Target State of the OS in the given region
+      schema:
+        type: string
+        enum:
+          - Deprecated
+          - Current
+          - Under_test
+          - Decommissioned
+        minLength: 1
+        maxLength: 50
+    - name: 'deviceRole'
+      in: query
+      required: false
+      description: |
+        This is the role this platform plays in the given region.
+        This field is used along with _include=trafficDiversion to get the protocols to be diverted.
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'currentVersion'
+      in: query
+      required: false
+      description: |
+       Source version of the OS
+      schema:
+        type: string
+        pattern: '^(\d+((\.\d+){1,2})?)$'
+        minLength: 1
+        maxLength: 20
+    - name: 'currentLabel'
+      in: query
+      required: false
+      description: |
+        Source Label of the OS
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'targetVersion'
+      in: query
+      required: false
+      description: |
+          Target version of the OS
+      schema:
+        type: string
+        pattern: '^(\d+((\.\d+){1,2})?)$'
+        minLength: 1
+        maxLength: 20
+    - name: 'targetLabel'
+      in: query
+      required: false
+      description: |
+          Target label of the OS
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'osVersionUpgradeId'
+      in: query
+      required: false
+      description: |
+        To view Upgrade details this ID of the should be passed.
+        This id is given to the user as part of the search or query.
+      schema:
+        type: integer
+        minimum: 1
+    - name: 'osVersionDeviceRegionId'
+      in: query
+      required: false
+      description: |
+        To view Image details this ID of the should be passed.
+        This id is given to the user as part of the query to upgrade details.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    '200':
+      description: "Response while DIAL works on reading the service."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/read_upgrade_response.yaml'
+put:
+  tags:
+    - IOS-XR
+  description: |
+      Used to update the upgrade image details records.
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  operationId: update_upgrade_details
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.update"
+  parameters:
+    - name: 'osVersionUpgradeId'
+      in: query
+      required: true
+      description: To update Upgrade details this ID should be passed.
+      schema:
+        type: integer
+        minimum: 1
+  requestBody:
+    description: "Update upgrade image details"
+    required: True
+    content:
+      application/json:
+        schema:
+          $ref: "../../definitions/admin/update_upgrade_request.yaml"
+  responses:
+    '200':
+      description: "Response while DIAL works on reading the service."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/update_upgrade_response.yaml'
+delete:
+  tags:
+    - Upgrade
+  summary: Delete the image upgrade details
+  description: This API is used to delete the os version upgrade details
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.delete"
+  operationId: delete_upgrade_details
+  parameters:
+    - name: 'osVersionUpgradeId'
+      in: query
+      required: true
+      description: |
+        To delete Upgrade details this ID should be passed.
+        This id is given to the user as part of the query to upgrade details.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    '200':
+      description: Expected response of connector module for /delete call
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/activateResponse.yaml'
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '500':
+      description: Internal Server Error

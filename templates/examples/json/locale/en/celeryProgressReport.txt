@@ -1,0 +1,43 @@
+{
+    "template": "celeryProgressReport",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "celeryJobs, queuedTime",
+        "subject": "Urgent: Celery Task(s) Progress Issue Report!!",
+        "title": "<h2>Celery Task(s) Progress Issue - In QUEUED/PENDING state over {{ mappings.queuedTime }} minute(s)</h2>",    
+        "subtitle": "<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>
+                        <thead>
+                            <tr>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Index</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Order ID</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Job ID</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Request ID</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Celery State</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Module Name</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Module Type</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Request Method</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Request Uri</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Monitoring Started</th>
+                                <th style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>Task Received Epoch</th>
+                            </tr>
+                        </thead>
+                        <tbody> {% for job in mappings.celeryJobs %} 
+                            <tr>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ loop.index }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['orderId'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['jobId'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['requestId'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['celeryState'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['moduleName'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['moduleType'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['requestMethod'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['requestUri'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['monitoringStarted'] }}</td>
+                                <td style='text-align: center; padding: 8px; border: 1px solid #dddddd;'>{{ job['taskReceivedEpoch'] }}</td>
+                            </tr> {% endfor %}
+                        </tbody>
+                    </table>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

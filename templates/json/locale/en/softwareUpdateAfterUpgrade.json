@@ -1,0 +1,12 @@
+{
+    "template": "softwareUpdateAfterUpgrade",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, ticketNumber, deviceName, siteId, url",
+        "subject": "{{mappings.orderType}} completed for device {{mappings.deviceName}} for site {{mappings.siteId}} with change ticket {{ mappings.ticketNumber }}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> The <b>{{mappings.orderType}}</b> for device <b>{{mappings.deviceName}}</b> at site <b>{{mappings.siteId}}</b> has completed successfully with DNE order no: <b>{{mappings.orderNumber}}</b> with change ticket <b>{{mappings.ticketNumber}}</b>. <br>Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a> for more details.</br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

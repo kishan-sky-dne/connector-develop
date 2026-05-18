@@ -1,0 +1,238 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+image: ${FC_REGISTRY}/ipnd-dne-public/python:3.10-sky
+
+stages:
+- security
+- pre_start
+- test
+- build
+- deploy
+- deploy_nginx
+- publish
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+sourcery:
+  stage: test
+  except:
+    - develop
+    - test
+    - stage
+    - master
+  only:
+    - merge_requests
+  tags:
+    - DNE-VDC
+  script:
+  - pip install sourcery
+  - sourcery login --token $SOURCERY_TOKEN
+  - cd /builds/network-automation/components/connectors/
+  - git config --global http.sslverify false
+  - git fetch origin +$CI_MERGE_REQUEST_TARGET_BRANCH_NAME:$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+  - git checkout $CI_COMMIT_BRANCH
+  - sourcery review --check --diff "git diff $(git merge-base --fork-point $CI_MERGE_REQUEST_TARGET_BRANCH_NAME)" .
+
+pre-merge-verification:
+  stage: test
+  tags:
+    - DNE-VDC
+  except:
+    variables:
+        - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "develop"
+        - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "test"
+        - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "stage"
+        - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == "master"
+  only:
+    - merge_requests
+  script:
+    - export UNWANTED_STRINGS=("# sourcery skip" "# noqa:" "print")
+    - cd /builds/network-automation/components/connectors/
+    - git config --global http.sslverify false
+    - git fetch origin +$CI_MERGE_REQUEST_TARGET_BRANCH_NAME:$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+    - git fetch origin +$CI_COMMIT_REF_NAME:$CI_COMMIT_REF_NAME
+    - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME is -> $CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
+    - echo "CI_COMMIT_REF_NAME is -> $CI_COMMIT_REF_NAME"
+    - git checkout $CI_COMMIT_REF_NAME
+    - |
+      # Get the list of changed files
+      CHANGED_FILES=$(git diff --name-only $(git merge-base --fork-point $CI_MERGE_REQUEST_TARGET_BRANCH_NAME))
+      # Variable to check if any string is found
+      STRING_FOUND=false
+
+      # Iterate over changed files
+      for file in $CHANGED_FILES; do
+        # Check if the file is not empty
+        if [ -s "$file" ]; then
+          # Get the actual changes in the file
+          CHANGES=$(git diff $(git merge-base --fork-point $CI_MERGE_REQUEST_TARGET_BRANCH_NAME) -- "$file" | grep '^\+')
+          # Iterate over strings to check
+          for string_to_check in "${UNWANTED_STRINGS[@]}"; do
+            # Check if the string is present in the changes
+            if grep -ni "$string_to_check" <<< "$CHANGES"; then
+              echo "Warning: '$string_to_check' found in $file."
+              STRING_FOUND=true
+            fi
+          done
+        fi
+      done
+
+      # Check if any string was found in any files
+      if [ "$STRING_FOUND" = true ]; then
+        echo "Exiting with a warning!!"
+        exit 1
+      fi
+
+      echo "No '${UNWANTED_STRINGS[@]}' found in any changed files. Well done. :) "
+  allow_failure: true
+
+validate-openapi:
+  stage: test
+  tags:
+    - DNE-VDC
+  except:
+    - develop
+    - test
+    - stage
+    - master
+  script:
+    - pip3 install tox==4.35.0
+    - make validate-openapi
+
+lint:
+  stage: test
+  tags:
+    - DNE-VDC
+  except:
+    - develop
+    - test
+    - stage
+    - master
+  script:
+    - pip3 install tox
+    - make lint
+
+pre-commit-check:
+  stage: test
+  tags:
+    - DNE-VDC
+  script:
+  - pip3 install pre-commit
+  - pre-commit install
+  - pre-commit run --all-files
+
+coverage:
+  stage: test
+  tags:
+    - DNE-VDC
+  coverage: '/^TOTAL.+?(\S+\%)$/'
+  except:
+    - develop
+    - test
+    - stage
+    - master
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - export GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+  script:
+    - export TZ="$TIMEZONE"
+    - pip3 install tox
+    - make coverage
+
+deploy-coverage:
+  stage: test
+  tags:
+    - DNE-VDC
+  coverage: '/^TOTAL.+?(\S+\%)$/'
+  only:
+    - develop
+  before_script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - export GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+  script:
+    - export TZ="$TIMEZONE"
+    - pip3 install tox
+    - make deploy-coverage
+
+build:
+  stage: build
+  tags:
+    - DNE-VDC
+  only:
+    - develop
+    - test
+    - stage
+    - master
+  image: ${FC_REGISTRY}/ipnd-dne/docker-dind:latest
+  before_script:
+    - 'which ssh-agent || ( apk add openssh-client) '
+    - eval $(ssh-agent -s)
+    - apk add curl
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - export GIT_SSH_COMMAND='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    - docker login ${FC_REGISTRY} -u ${CONNECTORS_AD_NR_USERNAME} -p ${CONNECTORS_AD_NR_PASSWORD}
+  script:
+    - sh scripts/test_docker_gitlab.sh
+
+deploy:
+  stage: deploy
+  tags:
+    - DNE-VDC
+  only:
+    - develop
+    - test
+    - stage
+    - master
+  image: ${FC_REGISTRY}/ipnd-dne-public/dtzar/helm-kubectl:latest
+  script:
+    - apk add --no-cache python3 jq bash py3-pip
+    - bash scripts/test_deployment.sh
+
+publish-api:
+  stage: publish
+  tags:
+    - DNE-VDC
+  only:
+  - /^release/.*$/
+  except:
+  - branches
+  image: registry.isp.sky.com/isp/misc/publish-api
+  before_script:
+    - export CONFLUENCE_USERNAME=${CONNECTORS_AD_USERNAME}
+    - export CONFLUENCE_PASSWORD=${CONNECTORS_AD_PASSWORD}
+  script:
+  - publish_openapi -f ${CI_PROJECT_DIR}/openapi/openapi.yaml -s IA -a Connectors
+
+gitleaks_scan:
+  stage: security
+  tags:
+    - DNE-VDC
+  image: 
+    name: zricethezav/gitleaks
+    entrypoint: [""]
+  script:
+    - gitleaks git . -v --log-opts "-n 500 --all" --max-decode-depth=5 

@@ -1,0 +1,55 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+---
+  required: 
+    - "coordinator"
+    - "created"
+    - "date"
+    - "dependencies"
+    - "description"
+    - "domains"
+    - "id"
+    - "last_updated"
+    - "name"
+    - "nis_ref"
+  properties: 
+    coordinator: 
+      type: "string"
+    created: 
+      type: "string"
+    date: 
+      type: "string"
+    dependencies: 
+      type: "array"
+      items: 
+        type: "integer"
+    description: 
+      type: "string"
+    domains: 
+      type: "array"
+      items: 
+        type: "object"
+        properties: 
+          fullname: 
+            type: "string"
+          id: 
+            type: "number"
+          name: 
+            type: "string"
+    id: 
+      type: "number"
+    last_updated: 
+      type: "string"
+    name: 
+      type: "string"
+    nis_ref: 
+      type: "string"

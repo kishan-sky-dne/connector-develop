@@ -1,0 +1,12 @@
+{
+    "template": "invalidOrderBeforeOrderCreation",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, circuitId, siteId, errorDetails",
+        "subject": "Invalid Order details have been received for circuit ID {{ mappings.circuitId}}, Order type: {{ mappings.orderType }}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> Order details has been validated unsuccessfully for circuit ID {{ mappings.circuitId}} and hence aborted. <br>Site id: <b>{{ mappings.siteId }} </b></br>Error Details: <b>{{ mappings.errorDetails }} </b></br> <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

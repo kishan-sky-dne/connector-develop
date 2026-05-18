@@ -1,0 +1,54 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+properties:
+  environment:
+   description: specify where the connector should be connecting to.
+   example: qa/production
+   type: string
+  domain:
+   description: A&P portal domain name
+   example: metro,cdn,core,enterprise
+   type: string
+  projectName:
+   description: Name of the project.
+   example: Bluebird OLT
+   type: string
+  tgReference:
+   description: TG deliverable reference.
+   example: TG9989
+   type: string
+  deliveryDate:
+   description: deliverydate.
+   example: '2022-07-20'
+   type: string
+  requiredDate:
+   description: requiredBydate.
+   example: '2021-07-20'
+   type: string
+  comment:
+   description: Mandatory comment to add while mofifying TG entry on A&P portal.
+   example: changing delivery date
+   type: string
+  status:
+   description: Mandatory Status code.
+   example: allowed values are, cancelled,delivered,completed,ok,new,risk
+   type: string
+
+required:
+  - environment
+  - domain
+  - projectName
+  - tgReference
+  - deliveryDate
+  - requiredDate
+  - comment
+  - status

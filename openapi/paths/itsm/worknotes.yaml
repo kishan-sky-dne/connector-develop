@@ -1,0 +1,33 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - itsm
+  summary: Add worknote to SPARK ticket into ServiceNow
+  description: requests to spark to add Worknote for the ticket
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.ticketAddNote"
+  operationId: add_note
+  requestBody:
+    description: Required details to add Worknote
+    content:
+      'application/json':
+        schema:
+          $ref: '../../definitions/itsm/request/worknotes.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/itsm/response/worknotes.yaml'
+      description: Expected response from Spark

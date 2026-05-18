@@ -1,0 +1,50 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:    
+  keyId:
+    type: string
+    minLength: 1
+    example: "BPM-12345"
+  message:
+    type: object
+    properties:
+      orderNumber:
+        type: integer
+        example: 12345
+      orderType:
+        type: string
+        minLength: 1
+        example: "map-t"
+      orderCreateDate:
+        type: string
+        minLength: 1
+        example: "2022-07-25 12:04:59"
+      orderEndDate:
+        type: string
+        minLength: 1
+        example: "2022-07-25 12:04:59"
+      status:
+        type: string
+        minLength: 1
+        example: Success 
+      serviceStatusDetails:
+        type: object
+        example: {/*Use case specific */}
+  eventTime:
+    type: string
+    minLength: 1
+    example: "2022-07-25 12:04:59"
+  eventSource:
+    type: string
+    minLength: 1
+    example: "DNE-BPM"

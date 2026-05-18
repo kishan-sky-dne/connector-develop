@@ -1,0 +1,62 @@
+---
+# HTTPRoute for CKS shared internal gateway
+# References: https://docs.cks.sky/connectivity/gateway-api/shared-gateways/
+# DNS pattern: <app>.internal.<env>.shared.onx.uk-sky.cks.sky
+# Certificates and DNS are automatically managed by the CKS platform
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: connectors-route
+  namespace: ${NAMESPACE}
+  labels:
+    app: connectors
+    environment: ${ENVIRONMENT}
+  annotations:
+    # Migrated from FC nginx ingress - Gateway API uses spec.timeouts instead
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '1800'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '1800'
+spec:
+  parentRefs:
+    - name: istio-internal-mesh-gateway
+      namespace: istio-internal-mesh-gateway
+      kind: Gateway
+      sectionName: https  # Required for TLS (only HTTPS is supported)
+
+  hostnames:
+    - "${HOSTNAME}"  # Format: connectors.internal.<env>.shared.onx.uk-sky.cks.sky
+  
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: connectors
+          port: 5000
+          weight: 100
+      timeouts:
+        request: 1800s      # 30 minutes (migrated from nginx proxy-read-timeout)
+        backendRequest: 1800s  # 30 minutes (migrated from nginx proxy-send-timeout)
+    
+    - matches:
+        - path:
+            type: Exact
+            value: /api/v1/healthcheck
+      backendRefs:
+        - name: connectors
+          port: 5000
+      filters:
+        - type: ResponseHeaderModifier
+          responseHeaderModifier:
+            set:
+              - name: X-Health-Check
+                value: "true"
+
+# NOTE: ReferenceGrant is NOT required for CKS shared gateways.
+# The shared gateway istio-internal-mesh-gateway is already configured
+# to allow HTTPRoutes from all tenant namespaces.
+#
+# NOTE: Certificate resource is NOT required for shared gateways.
+# Certificates are automatically managed by the CKS platform for supported hostnames.
+# DNS records are automatically created by ExternalDNS.
+# Only HTTPS (443) is supported - HTTP (80) automatically redirects to HTTPS.

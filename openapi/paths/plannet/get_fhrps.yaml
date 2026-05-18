@@ -1,0 +1,128 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: API to get first hop redundancy protocol info
+  description: API to get first hop redundancy protocol info
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_fhrps
+  parameters:
+    - name: 'protocol'
+      in: query
+      required: false
+      description: Type of redundancy protocol
+      example: vrrp
+      schema:
+        type: string
+        enum:
+          - vrrp
+          - hsrp
+          - carp
+          - glbp
+    - name: 'fhrpIds'
+      in: query
+      required: false
+      description: List of comma separated fhrp ids
+      example: 1,2,3
+      schema:
+        type: array
+        items:
+          type: integer
+        minLength: 1
+    - name: 'service'
+      in: query
+      required: false
+      description: Get information of service
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'bridgeDomain'
+      in: query
+      required: false
+      description: Bridge domain name
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'virtualIpv4'
+      in: query
+      required: false
+      description: virtual ipv4 address
+      example: 10.57.12.17, 10.11.40.82/29
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'virtualIpv6'
+      in: query
+      required: false
+      description: virtual ipv6 address
+      example: 2a02:c79:60a:0:8000::1, 2a02:c79:700:22::2/64
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'devicename'
+      in: query
+      required: false
+      description: hostname of the device
+      example: ar14-cdn.bllon.isp.sky.com
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+    - name: 'query'
+      in: query
+      required: false
+      description: General query
+      schema:
+        type: string
+        minLength: 1
+    - name: 'limit'
+      in: query
+      required: false
+      description: The number of results to return per page
+      example: 100
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 200
+    - name: 'offset'
+      in: query
+      required: false
+      description: The initial index from which to return the results
+      example: 0
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    - name: '_include'
+      in: query
+      required: false
+      description: To include the peer device fhrp info
+      schema:
+        type: string
+        enum:
+          - vrrp_peer
+          - hsrp_peer
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_fhrps.yaml'
+      description: Expected response of plannet for /get fhrps info

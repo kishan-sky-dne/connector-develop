@@ -1,0 +1,15 @@
+type: object
+required:
+  - status
+properties:
+  status:
+    type: string
+    enum:
+      - SUCCESS
+      - FAILURE
+  comments:
+    type: string
+    minLength: 1
+  osVersionUpgradeId:
+    type: integer
+    minimum: 1

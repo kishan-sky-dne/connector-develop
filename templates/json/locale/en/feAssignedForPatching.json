@@ -1,0 +1,12 @@
+{
+    "template": "feAssignedForPatching",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, deviceName, siteId, url, feEngineer, patchingStartDate, softwareVersion",
+        "subject": "FE assigned for {{mappings.orderType}} with order no:{{mappings.orderNumber}} for site:{{mappings.siteId}}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> For <b>{{mappings.orderType}}</b> order with order no.: <b>{{mappings.orderNumber}}</b>, FE Engineer <b>{{mappings.feEngineer}}</b> has been assigned to start Patching on <b>{{mappings.patchingStartDate}}</b> for the device <b>{{mappings.deviceName}}</b> at site: <b>{{mappings.siteId}} </b> <br> <br>Note: The required device upgrade software version is <b>{{mappings.softwareVersion}}</b>. <br>Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a> for more details.</br>  <br><p>Thank You!</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

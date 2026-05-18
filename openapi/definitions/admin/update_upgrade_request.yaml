@@ -1,0 +1,134 @@
+type: object
+required:
+  - upgradeDetails
+properties:
+  upgradeDetails:
+    type: object
+    properties:
+      targetOs:
+        type: object
+        properties:
+          customConfig:
+            type: array
+            items:
+              type: object
+              required:
+                - deviceRole
+                - beforeUpgrade
+                - afterUpgrade
+                - isRollbackRequired
+                - configMode
+              properties:
+                deviceRole:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                beforeUpgrade:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                afterUpgrade:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                isRollbackRequired:
+                  type: boolean
+                  example: True
+                beforeRollback:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                afterRollback:
+                  type: array
+                  items:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                configMode:
+                  type: string
+                  example: ADMIN
+                  enum: [XR, ADMIN, XR_EXEC, ADMIN_EXEC]
+                  minLength: 1
+                  maxLength: 10
+            minItems: 1
+        required:
+          - customConfig
+      intermediateSteps:
+        type: array
+        items:
+          type: object
+          required:
+            - sequence
+            - customConfig
+          properties:
+            sequence:
+              type: integer
+              example: 1
+              minimum: 1
+              maximum: 5
+            customConfig:
+              type: array
+              items:
+                type: object
+                required:
+                  - deviceRole
+                  - beforeUpgrade
+                  - afterUpgrade
+                  - isRollbackRequired
+                  - configMode
+                properties:
+                  deviceRole:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                  beforeUpgrade:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                  afterUpgrade:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                  isRollbackRequired:
+                    type: boolean
+                    example: True
+                  beforeRollback:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                  afterRollback:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                  configMode:
+                    type: string
+                    example: ADMIN
+                    enum: [XR, ADMIN, XR_EXEC, ADMIN_EXEC]
+                    minLength: 1
+                    maxLength: 10
+        minItems: 1
+    required:
+      - targetOs
+  Comments:
+    type: string
+    example: Upgrade is due to certain reason...
+    minLength: 1
+    maxLength: 2000

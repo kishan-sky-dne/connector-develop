@@ -1,0 +1,54 @@
+{
+  "fileType": "xls",
+  "sheets": [
+    {
+      "sheetIndex": 0,
+      "sections": [
+        {
+          "startIndex": "A22",
+          "endIndex": "I34",
+          "headerFlag": false
+        },
+        {
+          "startIndex": "A35",
+          "endIndex": "I42",
+          "headerFlag": false,
+          "sectionFormat": "Merged"
+        }
+      ]
+    },
+    {
+      "sheetIndex": 1,
+      "sections": [
+        {
+          "startIndex": "A2",
+          "endIndex": "E8",
+          "headerFlag": false
+        },
+        {
+          "startIndex": "A9",
+          "endIndex": "E16",
+          "headerFlag": false,
+          "sectionFormat": "Merged"
+        }
+      ]
+    },
+    {
+      "sheetIndex": 2,
+      "sections": [
+        {
+          "startIndex": "A2",
+          "endIndex": "E8",
+          "headerFlag": false
+        },
+        {
+          "startIndex": "A9",
+          "endIndex": "E16",
+          "headerFlag": false,
+          "sectionFormat": "Merged"
+        }
+      ]
+    }
+  ],
+  "dbStorageFlag": false
+}

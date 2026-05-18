@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Wholesale Request Schema For UNI Cease",
+  "required": [
+    "asset-id",
+    "spark-change-ticket",
+    "completion-date"
+  ],
+  "properties": {
+    "asset-id": {
+      "$id": "#/properties/asset-id",
+      "type": "string",
+      "title": "asset-id",
+      "minLength": 1,
+      "maxLength": 50,
+      "example": "SKY-CL01-003"
+    },
+    "spark-change-ticket": {
+      "$id": "#/properties/spark-change-ticket",
+      "type": "string",
+      "title": "spark-change-ticket",
+      "minLength": 1,
+      "maxLength": 10,
+      "example": "CHG1234567"
+    },
+    "completion-date": {
+      "$id": "#/properties/completion-date",
+      "type": "string",
+      "title": "completion-date",
+      "example": "22-Sep-2022"
+    }
+    }
+}

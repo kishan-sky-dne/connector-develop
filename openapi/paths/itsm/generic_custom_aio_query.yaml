@@ -1,0 +1,52 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - itsm
+  description: requests to spark for incident, change request & CI relationships details
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.genericQueryFilter"
+  operationId: aio_custom_query
+  parameters:
+    - name: table
+      in: query
+      required: true
+      schema:
+        enum:
+        - cmdb_rel_ci
+        type: string
+    - name: filter
+      in: query
+      required: true
+      schema:
+        enum:
+          - parent
+          - child
+        type: string
+    - name: ci_list
+      in: query
+      required: true
+      schema:
+        items:
+          type: string
+          minLength: 1
+        type: array
+        maxItems: 200
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../definitions/itsm/response/aio_custom_query.yaml'
+      description: Expected CI relationship response from Spark

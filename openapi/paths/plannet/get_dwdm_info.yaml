@@ -1,0 +1,76 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: API to get DWDM info
+  description: API to get DWDM info
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_dwdm_info
+  parameters:
+    - name: 'id'
+      in: query
+      required: false
+      description: Get information by ID
+      example: 52
+      schema:
+        type: integer
+        minLength: 1
+    - name: 'ne_type'
+      in: query
+      required: false
+      description: Get information by Model Name
+      example: 24CSM-SFA
+      schema:
+        type: string
+        minLength: 1
+    - name: 'interface'
+      in: query
+      required: false
+      description: Get information by Interface
+      example: C19
+      schema:
+        type: string
+        minLength: 1
+    - name: 'channel_nb'
+      in: query
+      required: false
+      description: Get information by Channel Number
+      example: 39
+      schema:
+        type: integer
+        minLength: 1
+    - name: 'frequency'
+      in: query
+      required: false
+      description: Get information by Frequency
+      example: 193.9
+      schema:
+        type: number
+        minLength: 1
+    - name: 'wavelength'
+      in: query
+      required: false
+      description: Get information by Wavelength
+      example: 1546.12
+      schema:
+        type: number
+        minLength: 1
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_dwdm_info.yaml'
+      description: Expected response of plannet for /get mux-mapping call

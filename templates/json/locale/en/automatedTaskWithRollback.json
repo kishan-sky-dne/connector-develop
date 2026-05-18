@@ -1,0 +1,12 @@
+{
+    "template": "automatedTaskWithRollback",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, ticketNumber, taskName, siteId, url",
+        "subject": "Rollback: {{mappings.ticketNumber}} on site id: {{mappings.siteId}} for {{mappings.taskName}}. ({{mappings.orderType}} order assignment no: {{mappings.orderNumber}})",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  <b> {{mappings.ticketNumber}} has been rolled back.</br></br> Task: <b> {{mappings.taskName}} </b> </br>Order type: <b> {{mappings.orderType}} </b> </br> Order no: <b> {{mappings.orderNumber}} </b> </br>Site id: <b> {{mappings.siteId}} </b> </br> </br>Please check order tracking section in <a href= {{ mappings.url }}> {{ mappings.url }} </a> with order number for more information. </br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

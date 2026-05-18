@@ -1,0 +1,32 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - AuditNow
+  summary: Stops AuditNow service
+  description: Stops AuditNow service, closing Kafka Consumer and Elasticsearch client.
+  security:
+      - oAuth2ClientCredentials:
+        - connector:write
+  x-openapi-router-controller: "connectors.webserver.audit_now.audit_now"
+  operationId: stop_audit_now
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              info:
+                type: string
+                example: "request for stopping AuditNow accepted"
+      description: Expected response for stop AuditNow call

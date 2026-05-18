@@ -1,0 +1,55 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  count:
+    type: integer
+    description: count of Circuit type
+    example: 0
+  next:
+    type: string
+    description: link to view the next 50 records
+    example: /inventory/plannet/deviceRoles/?limit=50&offset=50
+  previous:
+    type: string
+    description: link to view the next 50 records
+    example: /inventory/plannet/deviceRoles/?limit=10&offset=40
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: m_agg
+        color:
+          type: string
+          example: "111111"
+        description:
+          type: string
+          example: Metro Aggregation Router
+        created:
+          type: string
+          format: date
+          example: "2021-07-19"
+        last_updated:
+          type: string
+          format: date-time
+          example: "2021-07-19T22:45:58.400998Z"
+      required:
+        - name
+required:
+  - results
+  - count

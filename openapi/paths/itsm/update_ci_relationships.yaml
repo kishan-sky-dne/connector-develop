@@ -1,0 +1,44 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+patch:
+  tags:
+    - itsm
+  summary: Update CI relationships in Spark
+  description: request to Spark to update CI relationships
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.ciRelationshipUpdater"
+  operationId: update_ci_relationships
+  parameters:
+    - name: table
+      in: query
+      required: false
+      description: valid cmdb table
+      schema:
+        type: string
+        example: cmdb_ci
+        default: cmdb_ci
+        enum:
+          - cmdb_ci
+  requestBody:
+    description: CIs and relationship between CIs to update
+    content:
+      'application/json':
+        schema:
+          $ref: '../../definitions/itsm/request/update_ci_relationships.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/itsm/response/update_ci_relationships.yaml'
+      description: Expected response from Spark

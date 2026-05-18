@@ -1,0 +1,271 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: Retrieve network element details from plannet
+  description: Get meta data of network elements from plannet connector plannet
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_nes_details
+  parameters:
+    - name: 'searchAtgId'
+      in: query
+      required: false
+      description: Fetch network element details based on ATG ID
+      schema:
+        type: string
+        example: 32795
+    - name: 'searchDtgId'
+      in: query
+      required: false
+      description: Fetch network element details based on DTG ID
+      schema:
+        type: string
+        example: 32795
+    - name: 'searchAtgDate'
+      in: query
+      required: false
+      description: Fetch network element details based on ATG date
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate'
+      in: query
+      required: false
+      description: Fetch network element details based on DTG date
+      schema:
+        type: string
+        format: date
+        example: 2099-12-31
+    - name: 'searchAtgDate0'
+      in: query
+      required: false
+      description: Fetch network element details based on ATG date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchAtgDate1'
+      in: query
+      required: false
+      description: Fetch network element details based on ATG date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate0'
+      in: query
+      required: false
+      description: Fetch network element details based on DTG date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate1'
+      in: query
+      required: false
+      description: Fetch network element details based on DTG date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchLiveDate'
+      in: query
+      required: false
+      description: Fetch network element details based on live date
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchLiveDateRange0'
+      in: query
+      required: false
+      description: Fetch network element details based on live date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchLiveDateRange1'
+      in: query
+      required: false
+      description: Fetch network element details based on live date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'filter'
+      in: query
+      required: false
+      description: Filters the output based on the parameters. Searches the filter in name,hostname etc.
+      schema:
+        type: string
+    - name: 'name'
+      in: query
+      required: false
+      description: Fully Qualified Domain Name
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 64
+        example: "ar0-nme.bllon.isp.sky.com"
+    - name: 'hostName'
+      in: query
+      required: false
+      description: Hostname of the device without domain
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        example: "ar0-nme.bllon"
+    - name: 'description'
+      in: query
+      required: false
+      description: Fetch network element details based on description of the Network Element
+      schema:
+        type: string
+    - name: 'serial'
+      in: query
+      required: false
+      description: Fetch network element details based on serial value
+      schema:
+        type: string
+    - name: 'asn'
+      in: query
+      required: false
+      description: Fetch network element details based on autonomous system number
+      schema:
+        type: string
+    - name: 'searchRoom'
+      in: query
+      required: false
+      description: Fetch network element details based on the room value provided
+      schema:
+        type: string
+    - name: 'id'
+      in: query
+      required: false
+      description: Fetch network element details based on ID value
+      schema:
+        type: string
+    - name: 'parent'
+      in: query
+      required: false
+      description: Fetch network element details based on parent ID value
+      schema:
+        type: string
+    - name: 'manufacturerId'
+      in: query
+      required: false
+      description: Fetch network element details based on provided manufacturer id
+      schema:
+        type: string
+    - name: 'parents'
+      in: query
+      required: false
+      description: Fetch network element details based on parent Id value
+      schema:
+        type: string
+    - name: 'searchRegion'
+      in: query
+      required: false
+      description: Fetch network element details based on region value provided
+      schema:
+        type: string
+    - name: 'searchSite'
+      in: query
+      required: false
+      description: Fetch network element details based on site provided
+      schema:
+        type: string
+    - name: 'searchNeRole'
+      in: query
+      required: false
+      description: Fetch network element details based on NE role provided
+      schema:
+        type: string
+    - name: 'searchTenant'
+      in: query
+      required: false
+      description: Fetch network element details based on tenant value provided
+      schema:
+        type: string
+    - name: 'searchManufacturer'
+      in: query
+      required: false
+      description: Fetch network element details based on manufacturer data
+      schema:
+        type: string
+    - name: 'searchNeType'
+      in: query
+      required: false
+      description: Fetch network element details based on network element type
+      schema:
+        type: string
+    - name: 'searchPlatform'
+      in: query
+      required: false
+      description: Fetch network element details based on platform value provided
+      schema:
+        type: string
+    - name: 'searchRack'
+      in: query
+      required: false
+      description: Fetch network element details based on rack value provided
+      schema:
+        type: string
+    - name: 'isPseudo'
+      in: query
+      required: false
+      description: Fetch network element details based on pseudo value
+      schema:
+        type: boolean
+    - name: 'qCustomised'
+      in: query
+      required: false
+      description: Fetch network element details based on q_customised value provided
+      schema:
+        type: string
+    - name: 'offset'
+      in: query
+      required: false
+      description: The initial index from which to return the results
+      example: 0
+      schema:
+        type: integer
+        default: 0
+    - name: 'limit'
+      in: query
+      required: false
+      description: Number of results to return per page.
+      example: 0
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 100
+    - name: 'resilient_for'
+      in: query
+      required: false
+      description: Id for the resilient device
+      example: 1437
+      schema:
+        type: integer
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_nes_details.yaml'
+      description: Expected response of plannet for /getNesDetails call

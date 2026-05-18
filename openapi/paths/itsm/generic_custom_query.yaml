@@ -1,0 +1,95 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - itsm
+  summary: Custom Query Filter
+  description: requests to spark for incident, change request details
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.genericQueryFilter"
+  operationId: custom_query
+  parameters:
+    - name: 'table'
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - incident
+          - change_request
+          - cmdb_circuit
+          - cmdb_rel_ci
+    - name: "hostname"
+      description: Device hostname in FQDN
+      in: query
+      required: false
+      example: ma0.test.bllab.it.bb.sky.com
+      schema:
+          type: string
+    - name: 'filter'
+      in: query
+      required: true
+      schema:
+        type: string
+        enum:
+          - ci_list
+          - ci_dependency_map_child
+          - ci_dependency_map_parent
+    - name: 'start_date'
+      in: query
+      schema:
+        type: integer
+        format: int64
+    - name: 'end_date'
+      in: query
+      schema:
+        type: integer
+        format: int64
+    - name: 'ci_list'
+      in: query
+      required: false
+      description: 'spark query has limitation to return maximum of 500 records'
+      schema:
+        type: array
+        items:
+          type: string
+    - name: 'shortDescription'
+      in: query
+      required: false
+      description: 'tickets short description in response if required - accepts boolean only'
+      schema:
+        example: true/false
+        type: boolean
+    - name: 'ticket_number'
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: 'service_type'
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+          - bngFailover
+          - geaProvisioningV2
+          - maptUpdate   
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - $ref: '../../definitions/itsm/response/generic_custom_cr.yaml'
+              - $ref: '../../definitions/itsm/response/generic_custom_incident.yaml'
+      description: Expected response from Spark

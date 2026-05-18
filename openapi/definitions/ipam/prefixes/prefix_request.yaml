@@ -1,0 +1,50 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+required:
+  - prefix
+properties:
+  prefix:
+    type: string
+    example: 90.223.217.170/32
+    pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\/]([1-9]|[12][0-9]|3[0-2]))?$'
+  site:
+    type: string
+    minLength: 1
+    example: BLLON
+  vrf:
+    type: string
+    minLength: 1
+    maxLength: 20
+    example: Global
+  tenant:
+    type: string
+    minLength: 1
+    example: UK-Core
+  role:
+    type: string
+    minLength: 1
+    example: Core-Interconnect
+  is_pool:
+    type: boolean
+    default: false
+  description:
+    type: string
+    minLength: 1
+    example: hostname(Loopback)
+  tags:
+    type: array
+    minItems: 1
+    items:
+      type: string
+    example: interconnect
+  custom_fields:
+    type: object

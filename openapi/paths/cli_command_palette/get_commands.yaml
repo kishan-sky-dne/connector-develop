@@ -1,0 +1,64 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - CLI Command Palette
+  summary: Retrieve cli command palette for the given device
+  description: Retrieve all cli commands for the device
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.cli_command_palette.tasks.read"
+  operationId: get_commands
+  parameters:
+    - name: 'vendor'
+      in: query
+      required: true
+      description: Device vendor
+      example: cisco
+      schema:
+        type: string
+    - name: 'model'
+      in: query
+      required: false
+      description: Device model
+      example: ncs5500
+      schema:
+        type: string
+    - name: platform
+      in: query
+      required: true
+      description: Device platform
+      example: iosxr
+      schema:
+        type: string
+    - name: 'version'
+      in: query
+      required: false
+      description: Device OS version
+      example: 7.3.2
+      schema:
+        type: string
+    - name: 'hostname'
+      in: query
+      required: false
+      description: Device hostname in FQDN
+      example: ma0.test.bllab.it.bb.sky.com
+      schema:
+        type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          example: ["show version", "show running-config", "show install active"]
+          schema:
+            type: array
+      description: Expected response for commandPalette call

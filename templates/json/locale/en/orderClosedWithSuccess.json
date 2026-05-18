@@ -1,0 +1,12 @@
+{
+    "template": "orderClosedWithSuccess",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, taskName, siteId, url",
+        "subject": "{{ mappings.orderType }} Order Successfully Completed (No: {{ mappings.orderNumber }}, Step:{{ mappings.taskName }} & Site id:{{ mappings.siteId }})",
+        "title": "",
+        "subtitle": "<p>Hello,</p> <b> {{ mappings.orderType }} </b> order has been successfully completed the {{ mappings.taskName }} step.</br> <br>Order no: <b>{{ mappings.orderNumber }} </b></br>Site id: <b>{{ mappings.siteId }} </b></br>Step: <b> {{ mappings.taskName }} </b></br> <br>Please check the <a href= {{ mappings.url }}> {{ mappings.url }} </a> with the order number for more information. </br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

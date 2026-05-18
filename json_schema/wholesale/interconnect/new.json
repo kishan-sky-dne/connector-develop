@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Wholesale Request Schema For interconnect create",
+  "required": [
+    "rfs-date",
+    "remote-nni-pe",
+    "asset-id",
+    "ports",
+    "nni-name"
+  ],
+  "properties": {
+    "partner-code": {
+      "$id": "#/properties/partner-code",
+      "type": "string",
+      "title": "partner-code",
+      "minLength": 1,
+      "maxLength": 20,
+      "example": "OFNL"
+    },
+    "asset-id": {
+      "$id": "#/properties/asset-id",
+      "type": "string",
+      "title": "asset-id",
+      "minLength": 1,
+      "maxLength": 20,
+      "example": "SKY-LNTW-FLDA-1"
+    },
+    "nni-name": {
+      "$id": "#/properties/nni-name",
+      "type": "string",
+      "title": "nni-name",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "remote-nni-pe": {
+      "$id": "#/properties/remote-nni-pe",
+      "type": "string",
+      "title": "remote-nni-pe",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "remote-nni-lag": {
+      "$id": "#/properties/remote-nni-lag",
+      "type": "string",
+      "title": "remote-nni-lag",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "rfs-date": {
+      "$id": "#/properties/rfs-date",
+      "type": "string",
+      "title": "rfs-date"
+    },
+    "ports": {
+      "$id": "#/properties/ports",
+      "type": "array",
+      "title": "ports",
+      "items": {
+        "type": "object",
+        "required": [
+          "interface",
+          "bearer-rate",
+          "circuit-id"
+        ],
+        "properties": {
+          "interface": {
+            "type": "string",
+            "example": "po1/1/1",
+            "maxLength": 100
+          },
+          "bearer-rate": {
+            "type": "integer",
+            "example": 10,
+            "enum": [10,100]
+          },
+          "circuit-id": {
+            "type": "string",
+            "example": "CH-011234",
+            "maxLength": 100
+          }
+        }
+      }
+    },
+    "comment": {
+      "$id": "#/properties/comment",
+      "type": "string",
+      "title": "comment"
+    }
+  }
+}

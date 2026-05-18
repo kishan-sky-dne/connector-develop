@@ -1,0 +1,12 @@
+{
+    "template": "DCNCapacityUpgrade",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, deviceName, siteId, url",
+        "subject": "DCN Capacity upgrade required for {{mappings.orderType}} with order no: {{mappings.orderNumber}} for site {{mappings.siteId}}.",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  For <b> {{mappings.orderType}} </b> order with order number <b> {{mappings.orderNumber}} </b> DCN team has determined that DCN is full and the DCN capacity at site <b> {{mappings.siteId}} </b> has to be upgraded. </br></br> Order no: <b> {{mappings.orderNumber}} </b> </br>Site id: <b> {{mappings.siteId}} </b> </br>Device Name: <b> {{mappings.deviceName}} </b> </br> </br>Please check the <a href= {{ mappings.url }}> {{ mappings.url }} </a> with the order number <b>{{mappings.orderNumber}}</b> for more information. </br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

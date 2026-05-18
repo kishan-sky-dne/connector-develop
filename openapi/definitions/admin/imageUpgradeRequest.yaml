@@ -1,0 +1,210 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: array
+items:
+  type: object
+  required:
+    - deviceVendor
+    - deviceModel
+    - region
+    - currentOsVersion
+    - currentOsLabel
+    - upgrade
+  properties:
+    deviceVendor:
+      type: string
+      example: Cisco
+      enum: [CISCO, NOKIA, HUAWEI]
+      minLength: 1
+      maxLength: 50
+    deviceModel:
+      type: string
+      example: NCS5K
+      enum: [NCS540, NCS5K, ASR9K, NCS1K, NCS540L, N540-24Q2C2DD-SYS]
+      minLength: 1
+      maxLength: 50
+    region:
+      type: string
+      example: UK
+      enum: [UK, IT, DE, IE]
+      minLength: 1
+      maxLength: 10
+    currentOsVersion:
+      type: string
+      example: 7.1.0
+      minLength: 1
+      maxLength: 50
+    currentOsLabel:
+      type: string
+      example: 7.1.0-V1
+      minLength: 1
+      maxLength: 50
+    upgrade:
+      type: object
+      properties:
+        upgradeSteps:
+          type: integer
+          example: 2
+          minimum: 1
+          maximum: 5
+        targetOs:
+          type: object
+          properties:
+            osVersion:
+              type: string
+              example: 7.5.1
+              minLength: 1
+              maxLength: 50
+            osLabel:
+              type: string
+              example: 7.5.1-V1
+              minLength: 1
+              maxLength: 50
+            customConfig:
+              type: array
+              items:
+                type: object
+                required:
+                  - deviceRole
+                  - configMode
+                properties:
+                  deviceRole:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                  beforeUpgrade:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    minItems: 1
+                  afterUpgrade:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    minItems: 1
+                  isRollbackRequired:
+                    type: boolean
+                    example: True
+                  beforeRollback:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    minItems: 1
+                  afterRollback:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                      maxLength: 1024
+                    minItems: 1
+                  configMode:
+                    type: string
+                    example: ADMIN
+                    enum: [XR, ADMIN, XR_EXEC, ADMIN_EXEC]
+                    minLength: 1
+                    maxLength: 10
+              minItems: 1
+          required:
+            - osVersion
+            - osLabel
+        intermediateSteps:
+          type: array
+          items:
+            type: object
+            required:
+              - osVersion
+              - osLabel
+              - sequence
+            properties:
+              osVersion:
+                type: string
+                example: 7.3.0
+                minLength: 1
+                maxLength: 50
+              osLabel:
+                type: string
+                example: 7.3.0-V1
+                minLength: 1
+                maxLength: 50
+              sequence:
+                type: integer
+                example: 1
+                minimum: 1
+                maximum: 5
+              customConfig:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - deviceRole
+                    - configMode
+                  properties:
+                    deviceRole:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                    beforeUpgrade:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                        maxLength: 1024
+                      minItems: 1
+                    afterUpgrade:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                        maxLength: 1024
+                      minItems: 1
+                    isRollbackRequired:
+                      type: boolean
+                      example: True
+                    beforeRollback:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                        maxLength: 1024
+                      minItems: 1
+                    afterRollback:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+                        maxLength: 1024
+                      minItems: 1
+                    configMode:
+                      type: string
+                      example: ADMIN
+                      enum: [XR, ADMIN, XR_EXEC, ADMIN_EXEC]
+                      minLength: 1
+                      maxLength: 10
+          minItems: 1
+      required:
+        - upgradeSteps
+        - targetOs
+    Comments:
+      type: string
+      example: Upgrade is due to certain reason...
+      minLength: 1
+minItems: 1

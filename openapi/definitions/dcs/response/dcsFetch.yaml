@@ -1,0 +1,31 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  new_queuing:
+    type: integer
+    example: 1
+  result:
+    type: string
+    example: ok
+  queue_reserve:
+    type: integer
+    example: 1
+  batch_ref:
+    type: string
+    example: 061449a8-ad69-41d2-bfae-8a69c88d30ee
+  queue_len:
+    type: integer
+    example: 18966
+required:
+  - result
+  - batch_ref

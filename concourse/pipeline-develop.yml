@@ -1,0 +1,185 @@
+---
+#============================================================
+# Connectors - Develop Environment Pipeline
+# Auto-triggers on develop branch commits
+#============================================================
+
+resources:
+  - name: repo-develop
+    type: git
+    icon: github
+    check_every: 1m
+    webhook_token: &webhook-token ((common-creds.webhook_token))
+    source: &git-source
+      uri: https://github.com/kishan-sky-dne/connector-develop.git
+      username: ((common-creds.github_username))
+      password: ((common-creds.github_personal_access_token))
+      branch: main
+
+groups:
+  - name: all
+    jobs:
+      - gitleaks-scan
+      - lint
+      # - build-docker
+      - deploy-cks-onx
+      - deploy-cks-sce
+
+x-params-develop-cks-deploy-base: &params-develop-cks-deploy-base
+  ENVIRONMENT: develop
+  NAMESPACE: dne-develop
+  OAUTH_USERNAME: ((develop-secrets.oauth_username))
+  OAUTH_PASSWORD: ((develop-secrets.oauth_password))
+  SKY_VAULT_APP_ID: ((develop-secrets.sky_vault_app_id))
+  SKY_VAULT_CDN_RS_SAFE: ((develop-secrets.sky_vault_cdn_rs_safe))
+  CAUTH_USERNAME: ((develop-secrets.cauth_username))
+  CAUTH_PASSWORD: ((develop-secrets.cauth_password))
+  AD_USERNAME: ((develop-secrets.ad_username))
+  AD_PASSWORD: ((develop-secrets.ad_password))
+  ITSM_SUBSCRIPTION_KEY: ((develop-secrets.itsm_subscription_key))
+  PLANNET_USERNAME: ((develop-secrets.plannet_username))
+  PLANNET_PASSWORD: ((develop-secrets.plannet_password))
+  INCA_USERNAME: ((develop-secrets.inca_username))
+  INCA_PASSWORD: ((develop-secrets.inca_password))
+  NEXA_USERNAME: ((develop-secrets.nexa_username))
+  NEXA_PASSWORD: ((develop-secrets.nexa_password))
+  CONNECTORS_API_GW_URL: ((develop-connectors.CONNECTORS_API_GW_URL))
+  CONNECTORS_AUDITNOW_TOPIC: ((develop-connectors.CONNECTORS_AUDITNOW_TOPIC))
+  CONNECTORS_AZURE_AD_AUTH_AUTHORITY: ((develop-connectors.CONNECTORS_AZURE_AD_AUTH_AUTHORITY))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL: ((develop-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_ID: ((develop-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_ID))
+  CONNECTORS_AZURE_AD_AUTH_SCOPES: ((develop-connectors.CONNECTORS_AZURE_AD_AUTH_SCOPES))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID: ((develop-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET: ((develop-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET))
+  CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD: ((develop-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD))
+  CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME: ((develop-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME))
+  CONNECTORS_ELASTICSEARCH_NODES: ((develop-connectors.CONNECTORS_ELASTICSEARCH_NODES))
+  CONNECTORS_ELASTICSEARCH_PASSWORD: ((develop-connectors.CONNECTORS_ELASTICSEARCH_PASSWORD))
+  CONNECTORS_ELASTICSEARCH_USERNAME: ((develop-connectors.CONNECTORS_ELASTICSEARCH_USERNAME))
+  CONNECTORS_GIT_TOKEN: ((develop-connectors.CONNECTORS_GIT_TOKEN))
+  CONNECTORS_HORIZON_ENDPOINT: ((develop-connectors.CONNECTORS_HORIZON_ENDPOINT))
+  CONNECTORS_INCA_BASE_URL: ((develop-connectors.CONNECTORS_INCA_BASE_URL))
+  CONNECTORS_INCA_GEA_URL: ((develop-connectors.CONNECTORS_INCA_GEA_URL))
+  CONNECTORS_INCA_NEXA_PASSWORD: ((develop-connectors.CONNECTORS_INCA_NEXA_PASSWORD))
+  CONNECTORS_INCA_NEXA_USERNAME: ((develop-connectors.CONNECTORS_INCA_NEXA_USERNAME))
+  CONNECTORS_INCA_PASSWORD: ((develop-connectors.CONNECTORS_INCA_PASSWORD))
+  CONNECTORS_INCA_USERNAME: ((develop-connectors.CONNECTORS_INCA_USERNAME))
+  CONNECTORS_ITSM_ASSIGNED_TO: ((develop-connectors.CONNECTORS_ITSM_ASSIGNED_TO))
+  CONNECTORS_ITSM_CHECK_DURATION: ((develop-connectors.CONNECTORS_ITSM_CHECK_DURATION))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP: ((develop-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET: ((develop-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET))
+  CONNECTORS_ITSM_EVPN_CONFIG_GROUP: ((develop-connectors.CONNECTORS_ITSM_EVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_EVPN_PARENT_TICKET: ((develop-connectors.CONNECTORS_ITSM_EVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP: ((develop-connectors.CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP: ((develop-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET: ((develop-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP: ((develop-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET: ((develop-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_URL: ((develop-connectors.CONNECTORS_ITSM_URL))
+  CONNECTORS_KAFKA_BOOTSTRAP_SERVERS: ((develop-connectors.CONNECTORS_KAFKA_BOOTSTRAP_SERVERS))
+  CONNECTORS_KAFKA_SASL_PASSWORD: ((develop-connectors.CONNECTORS_KAFKA_SASL_PASSWORD))
+  CONNECTORS_KAFKA_SASL_PASSWORD_WRITE: ((develop-connectors.CONNECTORS_KAFKA_SASL_PASSWORD_WRITE))
+  CONNECTORS_KAFKA_SASL_USERNAME: ((develop-connectors.CONNECTORS_KAFKA_SASL_USERNAME))
+  CONNECTORS_KAFKA_SASL_USERNAME_WRITE: ((develop-connectors.CONNECTORS_KAFKA_SASL_USERNAME_WRITE))
+  CONNECTORS_MAILER_ALLOWED_DOMAINS: ((develop-connectors.CONNECTORS_MAILER_ALLOWED_DOMAINS))
+  CONNECTORS_MAILER_FEATURE_FLAG: ((develop-connectors.CONNECTORS_MAILER_FEATURE_FLAG))
+  CONNECTORS_MAILER_FROM_ADDRESS: ((develop-connectors.CONNECTORS_MAILER_FROM_ADDRESS))
+  CONNECTORS_MINIO_ACCESS_KEY: ((develop-connectors.CONNECTORS_MINIO_ACCESS_KEY))
+  CONNECTORS_MINIO_ENDPOINT: ((develop-connectors.CONNECTORS_MINIO_ENDPOINT))
+  CONNECTORS_MINIO_SECRET_KEY: ((develop-connectors.CONNECTORS_MINIO_SECRET_KEY))
+  CONNECTORS_MYSQLDB_DATABASE_NAME: ((develop-connectors.CONNECTORS_MYSQLDB_DATABASE_NAME))
+  CONNECTORS_MYSQLDB_HOST: ((develop-connectors.CONNECTORS_MYSQLDB_HOST))
+  CONNECTORS_MYSQLDB_PASSWORD: ((develop-connectors.CONNECTORS_MYSQLDB_PASSWORD))
+  CONNECTORS_MYSQLDB_PORT: ((develop-connectors.CONNECTORS_MYSQLDB_PORT))
+  CONNECTORS_MYSQLDB_USERNAME: ((develop-connectors.CONNECTORS_MYSQLDB_USERNAME))
+  CONNECTORS_OAUTH_URL: ((develop-connectors.CONNECTORS_OAUTH_URL))
+  CONNECTORS_OPTIONS_LOG_LEVEL: ((develop-connectors.CONNECTORS_OPTIONS_LOG_LEVEL))
+  CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION: ((develop-connectors.CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION))
+  CONNECTORS_ORDER_STATUS_TOPIC_MAPPER: ((develop-connectors.CONNECTORS_ORDER_STATUS_TOPIC_MAPPER))
+  CONNECTORS_ORDER_STATUS_URL: ((develop-connectors.CONNECTORS_ORDER_STATUS_URL))
+  CONNECTORS_PLANNET_ACCESS_TOKEN: ((develop-connectors.CONNECTORS_PLANNET_ACCESS_TOKEN))
+  CONNECTORS_PLANNET_BASE_URL: ((develop-connectors.CONNECTORS_PLANNET_BASE_URL))
+  CONNECTORS_POSTGRESDB_DATABASE_NAME: ((develop-connectors.CONNECTORS_POSTGRESDB_DATABASE_NAME))
+  CONNECTORS_POSTGRESDB_HOST: ((develop-connectors.CONNECTORS_POSTGRESDB_HOST))
+  CONNECTORS_POSTGRESDB_PASSWORD: ((develop-connectors.CONNECTORS_POSTGRESDB_PASSWORD))
+  CONNECTORS_POSTGRESDB_PORT: ((develop-connectors.CONNECTORS_POSTGRESDB_PORT))
+  CONNECTORS_POSTGRESDB_USERNAME: ((develop-connectors.CONNECTORS_POSTGRESDB_USERNAME))
+  CONNECTORS_RADIUS_BASE_URL: ((develop-connectors.CONNECTORS_RADIUS_BASE_URL))
+  CONNECTORS_RADIUS_PASSWORD: ((develop-connectors.CONNECTORS_RADIUS_PASSWORD))
+  CONNECTORS_RADIUS_SCOPE: ((develop-connectors.CONNECTORS_RADIUS_SCOPE))
+  CONNECTORS_RADIUS_USERNAME: ((develop-connectors.CONNECTORS_RADIUS_USERNAME))
+  CONNECTORS_RSA_PRIVATE_KEY: ((develop-connectors.CONNECTORS_RSA_PRIVATE_KEY))
+  CONNECTORS_RSA_PUBLIC_KEY: ((develop-connectors.CONNECTORS_RSA_PUBLIC_KEY))
+  CONNECTORS_SERVICEDB_PASSWORD: ((develop-connectors.CONNECTORS_SERVICEDB_PASSWORD))
+  CONNECTORS_SERVICEDB_USERNAME: ((develop-connectors.CONNECTORS_SERVICEDB_USERNAME))
+  CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT: ((develop-connectors.CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT))
+  DOCKERCONFIGJSON: ((common-creds.dockerconfigjson))
+
+jobs:
+  - name: gitleaks-scan
+    public: true
+    plan:
+      - get: repo-develop
+        trigger: true
+      - task: run-gitleaks
+        file: repo-develop/concourse/tasks/gitleaks.yml
+        input_mapping: {repo: repo-develop}
+
+  - name: lint
+    public: true
+    plan:
+      - get: repo-develop
+        trigger: true
+        passed: [gitleaks-scan]
+      - task: run-lint
+        file: repo-develop/concourse/tasks/lint.yml
+        input_mapping: {repo: repo-develop}
+        params:
+          GITHUB_TOKEN: ((common-creds.github_personal_access_token))
+          HARBOR_REGISTRY: ((common-creds.harbor_registry))
+
+  # - name: build-docker
+  #   public: true
+  #   serial: true
+  #   plan:
+  #     - get: repo-develop
+  #       trigger: true
+  #       passed: [lint]
+  #     - task: build-and-push
+  #       privileged: true
+  #       file: repo-develop/concourse/tasks/build-docker.yml
+  #       input_mapping: {repo: repo-develop}
+  #       params:
+  #         HARBOR_USERNAME: ((common-creds.harbor_username))
+  #         HARBOR_PASSWORD: ((common-creds.harbor_password))
+  #         HARBOR_REGISTRY: ((common-creds.harbor_registry))
+  #         IMAGE_NAME: ipnd-dne/connectors
+  #         IMAGE_TAG: develop
+
+  - name: deploy-cks-onx
+    public: true
+    plan:
+      - get: repo-develop
+        trigger: true
+        passed: [lint]
+      - task: deploy-to-cks-onx
+        file: repo-develop/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-develop}
+        params:
+          <<: *params-develop-cks-deploy-base
+          DATACENTER: onx
+          KUBECONFIG_CONTENT: ((develop-onx-kubeconfig))
+
+  - name: deploy-cks-sce
+    public: true
+    plan:
+      - get: repo-develop
+        trigger: true
+        passed: [lint]
+      - task: deploy-to-cks-sce
+        file: repo-develop/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-develop}
+        params:
+          <<: *params-develop-cks-deploy-base
+          DATACENTER: sce
+          KUBECONFIG_CONTENT: ((develop-sce-kubeconfig))

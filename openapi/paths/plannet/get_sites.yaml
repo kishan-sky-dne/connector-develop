@@ -1,0 +1,194 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: Retrieve sites details from plannet
+  description: Get meta data of sites from plannet connector plannet
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_sites
+  parameters:
+    - name: 'types'
+      in: query
+      required: false
+      description: Get information about particular types
+      example: intra
+      schema:
+        enum:
+          - exch
+          - score
+          - pop
+          - peer
+          - op100g
+          - colo
+          - cdn_pop
+          - cdn_cen
+          - regen
+          - cgn
+          - pseudo
+          - data
+        type: string
+        minLength: 1
+    - name: 'id'
+      in: query
+      required: false
+      description: Gives details of sites of that id
+      example: 2723
+      schema:
+        type: integer
+    - name: 'filter'
+      in: query
+      required: false
+      description: Filters the output based on the parameters. Searches the filter in name,fullname ,postcode etc.
+      schema:
+        type: string
+        minLength: 1
+    - name: 'limit'
+      in: query
+      required: false
+      description: The number of results to return per page.
+      example: 100
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 200
+    - name: 'offset'
+      in: query
+      required: false
+      description: The initial index from which to return the results.
+      example: 0
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+    - name: 'name'
+      in: query
+      required: false
+      description: Gives details of site of that particular name.
+      example: CLBER
+      schema:
+        type: string
+    - name: 'codeIp'
+      in: query
+      required: false
+      description: Gives details of site of that particular code_ip
+      example: bllon
+      schema:
+        type: string
+    - name: 'codeOp'
+      in: query
+      required: false
+      description: Gives details of site of that particular code_op
+      example: LNBL
+      schema:
+        type: string
+    - name: 'provider'
+      in: query
+      required: false
+      description: Gives details of sites of that particular provider
+      example: sky/BT
+      schema:
+        type: string
+    - name: 'physicalAddress'
+      in: query
+      required: false
+      description: Gives details of sites of that particular physical address.
+      example: 1 Brick Lane, London
+      schema:
+        type: string
+    - name: 'postcode'
+      in: query
+      required: false
+      description: Gives details of sites of that particular postal code.
+      example: NW1 2BH
+      schema:
+        type: string
+    - name: 'description'
+      in: query
+      required: false
+      description: Gives details of sites of that particular description
+      example: ''
+      schema:
+        type: string
+    - name: 'subtypes'
+      in: query
+      required: false
+      description: Get information about particular subtypes
+      example: ''
+      schema:
+        type: string
+    - name: 'latitude'
+      in: query
+      required: false
+      description: Gives details of sites of that particular latitude
+      example: 52.103889
+      schema:
+        type: string
+    - name: 'longitude'
+      in: query
+      required: false
+      description: Gives details of sites of that particular longitude
+      example: 1.111824
+      schema:
+        type: string
+    - name: 'ids'
+      in: query
+      required: false
+      description: Gives details of sites of multiple ids
+      example: 2723,23
+      schema:
+        type: string
+    - name: 'fullname'
+      in: query
+      required: false
+      description: Gives details of sites of that particular full name
+      example: COGGESHALL
+      schema:
+        type: string
+    - name: 'regionId'
+      in: query
+      required: false
+      description: Gives details of sites of that particular regional ID
+      example: 3
+      schema:
+        type: string
+    - name: 'region'
+      in: query
+      required: false
+      description: Gives details of sites of that particular regional ID
+      example: UK
+      schema:
+        type: string
+    - name: 'tenant'
+      in: query
+      required: false
+      description: Gives details of sites of that particular tenant
+      example: ''
+      schema:
+        type: string
+    - name: 'tenantId'
+      in: query
+      required: false
+      description: Gives details of sites of that particular tenant_id
+      example: ''
+      schema:
+        type: string
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_sites.yaml'
+      description: Expected response of plannet for /get_sites call

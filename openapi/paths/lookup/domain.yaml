@@ -1,0 +1,40 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - lookups
+  summary: The API take hostname as input and return the network domain it belongs to.
+  description: The API take hostname as input and return the network domain it belongs to.
+  security:
+     - oAuth2ClientCredentials:
+        - connector:read
+  x-openapi-router-controller: "connectors.webserver.lookup.tasks.read"
+  operationId: get_network_domain
+  parameters:
+    - name: hostname
+      description: "Hostname for which the network domain requires to be fetched"
+      example: ma0.dev-uk.bllab.isp.sky.com
+      in: path
+      required: true
+      schema:
+        type: string
+        format: hostname
+        minLength: 1
+        maxLength: 100
+        pattern: '^[a-zA-Z0-9-\.]*$'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/lookup/domain.yaml'
+      description: Expected response

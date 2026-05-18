@@ -1,0 +1,64 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  geaCeaseDetails:
+    type: object
+    properties:
+      messageType:
+        type: string
+        enum:
+          - GEACEASE
+      requestDate:
+        type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
+        example: 2023-12-14
+      exchange:
+        type: string
+        minLength: 1
+        maxLength: 20
+        example: WNWX
+      tgReference:
+        example: TG9989
+        type: string
+        pattern: ^([Tt][Gg])\d{1,}
+        minLength: 2
+      requiredByDate:
+        type: string
+        pattern: ^\d{4}-\d{2}-\d{2}$
+        example: 2023-12-31
+      btSwitch:
+        type: string
+        minLength: 1
+        maxLength: 20
+        example: BAACHK
+      circuitCeaseOrderRef:
+        type: string
+        minLength: 1
+        maxLength: 100
+        example: OGHP64783778-3456789-CEASE
+      cablelinkRef:
+        type: string
+        minLength: 4
+        pattern: ^OGHP
+        example: OGHP64783778
+    required:
+      - messageType
+      - requestDate
+      - exchange
+      - tgReference
+      - requiredByDate
+      - btSwitch
+      - circuitCeaseOrderRef
+      - cablelinkRef
+required:
+  - geaCeaseDetails

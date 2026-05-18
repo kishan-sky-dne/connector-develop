@@ -1,0 +1,64 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  status:
+    type: string
+    example: "Success|Failed|Partial Success"
+  message:
+    type: string
+    example: "Success or Failed or Partial Success message"
+  targetEmailsStatus:
+    type: object
+    properties:
+      toList:
+        type: object
+        properties:
+          successEmails:
+            type: array
+            items:
+              type: string
+              format: email
+          failedEmails:
+            type: array
+            items:
+              type: string
+              format: email
+      ccList:
+        type: object
+        properties:
+          successEmails:
+            type: array
+            items:
+              type: string
+              format: email
+          failedEmails:
+            type: array
+            items:
+              type: string
+              format: email
+      bccList:
+        type: object
+        properties:
+          successEmails:
+            type: array
+            items:
+              type: string
+              format: email
+          failedEmails:
+            type: array
+            items:
+              type: string
+              format: email
+  attachmentStatus:
+    type: string
+    example: "Success|None"

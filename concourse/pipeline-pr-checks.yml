@@ -1,0 +1,131 @@
+---
+#============================================================
+# Connectors PR Checks Pipeline
+# Runs security and quality checks on Pull Requests
+# Auto-triggers on PR creation/updates
+#============================================================
+
+resource_types:
+  - name: pull-request
+    type: registry-image
+    source:
+      repository: registry.cloud.sky/docker-hub/cfcommunity/github-pr-resource
+      tag: latest
+
+resources:
+  - name: connectors-prs
+    type: pull-request
+    icon: source-pull
+    check_every: 1m
+    webhook_token: &webhook-token ((common-creds.webhook_token))
+    source:
+      repository: sky-uk/dne-connectors
+      access_token: ((common-creds.github_personal_access_token))
+      base_branch: develop
+      disable_forks: true  # Only PRs from same repo (security)
+
+groups:
+  - name: all
+    jobs:
+      - pr-checks
+
+jobs:
+  - name: pr-checks
+    public: true
+    plan:
+      # Get PR
+      - get: connectors-prs
+        trigger: true
+        version: every
+
+      # Set overall PR status to pending
+      - put: connectors-prs
+        params:
+          path: connectors-prs
+          status: pending
+          context: connectors-pr-checks
+          description: "Running PR checks..."
+
+      # Run checks in parallel
+      - in_parallel:
+          steps:
+            # Gitleaks security scan
+            - task: gitleaks-scan
+              file: connectors-prs/concourse/tasks/gitleaks.yml
+              input_mapping: {repo: connectors-prs}
+              on_success:
+                put: connectors-prs
+                params:
+                  path: connectors-prs
+                  status: success
+                  context: gitleaks-scan
+                  description: "Gitleaks scan succeeded - no secrets found"
+              on_failure:
+                put: connectors-prs
+                params:
+                  path: connectors-prs
+                  status: failure
+                  context: gitleaks-scan
+                  description: "Gitleaks scan failed - secrets detected!"
+
+            # Lint check
+            - task: lint
+              file: connectors-prs/concourse/tasks/lint.yml
+              input_mapping: {repo: connectors-prs}
+              params:
+                GITHUB_TOKEN: ((common-creds.github_token))
+                HARBOR_REGISTRY: ((common-creds.harbor_registry))
+              on_success:
+                put: connectors-prs
+                params:
+                  path: connectors-prs
+                  status: success
+                  context: lint
+                  description: "Lint check succeeded - code quality passed"
+              on_failure:
+                put: connectors-prs
+                params:
+                  path: connectors-prs
+                  status: failure
+                  context: lint
+                  description: "Lint check failed - fix code quality issues"
+
+            # Unit tests (commented out - uncomment when needed)
+            # - task: unit-tests
+            #   file: connectors-prs/concourse/tasks/test.yml
+            #   input_mapping: {repo: connectors-prs}
+            #   params:
+            #     GITHUB_TOKEN: ((common-creds.github_token))
+            #     HARBOR_REGISTRY: ((common-creds.harbor_registry))
+            #   on_success:
+            #     put: connectors-prs
+            #     params:
+            #       path: connectors-prs
+            #       status: success
+            #       context: unit-tests
+            #       description: "Unit tests succeeded - all tests passed"
+            #   on_failure:
+            #     put: connectors-prs
+            #     params:
+            #       path: connectors-prs
+            #       status: failure
+            #       context: unit-tests
+            #       description: "Unit tests failed - check test results"
+
+    # Update overall PR status on success
+    on_success:
+      put: connectors-prs
+      params:
+        path: connectors-prs
+        status: success
+        context: connectors-pr-checks
+        description: "All PR checks passed ✓"
+
+    # Update overall PR status on failure
+    on_failure:
+      put: connectors-prs
+      params:
+        path: connectors-prs
+        status: failure
+        context: connectors-pr-checks
+        description: "PR checks failed - see individual check results"

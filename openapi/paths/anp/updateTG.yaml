@@ -1,0 +1,46 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - anp
+  summary: Update TG deliverable on A&P tracker
+  description: Update status,expected deliverydate,comments on A&P tracker for a TG reference
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.anp.tasks.update"
+  operationId: updateTGReference
+  parameters:
+    - in: header
+      name: ad_username
+      schema:
+        type: string
+      required: false
+    - in: header
+      name: ad_password
+      schema:
+        type: string
+        format: password
+      required: false
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: "../../definitions/anp/update/post_body.yaml"
+    description: Updates a TG reference in A&P portal
+    required: true
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/anp/update/response.yaml'
+      description: Expected response of A&P portal for updating TG reference

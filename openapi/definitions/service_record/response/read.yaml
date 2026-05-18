@@ -1,0 +1,185 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+wholesale-service:
+  summary: wholesale-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/pages/viewpage.action?spaceKey=IA&title=Wholesale+Orchestrator#WholesaleOrchestrator-Collection:wholesale-lifecycle"
+      },
+      {
+        "schema": "https://wiki.at.sky/pages/viewpage.action?spaceKey=IA&title=Wholesale+NNI+Orchestrator+Design#WholesaleNNIOrchestratorDesign-DBSchema:collectionname:wholesale-lifecycle"
+      } ]
+wholesale-audit:
+  summary: wholesale-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/pages/viewpage.action?spaceKey=IA&title=Wholesale+Orchestrator#WholesaleOrchestrator-AuditDBSchema:wholesale-audit-log"
+      },
+      {
+        schema: "https://wiki.at.sky/pages/viewpage.action?spaceKey=IA&title=Wholesale+Orchestrator#WholesaleOrchestrator-AuditDBSchema:wholesale-audit-log"
+      } ]
+deltabase-service:
+  summary: deltabase-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Delta+Base+Config+Design#DeltaBaseConfigDesign-Collection:me-to-ma-data"
+      }]
+deltabase-audit:
+  summary: deltabase-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Delta+Base+Config+Design#DeltaBaseConfigDesign-AuditDB:me-to-ma-audit-log"
+      }]
+metro-rr-service:
+  summary: metro-rr-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Metro+RR+Design#MetroRRDesign-Collection:metro-rr-lifecycle"
+      }]
+metro-rr-audit:
+  summary: metro-rr-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Metro+RR+Design#MetroRRDesign-Collection:metro-rr-audit-log"
+      }]
+metro-link-service:
+  summary: metro-link-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Metro+Link+Service+%28MPLS%29+Design#MetroLinkService(MPLS)Design-Collection:metro-link-lifecycle"
+      }]
+metro-link-audit:
+  summary: metro-link-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Metro+Link+Service+%28MPLS%29+Design#MetroLinkService(MPLS)Design-AuditDB:metro-link-audit-log"
+      }]
+sky-talk-service:
+  summary: sky-talk-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Sky+Talk+Design+-+Draft#SkyTalkDesignDraft-Collection:sky-talk-lifecycle"
+      }]
+sky-talk-audit:
+  summary: sky-talk-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Sky+Talk+Design+-+Draft#SkyTalkDesignDraft-AuditDBSchema:sky-talk-audit-log(Latest)"
+      }]
+unified-management-service:
+  summary: unified-management-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Unified+Management+%28Broadband+Management%29+Design+-+Draft+Page+1#UnifiedManagement(BroadbandManagement)DesignDraftPage1-Collection:unified-management-lifecycle"
+      }]
+unified-management-audit:
+  summary: unified-management-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Unified+Management+%28Broadband+Management%29+Design+-+Draft+Page+1#UnifiedManagement(BroadbandManagement)DesignDraftPage1-AuditDBSchema:unified-management-audit-log"
+      }]
+ubb-service:
+  summary: ubb-service
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        "schema": "https://wiki.at.sky/display/IA/Design#Design-Collection:UBBServiceModel"
+      }]
+ubb-audit:
+  summary: ubb-audit
+  value:
+    "totalRecords": 100
+    "recordsPerPage": 10
+    "pageNumber": 3
+    "pageStartIndex": 30
+    "pageEndIndex": 39
+    "data": [
+      {
+        schema: "https://wiki.at.sky/display/IA/Design#Design-AuditDB:ubb-audit-log"
+      }]

@@ -1,0 +1,22 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: ((common-creds.harbor_registry))/ipnd-dne-public/python
+    tag: "3.10-sky"
+    username: ((common-creds.harbor_username))
+    password: ((common-creds.harbor_password))
+
+inputs:
+  - name: repo
+
+run:
+  path: bash
+  args:
+    - -exc
+    - |
+      cd repo
+      pip3 install tox
+      make lint

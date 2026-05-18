@@ -1,0 +1,137 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  ticketNumber:
+    type: string
+    minLength: 1
+    example: "CHG123456789"
+  updatedBy:
+    type: string
+    minLength: 1
+    example: "vsh18"
+  assignedTo:
+    type: string
+    minLength: 1
+    example: "vsh18"
+  state:
+    type: string
+    enum:
+      - New
+      - Authorised
+      - Implementation In Progress
+      - Closed Successful
+      - Closed Successful with issues
+      - Closed Unsuccessful
+      - Closed Backed Out
+      - Under Implementation
+      - Post Implementation Review
+      - Closed
+  workNotes:
+    type: string
+    minLength: 1
+    example: "Change completed successfully"
+  assignmentGrp:
+    type: string
+    minLength: 1
+    example: "UK IP Network Development Test and Delivery Team"
+  implementationCode:
+    enum:
+      - Successful
+      - Successful with issues
+      - Unsuccessful
+    type: string
+    example: "Unsuccessful"
+  implementationDetails:
+    type: string
+    example: ""
+    minLength: 1
+    maxLength: 4000
+  # Fix for BUG DNE-2549
+  failureDescp:
+    type: string
+    example: "Implementation failed due to Faulty Console port on Remote Console Server"
+    minLength: 1
+    maxLength: 1000
+  startDate:
+    description: "Start date of the implementation (EPOCH)"
+    example: 1572794340
+    type: integer
+  endDate:
+    description: "End date of the implementation (EPOCH)"
+    example: 1572794340
+    type: integer
+  causeOfFailure:
+    enum:
+      - Wrong Instructions provided
+      - Incorrectly Implemented Instructions
+      - Insufficient Pre Testing
+      - Insufficient Post Testing
+      - Unexpected behaviour
+      - Overrunning Change
+      - Other
+    type: string
+    example: "Unexpected behaviour"
+  backedOut:
+    enum:
+      - "Fully Backed Out"
+      - "Partial Back Out"
+      - "Yes"
+      - "No"
+    type: string
+    example: "Yes"
+  correctedPlan:
+    type: string
+    maxLength: 4000
+    minLength: 1
+  reschedule:
+    description: Flag to indicate if the change is being rescheduled
+    type: boolean
+    example: true
+  newEndDate:
+    description: New end date for the rescheduled change (Unix Epoch
+      in seconds)
+    example: 1572797940
+    type: integer
+  newStartDate:
+    description: New start date for the rescheduled change (Unix Epoch
+      in seconds)
+    example: 1572794340
+    type: integer
+  rescheduleReason:
+    description: Reason for rescheduling the change
+    enum:
+      - Awaiting Dependent Change
+      - Change Window Expired
+      - Conflict with Other Change
+      - Earlier Implementation Required
+      - Implementation Team Not Ready
+      - Incorrect Date/Time
+      - Infrastructure Fault or Capacity Issues
+      - Infrastructure Not Ready
+      - No Field or 3rd Party Resource Availability
+      - No Implementation Resource Availability
+      - Not Fully Approved In Time
+      - Too Much Work Scheduled
+      - Wholesale Customer Rejected
+      - Within Restriction Period
+      - Other Reason / More Info Required
+    example: Change Window Expired
+    type: string
+  additionalInformation:
+    description: "Free text up to 4,000 characters. Required when rescheduleReason is 'Other Reason / More Info Required'."
+    type: string
+    minLength: 1
+    maxLength: 4000
+required:
+  - ticketNumber
+  - updatedBy

@@ -1,0 +1,58 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - Service Status Read
+  summary: Get the status of the provided services
+  description: This API fetches the status of the provided services
+  security:
+    - oAuth2ClientCredentials: [ connector:read ]
+  x-openapi-router-controller: "connectors.webserver.service_status.read"
+  operationId: get_service_status
+  parameters:
+    - name: orderId
+      required: true
+      in: query
+      example: BPM-123
+      schema:
+        type: string
+        pattern: '^BPM-[0-9a-zA-Z]+$'
+    - name: serviceType
+      in: query
+      required: true
+      example: [wholesale,skytalk]
+      schema:
+        maxItems: 10
+        minItems: 1
+        type: array
+        description: "A single or list of comma seperated services that match schema records"
+        items:
+          type: string
+          minLength: 1 
+    - name: operationType
+      in: query
+      example: create
+      schema:
+        default: create
+        description: "The type of operation: create or delete"
+        type: string
+        enum:
+          - create
+          - delete
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/service_status/read.yaml'
+      description: Expected response of service status read
+

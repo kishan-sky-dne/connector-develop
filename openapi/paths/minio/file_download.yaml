@@ -1,0 +1,56 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - MinIO
+  description: Download file/object from MinIO Storage
+  x-openapi-router-controller: "connectors.webserver.minio.read"
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  operationId: download_files
+  parameters:
+    - name: 'bucketName'
+      in: query
+      required: true
+      description: Name of the bucket from where files will be present in folder 
+      example: software-update
+      schema:
+        type: string
+        minLength: 3
+        maxLength: 63
+        pattern: '^(?!^(?:\d{1,3}\.){3}\d{1,3}$)[a-z0-9]([a-z0-9\-]{1,61}[a-z0-9])?$'
+    - name: 'filename'
+      in: query
+      required: true
+      description: list of file names will be downloaded from MinIO
+      example: software-update
+      schema:
+        type: array
+        items:
+          type: string
+          minLength: 1
+          example: ta0_bllabd1_console_log.log, BPM-123/ConsoleLogs/ta1_bllabd1.log
+  responses:
+    '200':
+      description: File download from MinIO storage response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '500':
+      description: Internal Server Error

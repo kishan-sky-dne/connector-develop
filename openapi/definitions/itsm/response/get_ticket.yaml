@@ -1,0 +1,34 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  result:
+    type: array
+    items:
+      type: object
+      properties:
+        chgtktNumber:
+          type: string
+          example: "CHG123456789"
+        state:
+          type: string
+          example: "APPROVED"
+        startDate:
+          type: string
+          example: "1572794340"
+        endDate:
+          type: string
+          example: "1572794340"
+        parentTicketNumber:
+          type: string
+          example: "CHG12345678"
+          description: "parentTicket will be in response if parentChange is set to True in query parameter"

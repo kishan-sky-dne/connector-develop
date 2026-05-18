@@ -1,0 +1,99 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+patch:
+  tags:
+    - plannet
+  summary: Update transition group
+  description: Update the transistion group
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.write"
+  operationId: update_transition_group
+  parameters:
+    - name: 'id'
+      in: path
+      required: true
+      description: ID of the transition group
+      schema:
+        type: string
+        pattern: "[(TG)(tg)]{0,1}[0-9]+"
+  requestBody:
+    description: Required details to update the transition group
+    content:
+      application/json:
+        schema:
+          required: 
+            - "date"
+            - "domains"
+          properties: 
+            name: 
+              description: Short description of the TG
+              type: "string"
+              maxLength: 200
+              minLength: 1
+            date: 
+              type: "string"
+              description: The date that transition should or did occur.
+            description: 
+              type: "string"
+            coordinator: 
+              type: "string"
+              description: Name of the coordinator of this TG.
+              maxLength: 50
+            nis_ref: 
+              type: "string"
+              description: Reference to the legacy NIS TG ID.
+              maxLength: 10
+            dependencies: 
+              type: "array"
+              items: 
+                type: "integer"
+                description: TGs that this TG depend upon.
+            domains: 
+              type: "array" 
+              items: 
+                type: "integer"
+                description: Network domain that it is applied to.
+
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/update_transition_group.yaml'
+      description: Expected response of plannet for /dcim/tgs/{id} call
+
+
+get:
+  tags:
+    - plannet
+  summary: Get transition group info
+  description: Get details about the transistion group
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_transition_group_data
+  parameters:
+    - name: 'id'
+      in: path
+      required: true
+      description: ID of the transition group
+      schema:
+        type: string
+        pattern: "[(TG)(tg)]{0,1}[0-9]+"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_transition_group.yaml'
+      description: Expected response of plannet for get /dcim/tgs/{id} call

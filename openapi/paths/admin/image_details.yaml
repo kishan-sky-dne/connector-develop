@@ -1,0 +1,131 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - admin
+  summary: Get the metadata information about the golden image
+  description: Request to get the metadata information about the golden image
+  security:
+     - oAuth2ClientCredentials:
+        - connector:read
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.read_image_metadata"
+  operationId: get_image_details
+  parameters:
+    - name: _include
+      description: "This is comma separated field which states what attributes to return to matching filters"
+      example: deviceVendor
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: '^([a-zA-Z\s]+,)*([a-zA-Z\s]+)$'
+    - name: limit
+      description: "number of records"
+      example: 3
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 25
+    - name: deviceVendor
+      description: "Device Vendor"
+      example: Cisco
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: deviceRole
+      description: "Device Role"
+      example: t_agg
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: deviceModel
+      description: "Device Model"
+      example: NCS-540
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: os
+      description: "Operating System"
+      example: ios-xr
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: osVersion
+      description: "Operating System Version"
+      example: 7.0.2
+      in: query
+      required: false
+      schema:
+        type: string
+        pattern: '^(\d+((\.\d+){1,2})?)$'
+    - name: status
+      description: "Status"
+      example: Active
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: createdOn
+      description: "created Date"
+      example: "2020-11-11 13:23:44"
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: modifiedOn
+      description: "modified Date"
+      example: "2020-11-11 13:23:44"
+      in: query
+      required: false
+      schema:
+        type: string
+    - name: deviceOsVersionId
+      description: "Device Os Version Id"
+      example: 3
+      in: query
+      required: false
+      schema:
+        type: integer
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/image_details_response.yaml'
+      description: Get the metadata information about the golden image
+post:
+  tags:
+    - admin
+  summary: Add the image metadata information
+  description: requests to add the image metadata information
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.addImage"
+  operationId: add_image_details
+  requestBody:
+    description: Required details to add image metadata
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/admin/addImageRequest.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/addImageResponse.yaml'
+      description: Expected response for add image metadata information

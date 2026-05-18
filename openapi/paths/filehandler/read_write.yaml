@@ -1,0 +1,156 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  description: The API write the xls/csv file as per provided data
+  operationId: write_sheet
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - templateName
+            - sheets
+            - fileType
+          properties:
+            fileType:
+              type: string
+              enum:
+                - xls
+                - csv
+            templateName:
+              type: string
+              default: abc.xls
+              pattern: ^.*$
+              example: abc.xls
+            sheets:
+              type: array
+              minItems: 1
+              items:
+                type: object
+                required:
+                  - sections
+                properties:
+                  sections:
+                    type: array
+                    minItems: 1
+                    items:
+                      type: object
+                      required:
+                        - rows
+                      properties:
+                        rows:
+                          type: array
+                          minItems: 1
+                          items:
+                            type: object
+    description: Request to write the xls/csv file as per provided data
+  responses:
+      '200':
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fileName
+                - fileContent
+              properties:
+                fileName:
+                  type: string
+                  pattern: ^.*$
+                fileContent:
+                  type: string
+                  pattern: '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$'
+        description: Expected response as base64 encode string data
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  summary: The API write the xls/csv file as per provided data. Data is written on, already stored formated xls/csv file based
+           on the rule described in template file.
+  tags:
+  - File Handler
+  x-openapi-router-controller: connectors.webserver.filehandler.readwrite
+put:
+  description: The API parse the xls/csv file data as per provided template file and returns the data in JSON formatted.
+  operationId: parse_sheet
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - templateName
+            - fileContent
+            - fileType
+          properties:
+            fileType:
+              type: string
+              enum:
+                - xls
+                - csv
+            dataOrientation :
+              type: string
+              enum:
+                - col
+                - row
+            templateName:
+              type: string
+              default: abc.xls
+              pattern: ^.*$
+              example: abc.xls
+            fileContent:
+              type: string
+              pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$"
+    description: Request to parse the xls/csv file as per provided data
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - templateName
+              - dataOrientation
+              - sheet
+            properties:
+              templateName:
+                type: string
+                pattern: ^.*$
+              dataOrientation :
+                type: string
+              dbResourceIndex:
+                type: number
+              sheet:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - Sections
+                  properties:
+                    Sections:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - rows
+                        properties:
+                          rows:
+                            type: array
+                            items:
+                              type: object
+      description: Expected response is dictionary formmatted data of particular file
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  summary: The API parse the xls file data as per provided template file and returns the data in JSON formatted.
+        The template file states whether to return data or write the parsed data on DB
+  tags:
+    - File Handler
+  x-openapi-router-controller: connectors.webserver.filehandler.readwrite

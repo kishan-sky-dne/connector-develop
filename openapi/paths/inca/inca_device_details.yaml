@@ -1,0 +1,45 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - inca
+  summary: Retrieve different type of INCA device and associated subnet details
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.inca.tasks.read"
+  operationId: get_device_details
+  description: Used to get Device details and its associated subnets from the INCA system.
+  parameters:
+    - description: Hostname(Without domain name). Either hostname or exchangeName is mandatory
+      example: vm0.bllon
+      in: query
+      name: hostname
+      schema:
+        items:
+          type: string
+          minLength: 1
+        type: array
+        minItems: 1
+    - description: exchangeName. Either hostname or exchangeName is mandatory
+      example: smlea
+      in: query
+      name: exchangeName
+      schema:
+        type: string
+        minLength: 1
+  responses:
+    '200':
+      description: Expected response of inca device details and its associated subnet
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/inca/response/getIncaDeviceDetails.yaml'

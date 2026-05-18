@@ -1,0 +1,22 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+openapi: 3.0.0
+info:
+  $ref: './info/index.yaml'
+paths:
+  $ref: './paths/index.yaml'
+tags:
+  $ref: './tags/index.yaml'
+components:
+  $ref: './oauth2.0/securitySchema.yaml'
+servers:
+  - url: /api/v1

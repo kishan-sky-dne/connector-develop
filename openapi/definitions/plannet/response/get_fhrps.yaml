@@ -1,0 +1,99 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  count:
+    type: integer
+    description: count of fhrps
+    example: 0
+  next:
+    type: string
+    description: link to view the next 50 records
+    example: /api/dcim/fhrps/?device_name=ar14-cdn.bllon.isp.sky.com&limit=10&offset=10&protocol=vrrp
+  previous:
+    type: string
+    description: link to view the next 50 records
+    example: /api/dcim/fhrps/?device_name=ar14-cdn.bllon.isp.sky.com&limit=10&offset=10&protocol=vrrp
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 39590
+        fhrps:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 39928
+              device_name:
+                type: string
+                example: ar14-cdn.bllon.isp.sky.com
+              interface_name:
+                type: string
+                example: Bundle-Ether1024
+              delay_minimum:
+                type: integer
+                example: 2
+              reload:
+                type: integer
+                example: 2
+              ipv4_address:
+                type: string
+                example: 10.57.12.17
+              ipv6_address:
+                type: string
+                example: 2a02:c79:60a:0:8000::1
+              priority:
+                type: integer
+                example: 200
+              preempt_delay:
+                type: integer
+                example: 200
+              tracking:
+                type: string
+                example: "0"
+              increment:
+                type: integer
+                example: 200
+              decrement:
+                type: integer
+                example: 200
+              timers:
+                type: string
+                example: "0"
+        protocol:
+          type: string
+          enum:
+            - vrrp
+            - hsrp
+            - carp
+            - glbp
+        fhrp_id:
+          type: integer
+          example: 10
+        service:
+          type: string
+          example: software-update
+        bridge_domain:
+          type: string
+        virtual_ipv4:
+          type: string
+          example: 10.57.12.17
+        virtual_ipv6:
+          type: string
+          example: 2a02:c79:60a:0:8000::1
+              

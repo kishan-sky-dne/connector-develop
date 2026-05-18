@@ -1,0 +1,47 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+repos:
+  - repo: https://github.com/ambv/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        name: Formatting code via black
+        entry: black --line-length 120 src/ tests/
+        additional_dependencies:
+          - click==8.0.4
+  - repo: https://github.com/pycqa/isort
+    rev: 5.11.5
+    hooks:
+      - id: isort
+        name: Sorting the imports
+  - repo: https://github.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+      - id: flake8
+        name: Running the flake tests
+        entry: flake8 src tests setup.py
+        additional_dependencies:
+          - importlib_metadata==4.12.0
+          - pep8-naming==0.11.1
+          - flake8-debugger==3.2.1
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0 # Use the ref you want to point at
+    hooks:
+      - id: check-merge-conflict
+        name: Verifying if no merge conflict markers are present
+      - id: detect-private-key
+        name: Verifying if no private-keys are present
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.23.3
+    hooks:
+      - id: gitleaks
+        entry: gitleaks git . -v --staged --ignore-gitleaks-allow --max-decode-depth=5 

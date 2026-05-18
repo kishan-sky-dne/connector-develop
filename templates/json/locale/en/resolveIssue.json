@@ -1,0 +1,12 @@
+{
+    "template": "resolveIssue",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, taskName, orderNumber, deviceType, siteId, url, deviceName, deviceOrderId, desiredStage ",
+        "subject": "{{mappings.orderType}} Attention: Resolve Issue (No: {{mappings.orderNumber}} &- Step:{{mappings.taskName}} Device Type: {{mappings.deviceType}} Site: {{mappings.siteId}})",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  A <b> {{mappings.orderType}} </b> order needs your attention at <b>{{mappings.taskName}} </b> step Order no: <b>{{mappings.orderNumber}} </b> <br> Device Type: <b>{{mappings.deviceType}}</b> <br> Issue:<b> The device, {{mappings.deviceName}} with order ID {{mappings.deviceOrderId}} has not completed {{mappings.desiredStage}} for 24 hours. Please resolve the same. </b>  <br> Site: <b>{{mappings.siteId}} </b> <br> Please check <b>{{mappings.url}}</b> for more details. <p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

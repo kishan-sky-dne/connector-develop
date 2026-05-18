@@ -1,0 +1,43 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+put:
+  tags:
+    - inca
+  summary: Update the New Switch request status to RFS (Ready For Service).
+  description: Update the New Switch request status to Ready For Service (RFS).
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.inca.tasks.update"
+  operationId: update_inca_rfs_details
+  parameters:
+    - name: 'type'
+      in: query
+      required: true
+      description: type of the service
+      schema:
+        type: string
+        example: newMetroSwitch
+        enum:
+          - newMetroSwitch
+  requestBody:
+    description: Required details to update INCA rfs status
+    content:
+      'application/json':
+        schema:
+          $ref: '../../definitions/inca/request/updateIncaRfsDetails.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/inca/response/updateIncaRfsDetails.yaml'
+      description: Expected response of inca module for /updateIncaRfsDetails call

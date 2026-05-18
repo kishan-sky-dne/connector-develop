@@ -1,0 +1,42 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  status:
+    type: "string"
+    example: "SUCCESS"
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        parentCI:
+          type: string
+          example: me0.mypon.isp.sky.com
+        relationshipType:
+          type: string
+          example: "Connects to::Connected by"
+          enum:
+            - "Connects to::Connected by"
+            - "Depends on::Used by"
+        childCI:
+          type: string
+          example: ONEA45266093
+        action:
+          type: string
+          example: add
+        postUrlPath:
+          type: string
+          example: "https://sparkproxyuat.azure-api.net//service3605/request?action=add&parent_ci=me0.mypon.isp.sky.com&child_ci=ONEA45266093&relationship_type=Depends on::Used by"
+        relationshipStatus:
+          type: string
+          example: "Created relationship for 'me0.mypon.isp.sky.com <<>> ONEA45266093"

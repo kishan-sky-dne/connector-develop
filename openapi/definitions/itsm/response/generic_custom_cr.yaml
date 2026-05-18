@@ -1,0 +1,36 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  result:
+    type: array
+    items:
+      type: object
+      properties:
+        number:
+          type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+        reason:
+          type: string
+        u_change_allowed_during_freeze:
+          type: string
+        work_start:
+          type: string
+        work_end:
+          type: string
+        type:
+          type: string
+        cmdb_ci:
+          type: string

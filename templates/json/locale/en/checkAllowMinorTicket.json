@@ -1,0 +1,12 @@
+{
+    "template": "checkAllowMinorTicket",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderNumber, ticketNumber",
+        "subject": "Spark minor ticket(CTASK) creation failure Spark ticket: {{ mappings.ticketNumber }} DNE Order No: {{ mappings.orderNumber }}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> A Normal change ticket <b>{{ mappings.ticketNumber }} </b> has been raised and Authorized for Metro Migration Phase1 order {{ mappings.orderNumber }}, but minor ticket creation is failing.</br> <br>Please ensure 'Allow Minor Changes' option is enabled for this Spark Change.</br> <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email.<br>"
+    }
+}

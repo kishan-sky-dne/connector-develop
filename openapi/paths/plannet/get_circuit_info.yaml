@@ -1,0 +1,158 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: API to get exchanges in the network
+  description: API to get exchanges in the network
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_circuit_info
+  parameters:
+    - name: 'parentRef'
+      in: query
+      required: false
+      description: Get infomation for a particular ring ID
+      example: BTWR100018
+      schema:
+        type: string
+        minLength: 1
+    - name: 'filter'
+      in: query
+      required: false
+      description: Filters the output based on the parameters. Searches the filter in cid
+      example: 067
+      schema:
+        type: string
+        minLength: 1
+    - name: 'id'
+      in: query
+      required: false
+      description: Get information for a particular ID
+      schema:
+        type: integer
+    - name: 'cid'
+      in: query
+      required: false
+      description: Get information for a particular CID
+      example: 1000/BLLA-DEV3/10G/OVN1 me0-ma0
+      schema:
+        type: string
+        minLength: 1
+    - name: 'ids'
+      in: query
+      required: false
+      description: Get information for a multiple IDs. Separated by Commas
+      example: 71482,71483
+      schema:
+        type: string
+    - name: 'providerId'
+      in: query
+      required: false
+      description: Get information for particular provider ID
+      example: 16
+      schema:
+        type: string
+        minLength: 1
+    - name: 'provider'
+      in: query
+      required: false
+      description: Get information for particular provider
+      example: BSkyB
+      schema:
+        type: string
+        minLength: 1
+    - name: 'typeId'
+      in: query
+      required: false
+      description: Get information for particular type id
+      example: 13
+      schema:
+        type: string
+        minLength: 1
+    - name: 'type'
+      in: query
+      required: false
+      description: Get information for particular type
+      example: Intra-exchange link
+      schema:
+        type: string
+        minLength: 1
+    - name: 'tenantId'
+      in: query
+      required: false
+      description: Get information for particular tenant id
+      schema:
+        type: string
+        minLength: 1
+    - name: 'tenant'
+      in: query
+      required: false
+      description: Get information for particular tenant
+      schema:
+        type: string
+        minLength: 1
+    - name: 'siteName'
+      in: query
+      required: false
+      description: Get information for particular site
+      example: BLLA
+      schema:
+        type: string
+        minLength: 1
+    - name: 'neName'
+      in: query
+      required: false
+      description: Get information for particular NE
+      example: Ma0.dev
+      schema:
+        type: string
+        minLength: 1
+    - name: 'subType'
+      in: query
+      required: false
+      description: Get information for particular sub type
+      schema:
+        type: string
+        minLength: 1
+    - name: 'linkType'
+      in: query
+      required: false
+      description: Get information for particular link type
+      schema:
+        type: string
+        minLength: 1
+    - name: 'limit'
+      in: query
+      required: false
+      description: The number of results to return per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 200
+        default: 50
+    - name: 'offset'
+      in: query
+      required: false
+      description: skip the number of response from top
+      example: 0
+      schema:
+        type: integer
+        default: 0
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_circuit_info.yaml'
+      description: Expected response of plannet for /get circuit info call

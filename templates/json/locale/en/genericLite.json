@@ -1,0 +1,12 @@
+{
+    "template": "genericLite",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "mailType, orderType, orderNumber, url",
+        "subject": "{{ mappings.orderType }} Order {{ mappings.mailType }} (No: {{ mappings.orderNumber }})",
+        "title": "",
+        "subtitle": "<p>Hello,</p>A <b> {{ mappings.orderType }} </b> order has been {{ mappings.mailType }}.</br></br>Order no: <b>{{ mappings.orderNumber }}</b>{% if mappings.taskName is defined %}</br>Step: <b>{{ mappings.taskName }}</b> {% endif %}{% if mappings.deviceType is defined %}</br>Device type: <b>{{ mappings.deviceType }}</b> {% endif %}</br></br>Please check <a href={{ mappings.url }}>{{ mappings.url }}</a> for more information.</br></br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

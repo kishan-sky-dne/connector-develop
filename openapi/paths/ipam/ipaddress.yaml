@@ -1,0 +1,94 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - ipam
+  summary: Get the list of available IPs for the given prefix
+  description: Request to get the list of available IPs for the given prefix
+  security:
+     - oAuth2ClientCredentials:
+        - connector:read
+  x-openapi-router-controller: "connectors.webserver.ipam.tasks.get_ip_address"
+  operationId: get_available_ips
+  parameters:
+    - name: prefix
+      description: "IP Prefix pool"
+      example: "89.200.128.0/24"
+      in: query
+      required: true
+      schema:
+        type: string
+        pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\/]([1-9]|[12][0-9]|3[0-2]))?$'
+    - name: network
+      description: "Networks such as UK and IT"
+      example: UK
+      in: query
+      required: true
+      schema:
+        enum:
+          - UK
+          - IT
+        type: string
+    - name: domain
+      example: Core
+      in: query
+      required: true
+      schema:
+        enum:
+          - Core
+          - DCN
+          - ISP
+          - Broadband
+          - CDN
+          - Edge
+          - Mobile
+          - Interconnect
+        type: string
+    - name: quantity
+      description: "Limit on number of first Available IPs records"
+      example: 3
+      in: query
+      required: false
+      schema:
+        type: integer
+        default: 10
+        maximum: 50
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/ipam/response.yaml'
+      description: List of available IPs for the given prefix
+post:
+  tags:
+    - ipam
+  summary: Reserves the ip selected by the user
+  description: Request netbox to reserve the given ip address
+  security:
+     - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.ipam.tasks.reserve_ipaddress"
+  operationId: reserve_netbox_ipaddress
+  requestBody:
+    description: Required details to reserve the ip address
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/ipam/reserve/reserve_request.yaml'
+    required: true
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/ipam/reserve/reserve_response.yaml'
+      description: Status of reserve ip address

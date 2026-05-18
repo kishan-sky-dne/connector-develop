@@ -1,0 +1,15 @@
+type: object
+required:
+  - status
+properties:
+  status:
+    type: string
+    enum:
+      - SUCCESS
+      - FAILURE
+  comments:
+    type: string
+    minLength: 1
+  osVersionDeviceRegionId:
+    type: integer
+    minimum: 1

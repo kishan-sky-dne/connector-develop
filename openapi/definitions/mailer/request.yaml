@@ -1,0 +1,97 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  toList:
+    type: array
+    default: []
+    items:
+      type: string
+      format: email
+  ccList:    # removing default parameter value after checking with BPM
+    type: array
+    items:
+      type: string
+      format: email
+    minItems: 1
+  bccList:    # removing default parameter value after checking with BPM
+    type: array
+    items:
+      type: string
+      format: email
+    minItems: 1
+  attachmentList:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+        - fileName
+        - fileContent
+      properties:
+        fileName:   #bug fix DNE-1246
+          type: string
+          pattern: '^[^.].*\.(?!bin$|js$|exe$)[^.]+$'
+          example: "taskAssignment.jpg"
+        fileContent:    #bug fix DNE-1226
+          type: string
+          example: "YWJjMTIzIT8kKiYoKScPUB+="
+          pattern: '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$'
+  mailTemplate:
+    type: string
+  language:
+    type: string
+  parameters:
+    type: object
+    properties:
+      orderType:
+        type: string
+        example: "OLT Commissioning"
+      mailType:
+        type: string
+        example: "Successfully Completed"
+      orderNumber:
+        type: string
+        example: "123"
+      siteId:
+        type: string
+        example: "1"
+      url:
+        type: string
+        example: "https://testurl.com"
+      taskName:
+        type: string
+        example: taskAssignment
+      deviceName:
+        type: string
+        example: "testDevice1"
+      deviceType:
+        type: string
+        example: "metro"
+      userName:
+        type: string
+        example: "testuser"
+      ticketNumber:
+        type: string
+      subjectAddon:
+        type: string
+        example: "and updated ordertype T1-LEG-P2B-P2B"
+      alertMessage:
+        type: string
+        description: "This text will be displayed in red color for Alert"
+        example: "Order Sub Type: T1-LEG-P2B-P2B"
+required:
+  - toList
+  - parameters
+  - language
+  - mailTemplate # Fix for Bug 3284
+

@@ -1,0 +1,421 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  count:
+    type: integer
+    description: count of interface links
+    example: 0
+  next:
+    type: string
+    description: link to view the next 50 records
+    example: https://plannet.cf.dev-paas.bskyb.com/api/dcim/nes/?limit=50&offset=50
+  previous:
+    type: string
+    description: link to view the next 50 records
+    example: https://plannet.cf.dev-paas.bskyb.com/api/dcim/nes/?limit=10&offset=40
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 16137
+        atg:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 32795
+            name:
+              type: string
+              example: "ne_AACN,i_enabled_2020-05-04"
+            name_str:
+              type: string
+              example: "TG32795 ne_AACN,i_enabled_2020-05-04 (04/05/2020)"
+            date:
+              type: string
+              format: date
+              example: "2020-05-04"
+            dependencies:
+              type: array
+              items:
+                type: string
+            domains:
+              type: array
+              items:
+                type: string
+            coordinator:
+              type: string
+            nis_ref:
+              type: string
+              example: TG32795
+        dtg:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 9999
+            name:
+              type: string
+              example: "ne_AACN,i_enabled_2020-05-04"
+            name_str:
+              type: string
+              example: "TG32795 ne_AACN,i_enabled_2020-05-04 (04/05/2020)"
+            date:
+              type: string
+              format: date
+              example: "2099-12-31"
+            dependencies:
+              type: array
+              items:
+                type: string
+            domains:
+              type: array
+              items:
+                type: string
+            coordinator:
+              type: string
+            nis_ref:
+              type: string
+              example: TG9999
+        ne_role:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            name:
+              type: string
+              example: m-edge
+            color:
+              type: string
+              example: "111111"
+            description:
+              type: string
+              example: m-edge
+        ne_subrole:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            name:
+              type: string
+              example: m-edge
+            color:
+              type: string
+              example: "111111"
+            description:
+              type: string
+              example: m-edge
+        ne_type:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            manufacturer:
+              type: string
+              format: url
+            endofsale_date:
+              type: string
+              format: date
+              example: "2021-05-20"
+            endofsupport_date:
+              type: string
+              format: date
+              example: "2021-05-20"
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            width:
+              type: integer
+              example: 600
+            u_height:
+              type: integer
+              example: 2
+            is_full_depth:
+              type: boolean
+              example: True
+            is_transmission:
+              type: boolean
+              example: False
+            slot_qty:
+              type: integer
+              example: 2
+            port_qty:
+              type: integer
+              example: 44
+            part_number:
+              type: string
+              example: 02311ARU
+            asset_tag:
+              type: string
+            interface_ordering:
+              type: integer
+              example: 1
+            lag_prefix:
+              type: string
+              example: Eth-Trunk
+            is_pseudo:
+              type: boolean
+              example: False
+            clei:
+              type: string
+            description:
+              type: string
+        tenant:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            url:
+              type: string
+              format: url
+            name:
+              type: string
+        platform:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            manufacturer:
+              type: string
+              format: url
+              example: "https://plannet.cf.dev-paas.bskyb.com/api/dcim/manufacturers/6"
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            name:
+              type: string
+              example: "VRP-8.190-V800R011C10SPC700"
+            nms_version:
+              type: string
+            napalm_driver:
+              type: string
+            napalm_args:
+              type: string
+            os:
+              type: integer
+        site:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 161
+            region:
+              type: string
+              format: url
+              example: "https://plannet.cf.dev-paas.bskyb.com/api/dcim/regions/3"
+            tenant:
+              type: string
+              format: url
+            atg:
+              type: string
+              format: url
+            dtg:
+              type: string
+              format: url
+            types:
+              type: array
+              items:
+                type: string
+                format: url
+            subtypes:
+              type: array
+              items:
+                type: string
+                format: url
+            time_zone:
+              type: string
+              example: "Europe/London"
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            name:
+              type: string
+              example: EACOL
+            fullname:
+              type: string
+              example: COLCHESTER
+            code_ip:
+              type: string
+              example: bllon
+            code_op:
+              type: string
+            physical_address:
+              type: string
+            postcode:
+              type: string
+            description:
+              type: string
+            latitude:
+              type: string
+            longitude:
+              type: string
+            site_id:
+              type: string
+            provider:
+              type: integer
+        rack:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 2
+            site:
+              type: string
+              format: url
+            room:
+              type: string
+              format: url
+            tenant:
+              type: string
+              format: url
+            role:
+              type: string
+              format: url
+            group:
+              type: string
+              format: url
+            created:
+              type: string
+              format: date
+              example: "2021-05-20"
+            last_updated:
+              type: string
+              format: date-time
+              example: "2021-05-20T11:11:38.284032Z"
+            name:
+              type: string
+            facility_id:
+              type: string
+            room_row:
+              type: string
+            position:
+              type: string
+            serial:
+              type: string
+            type:
+              type: integer
+              enum: [100, 200, 300, 1000, 1100]
+            width:
+              type: integer
+              enum: [19, 23]
+            u_height:
+              type: integer
+            desc_units:
+              type: boolean
+        asn:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the Autonomous System
+              example: Vodafone UK
+            provider:
+              type: integer
+              description: Provider this ASN belongs to
+        room:
+          type: object
+          properties:
+            name:
+              type: string
+        parent:
+          type: object
+          properties:
+            name:
+              type: string
+              description: FQDN Name
+              example: "me0.eacol.isp.sky.com"
+            hostname:
+              type: string
+              description: Only hostname part of FQDN name
+              example: "me0.eacol"
+        state:
+          type: string
+        created:
+          type: string
+          format: date
+        last_updated:
+          type: string
+          format: date-time
+        name:
+          type: string
+          description: FQDN Name
+          example: "me0.eacol.isp.sky.com"
+        hostname:
+          type: string
+          description: Only hostname part of FQDN name
+          example: "me0.eacol"
+        serial:
+          type: string
+        face:
+          type: integer
+          enum: [1,2]
+        position:
+          type: integer
+        description:
+          type: string
+        local_context_data:
+          type: string
+        height:
+          type: integer
+        logical_site:
+          type: integer
+      required:
+        - atg
+        - dtg
+        - ne_role
+        - ne_type
+        - site
+        - name
+        - hostname
+    minItems: 1
+required:
+  - results
+  - count

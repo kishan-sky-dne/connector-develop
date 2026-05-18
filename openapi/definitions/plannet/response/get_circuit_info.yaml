@@ -1,0 +1,144 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  count:
+    type: integer
+    description: count of Circuits
+    example: 0
+  next:
+    type: string
+    description: link to view the next 50 records
+    example: /inventory/plannet/circuits/?limit=50&offset=1&ringId=BTWR100018
+  previous:
+    type: string
+    description: link to view the next 50 records
+    example: /inventory/plannet/circuits/?limit=50&offset=3&ringId=BTWR100018
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        parent:
+          type: string
+          example: null
+        rate:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 8
+            name:
+              type: string
+              example: "OM"
+            value:
+              type: integer
+              example: 0
+            unit_id:
+              type: integer
+              example: 2
+            description:
+              type: string
+              example: "OM rate"
+        provider:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 7
+            created:
+              type: string
+              example: 2021-05-19
+            last_updated:
+              type: string
+              example: 2021-05-19T09:02:26.283946Z
+            name:
+              type: string
+              example: OpenReach
+            account:
+              type: string
+              example: null
+            portal_url:
+              type: string
+              example: null
+            noc_contact:
+              type: string
+              example: null
+            admin_contact:
+              type: string
+              example: null
+            description:
+              type: string
+              example: null
+        type:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 22
+            created:
+              type: string
+              example: 2021-05-22
+            last_updated:
+              type: string
+              example: 2021-05-22T10:44:06.637478Z
+            name:
+              type: string
+              example: T1 Optical Wavelength
+        subtype:
+          type: string
+          example: null
+        tenant:
+          type: string
+          example: null
+        created:
+          type: string
+          example: 2021-05-22
+        last_updated:
+          type: string
+          example : 2021-05-22T10:45:08.711767Z
+        cid:
+          type: string
+          example: BTWC800067
+        cct_no:
+          type: string
+          example: null
+        length:
+          type: integer
+          example: 0
+        capacity:
+          type: integer
+          example: 0
+        is_protected:
+          type: boolean
+          example: true
+        description:
+          type: string
+          example: null
+        a_site_external_cable_id:
+          type: string
+          example: null
+        a_site_external_cable_length:
+          type: string
+          example: null
+        b_site_external_cable_id:
+          type: string
+          example: null
+        b_site_external_cable_length:
+          type: string
+          example: null
+        parent_ref:
+          type: string
+          example: BTWR100018

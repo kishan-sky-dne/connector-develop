@@ -1,0 +1,171 @@
+---
+#============================================================
+# Connectors - Stage Environment Pipeline
+# Manual trigger for stage environment deployment
+#============================================================
+
+resources:
+  - name: repo-stage
+    type: git
+    icon: github
+    check_every: 1m
+    webhook_token: &webhook-token ((common-creds.webhook_token))
+    source: &git-source
+      uri: https://github.com/sky-uk/dne-connectors.git
+      username: ((common-creds.github_username))
+      password: ((common-creds.github_personal_access_token))
+      branch: stage
+
+groups:
+  - name: all
+    jobs:
+      - gitleaks-scan
+      - build-docker
+      - deploy-cks-onx
+      - deploy-cks-sce
+
+x-params-stage-cks-deploy-base: &params-stage-cks-deploy-base
+  ENVIRONMENT: stage
+  NAMESPACE: dne-stage
+  OAUTH_USERNAME: ((stage-secrets.oauth_username))
+  OAUTH_PASSWORD: ((stage-secrets.oauth_password))
+  SKY_VAULT_APP_ID: ((stage-secrets.sky_vault_app_id))
+  SKY_VAULT_CDN_RS_SAFE: ((stage-secrets.sky_vault_cdn_rs_safe))
+  CAUTH_USERNAME: ((stage-secrets.cauth_username))
+  CAUTH_PASSWORD: ((stage-secrets.cauth_password))
+  AD_USERNAME: ((stage-secrets.ad_username))
+  AD_PASSWORD: ((stage-secrets.ad_password))
+  ITSM_SUBSCRIPTION_KEY: ((stage-secrets.itsm_subscription_key))
+  PLANNET_USERNAME: ((stage-secrets.plannet_username))
+  PLANNET_PASSWORD: ((stage-secrets.plannet_password))
+  INCA_USERNAME: ((stage-secrets.inca_username))
+  INCA_PASSWORD: ((stage-secrets.inca_password))
+  NEXA_USERNAME: ((stage-secrets.nexa_username))
+  NEXA_PASSWORD: ((stage-secrets.nexa_password))
+  CONNECTORS_API_GW_URL: ((stage-connectors.CONNECTORS_API_GW_URL))
+  CONNECTORS_AUDITNOW_TOPIC: ((stage-connectors.CONNECTORS_AUDITNOW_TOPIC))
+  CONNECTORS_AZURE_AD_AUTH_AUTHORITY: ((stage-connectors.CONNECTORS_AZURE_AD_AUTH_AUTHORITY))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL: ((stage-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_ID: ((stage-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_ID))
+  CONNECTORS_AZURE_AD_AUTH_SCOPES: ((stage-connectors.CONNECTORS_AZURE_AD_AUTH_SCOPES))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID: ((stage-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET: ((stage-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET))
+  CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD: ((stage-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD))
+  CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME: ((stage-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME))
+  CONNECTORS_ELASTICSEARCH_NODES: ((stage-connectors.CONNECTORS_ELASTICSEARCH_NODES))
+  CONNECTORS_ELASTICSEARCH_PASSWORD: ((stage-connectors.CONNECTORS_ELASTICSEARCH_PASSWORD))
+  CONNECTORS_ELASTICSEARCH_USERNAME: ((stage-connectors.CONNECTORS_ELASTICSEARCH_USERNAME))
+  CONNECTORS_GIT_TOKEN: ((stage-connectors.CONNECTORS_GIT_TOKEN))
+  CONNECTORS_HORIZON_ENDPOINT: ((stage-connectors.CONNECTORS_HORIZON_ENDPOINT))
+  CONNECTORS_INCA_BASE_URL: ((stage-connectors.CONNECTORS_INCA_BASE_URL))
+  CONNECTORS_INCA_GEA_URL: ((stage-connectors.CONNECTORS_INCA_GEA_URL))
+  CONNECTORS_INCA_NEXA_PASSWORD: ((stage-connectors.CONNECTORS_INCA_NEXA_PASSWORD))
+  CONNECTORS_INCA_NEXA_USERNAME: ((stage-connectors.CONNECTORS_INCA_NEXA_USERNAME))
+  CONNECTORS_INCA_PASSWORD: ((stage-connectors.CONNECTORS_INCA_PASSWORD))
+  CONNECTORS_INCA_USERNAME: ((stage-connectors.CONNECTORS_INCA_USERNAME))
+  CONNECTORS_ITSM_ASSIGNED_TO: ((stage-connectors.CONNECTORS_ITSM_ASSIGNED_TO))
+  CONNECTORS_ITSM_CHECK_DURATION: ((stage-connectors.CONNECTORS_ITSM_CHECK_DURATION))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP: ((stage-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET: ((stage-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET))
+  CONNECTORS_ITSM_EVPN_CONFIG_GROUP: ((stage-connectors.CONNECTORS_ITSM_EVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_EVPN_PARENT_TICKET: ((stage-connectors.CONNECTORS_ITSM_EVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP: ((stage-connectors.CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP: ((stage-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET: ((stage-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP: ((stage-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET: ((stage-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_URL: ((stage-connectors.CONNECTORS_ITSM_URL))
+  CONNECTORS_KAFKA_BOOTSTRAP_SERVERS: ((stage-connectors.CONNECTORS_KAFKA_BOOTSTRAP_SERVERS))
+  CONNECTORS_KAFKA_SASL_PASSWORD: ((stage-connectors.CONNECTORS_KAFKA_SASL_PASSWORD))
+  CONNECTORS_KAFKA_SASL_PASSWORD_WRITE: ((stage-connectors.CONNECTORS_KAFKA_SASL_PASSWORD_WRITE))
+  CONNECTORS_KAFKA_SASL_USERNAME: ((stage-connectors.CONNECTORS_KAFKA_SASL_USERNAME))
+  CONNECTORS_KAFKA_SASL_USERNAME_WRITE: ((stage-connectors.CONNECTORS_KAFKA_SASL_USERNAME_WRITE))
+  CONNECTORS_MAILER_ALLOWED_DOMAINS: ((stage-connectors.CONNECTORS_MAILER_ALLOWED_DOMAINS))
+  CONNECTORS_MAILER_FEATURE_FLAG: ((stage-connectors.CONNECTORS_MAILER_FEATURE_FLAG))
+  CONNECTORS_MAILER_FROM_ADDRESS: ((stage-connectors.CONNECTORS_MAILER_FROM_ADDRESS))
+  CONNECTORS_MINIO_ACCESS_KEY: ((stage-connectors.CONNECTORS_MINIO_ACCESS_KEY))
+  CONNECTORS_MINIO_ENDPOINT: ((stage-connectors.CONNECTORS_MINIO_ENDPOINT))
+  CONNECTORS_MINIO_SECRET_KEY: ((stage-connectors.CONNECTORS_MINIO_SECRET_KEY))
+  CONNECTORS_MYSQLDB_DATABASE_NAME: ((stage-connectors.CONNECTORS_MYSQLDB_DATABASE_NAME))
+  CONNECTORS_MYSQLDB_HOST: ((stage-connectors.CONNECTORS_MYSQLDB_HOST))
+  CONNECTORS_MYSQLDB_PASSWORD: ((stage-connectors.CONNECTORS_MYSQLDB_PASSWORD))
+  CONNECTORS_MYSQLDB_PORT: ((stage-connectors.CONNECTORS_MYSQLDB_PORT))
+  CONNECTORS_MYSQLDB_USERNAME: ((stage-connectors.CONNECTORS_MYSQLDB_USERNAME))
+  CONNECTORS_OAUTH_URL: ((stage-connectors.CONNECTORS_OAUTH_URL))
+  CONNECTORS_OPTIONS_LOG_LEVEL: ((stage-connectors.CONNECTORS_OPTIONS_LOG_LEVEL))
+  CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION: ((stage-connectors.CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION))
+  CONNECTORS_ORDER_STATUS_TOPIC_MAPPER: ((stage-connectors.CONNECTORS_ORDER_STATUS_TOPIC_MAPPER))
+  CONNECTORS_ORDER_STATUS_URL: ((stage-connectors.CONNECTORS_ORDER_STATUS_URL))
+  CONNECTORS_PLANNET_ACCESS_TOKEN: ((stage-connectors.CONNECTORS_PLANNET_ACCESS_TOKEN))
+  CONNECTORS_PLANNET_BASE_URL: ((stage-connectors.CONNECTORS_PLANNET_BASE_URL))
+  CONNECTORS_POSTGRESDB_DATABASE_NAME: ((stage-connectors.CONNECTORS_POSTGRESDB_DATABASE_NAME))
+  CONNECTORS_POSTGRESDB_HOST: ((stage-connectors.CONNECTORS_POSTGRESDB_HOST))
+  CONNECTORS_POSTGRESDB_PASSWORD: ((stage-connectors.CONNECTORS_POSTGRESDB_PASSWORD))
+  CONNECTORS_POSTGRESDB_PORT: ((stage-connectors.CONNECTORS_POSTGRESDB_PORT))
+  CONNECTORS_POSTGRESDB_USERNAME: ((stage-connectors.CONNECTORS_POSTGRESDB_USERNAME))
+  CONNECTORS_RADIUS_BASE_URL: ((stage-connectors.CONNECTORS_RADIUS_BASE_URL))
+  CONNECTORS_RADIUS_PASSWORD: ((stage-connectors.CONNECTORS_RADIUS_PASSWORD))
+  CONNECTORS_RADIUS_SCOPE: ((stage-connectors.CONNECTORS_RADIUS_SCOPE))
+  CONNECTORS_RADIUS_USERNAME: ((stage-connectors.CONNECTORS_RADIUS_USERNAME))
+  CONNECTORS_RSA_PRIVATE_KEY: ((stage-connectors.CONNECTORS_RSA_PRIVATE_KEY))
+  CONNECTORS_RSA_PUBLIC_KEY: ((stage-connectors.CONNECTORS_RSA_PUBLIC_KEY))
+  CONNECTORS_SERVICEDB_PASSWORD: ((stage-connectors.CONNECTORS_SERVICEDB_PASSWORD))
+  CONNECTORS_SERVICEDB_USERNAME: ((stage-connectors.CONNECTORS_SERVICEDB_USERNAME))
+  CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT: ((stage-connectors.CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT))
+  DOCKERCONFIGJSON: ((common-creds.dockerconfigjson))
+
+jobs:
+  - name: gitleaks-scan
+    public: true
+    plan:
+      - get: repo-stage
+        trigger: true
+      - task: run-gitleaks
+        file: repo-stage/concourse/tasks/gitleaks.yml
+        input_mapping: {repo: repo-stage}
+
+  - name: build-docker
+    public: true
+    serial: true
+    plan:
+      - get: repo-stage
+        trigger: true
+        passed: [gitleaks-scan]
+      - task: build-and-push
+        privileged: true
+        file: repo-stage/concourse/tasks/build-docker.yml
+        input_mapping: {repo: repo-stage}
+        params:
+          HARBOR_USERNAME: ((common-creds.harbor_username))
+          HARBOR_PASSWORD: ((common-creds.harbor_password))
+          HARBOR_REGISTRY: ((common-creds.harbor_registry))
+          IMAGE_NAME: ipnd-dne/connectors
+          IMAGE_TAG: stage
+
+  - name: deploy-cks-onx
+    public: true
+    plan:
+      - get: repo-stage
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-onx
+        file: repo-stage/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-stage}
+        params:
+          <<: *params-stage-cks-deploy-base
+          DATACENTER: onx
+          KUBECONFIG_CONTENT: ((stage-onx-kubeconfig))
+
+  - name: deploy-cks-sce
+    public: true
+    plan:
+      - get: repo-stage
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-sce
+        file: repo-stage/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-stage}
+        params:
+          <<: *params-stage-cks-deploy-base
+          DATACENTER: sce
+          KUBECONFIG_CONTENT: ((stage-sce-kubeconfig))

@@ -1,0 +1,63 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - MinIO
+  description: Uploads file/object to MinIO Storage
+  x-openapi-router-controller: "connectors.webserver.minio.write"
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  operationId: upload_files
+  requestBody:
+    description: Required details to upload file to MinIO
+    content:
+      'multipart/form-data':
+        schema:
+          type: object
+          properties:
+            bucketName:
+              type: string
+              description: Name of the bucket where files will be uploaded
+              example: software-update
+              minLength: 3
+              maxLength: 63
+              pattern: '^(?!^(?:\d{1,3}\.){3}\d{1,3}$)[a-z0-9]([a-z0-9\-]{1,61}[a-z0-9])?$'
+            objectName:
+              type: string
+              description: file name where contents will be written in MinIO
+              example: ta0_bllabd1_console_log.log, BPM-123/ConsoleLogs/ta1_bllabd1.log
+              minLength: 1
+              maxLength: 250
+            objectContent:
+              type: string
+              description: Contents of the file to be uploaded. file should be base64 encoded
+              format: base64
+            isCompressionNeeded:
+              type: boolean
+              description: Compress the object content before uploading if set to true; otherwise, upload without compression. The default value is true.
+              example: true
+              default: true
+          required:
+            - bucketName
+            - objectName
+            - objectContent
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                example: SUCCESS
+      description: File upload to MinIO storage response

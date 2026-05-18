@@ -1,0 +1,135 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  deviceList:
+    type: array
+    items:
+      type: object
+      properties:
+        hostname:
+          type: string
+          example: vm0.bllon
+        deviceInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              buildNo:
+                type: integer
+                example: 12
+              buildRef:
+                type: string
+                example: BLLON_12 MCR/6 D/12
+              deviceStatus:
+                type: string
+                example: Live
+              configHostname:
+                type: string
+                example: vm0.bllon.isp.sky.com
+              liveDate:
+                type: string
+                example: 06-MAY-2014
+              deviceInterfaces:
+                type: object
+                properties:
+                  deviceInterface:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        aEndDeviceHostname:
+                          type: string
+                          example: as21.bllon
+                        aEndDeviceInterface:
+                          type: string
+                          example: as21.bllon:ge1-0-7
+                        aEndDeviceIp:
+                          type: string
+                        aEndLagNo:
+                          type: string
+                        bEndDeviceInterface:
+                          type: string
+                          example: as21.bllon:ge1-0-26
+                        bEndDeviceIp:
+                          type: string
+                        bEndLagNo:
+                          type: string
+                        reference:
+                          type: string
+              subnetInterfaces:
+                type: object
+                properties:
+                  subnetInterface:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        ipAddress:
+                          type: string
+                          example: 90.223.37.100
+                        interfaceType:
+                          type: string
+                          example: ISAM MGMT VM
+                        subnet:
+                          type: string
+                          example: 90.223.37.96/28
+                        vlanNo:
+                          type: string
+                          example: 250
+                        LLUMGMTPE1:
+                          type: string
+              sdpIds:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    sdpId:
+                      type: integer
+                      example: 12924
+              vlans:
+                type: object
+                properties:
+                  vlan:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        vlanNo:
+                          type: integer
+                          example: 201
+                        vlanType:
+                          type: string
+                          example: LLU Management
+                        subnet:
+                          type: string
+                          example: 217.206.241.128/28
+                        interfaces:
+                          type: object
+                          properties:
+                            interface:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  hostname:
+                                    type: string
+                                    example: sr15.bllon
+                                  IPAddress:
+                                    type: string
+                                    example: 217.206.241.129
+                                  vlanNo:
+                                    type: integer
+                                    example: 201
+                                  interfaceType:
+                                    type: string
+                                    example: LLU MGMT PE1

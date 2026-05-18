@@ -1,0 +1,77 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+properties:
+  deviceVendor:
+    type: array
+    items:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        vendor:
+          type: string
+  deviceModel:
+    type: array
+    items:
+      type: object
+      properties:
+        deviceId:
+          type: string
+        model:
+          type: string
+  region:
+    type: array
+    items:
+      type: object
+      properties:
+        regionId:
+          type: string
+        region:
+          type: string
+  currentState:
+    type: array
+    items:
+      type: object
+      properties:
+        stateId:
+          type: string
+        state:
+          type: string
+  deviceRole:
+    type: array
+    items:
+      type: object
+      properties:
+        roleId:
+          type: string
+        role:
+          type: string
+  packageType:
+    type: array
+    items:
+      type: object
+      properties:
+        packageId:
+          type: string
+        package:
+          type: string
+  fileType:
+    type: array
+    items:
+      type: object
+      properties:
+        fileId:
+          type: string
+        file:
+          type: string
+
+

@@ -1,0 +1,256 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  configurationItem:
+    type: string
+    minLength: 1
+    maxLength: 250
+  serviceType:
+    type: string
+    enum:
+      - ethernetSegment
+      - managementEvpn
+      - subscriberEvpn
+      - evpn
+      - metroMigration
+      - external
+      - geaProvisioning
+      - wapProvisioning
+      - wholesaleUni
+      - wholesaleNni
+      - lagExpansion
+      - quattroPrefixSets
+      - ubbMigration
+      - metroServiceMigration
+      - serviceIncident
+      - newSwitchInstall
+      - softwareUpdate
+      - mapTprovisioning
+      - lagUpgrade
+      - retrofit
+      - maptUpdate
+      - openreachretest
+      - bngFailover
+      - maptDelete
+      - geaOpenReachTest
+      - geaProvisioningV2
+      - portshutunshut
+      - wholesaleEth2
+      - geaPlugup
+      - metroServiceDecommissioning
+      - routeServerMappingUpdate
+  skipConflict: 
+    description: Must be set to True if all conflicts (excluding freeze and holidays) are to be skipped. 
+    example: true/false
+    type: boolean  
+  isDummy:
+    description: It must be present and set to true if user wants a dummy ticket.
+    example: true/false
+    type: boolean
+  isChgOnHoliday:
+    description: isChgOnHoliday
+    example: true/false
+    type: boolean
+    default: false
+  isChgOnFreeze:
+    description: isChgOnFreeze
+    example: true/false
+    type: boolean
+    default: false
+  isCIPullRequired:
+    description: It must be present and set to true if user wants to pull all affected CIs from PlanNet. Currently DNE does not pull CIs from PlanNet for serviceIncident service type. Therefore, value must be set to false.
+    example: true/false
+    default: false
+    type: boolean
+  changeType:
+    type: string
+    example: minor
+    description: Spark Service Now Change Type
+    enum:
+      - minor
+      - routine
+      - standard
+      - normal
+  parentChange:
+    type: string
+    example: "CHG123456789"
+    pattern: '^(CHG)[0-9]*$'
+  assignmentGroup:
+    type: string
+    example: "UK Network Integration Team - TechUK"
+    minLength: 1
+  description:
+    type: string
+    example: "Free text upto 4000 characters"
+  createdBy:
+    type: string
+    minLength: 1
+    example: "rky08"
+  offset:
+    type: integer
+    example: 0
+    default: 0
+    description: Time in hours to offset from 00:00 for creating change
+  startDate:
+    description: "Start date of the change ticket (EPOCH)"
+    type: integer
+    example: 1572794340
+  endDate:
+    description: "End date of the change ticket (EPOCH)"
+    type: integer
+    example: 1572794340
+  waitTime:
+    type: integer
+    example: 1
+  changeWindow:
+    type: integer
+    example: 6
+  shortDescription:
+    description: "Short description of the change ticket"
+    type: string
+    example: "12345"
+    minLength: 1
+    maxLength: 160      # Fix for Bug DNE-2528
+  affectedCIs:
+    type: array
+    items:
+      type: object
+      properties:
+        ciName:
+          type: string
+          description: Device name
+          example: "foo.bar.isp.sky.com"
+        impactType:
+          type: string
+          example: "No Service Impact"
+          enum:
+            - "No Service Impact"
+            - "At Risk"
+            - "Full Outage"
+            - "Minor Degradation"
+            - "Moderate Degradation"
+            - "Reduced Resiliency"
+            - "Severe Degradation"
+    minItems: 0
+  attachments:
+    items:
+      properties:
+        fileContent:
+          format: base64
+          type: string
+          example: "YmFzZTY0IHVybA"
+          pattern: '^((?:[A-Za-z0-9+/_/-]{4})*(?:[A-Za-z0-9+/]*))|((?:[A-Za-z0-9+]{4})*(?:[A-Za-z0-9+]{2}==|[A-Za-z0-9+]{3}=)?)$'  # Fix for Bug DNE-2478
+        fileName:
+          pattern: '^[\w-]{3,50}\.(txt|log|xls|doc|docx|zip)$'      #  Fix for Bug DNE-2593
+          type: string
+      required:
+        - fileName
+        - fileContent
+      type: object
+    type: array
+    minItems: 1
+  thirdPartyTicket:
+    type: object
+    properties:
+      thirdpartyImpact:
+        type: string
+        example: "Full outage to service"
+      thirdpartyImpactReason:
+        type: string
+        example: "Maintenance-Sky Network Upgrade"
+    required:
+      - thirdpartyImpact
+      - thirdpartyImpactReason
+  reScheduledInfo:
+    properties:
+      justification:
+        maxLength: 4000
+        minLength: 1
+        type: string
+      prevTktNumber:
+        type: string
+    required:
+      - prevTktNumber
+      - justification
+    type: object
+  templateName:
+    description: " Template to create Standard Ticket"
+    example: "UK: IPND - STD2371 - CORE Plug-up and Circuit test (IP T&D)"
+    type: string
+  implementationPlanDtls:
+    properties:
+      freeText:
+        type: string
+        description: "Free text as implementation plan"
+        example: "Connect A and B"
+        minLength: 1
+        maxLength: 4000
+      templatedText:
+        oneOf:
+          - $ref: './templated_text_dnsCfgRequest.yaml'
+        type: object
+  implementationPlan:
+    type: string
+    minLength: 1
+    maxLength: 4000
+  justification:
+    type: string
+    minLength: 1
+    maxLength: 4000
+  orderNumber:
+    type: string
+    minLength: 1
+  orderSubType:
+    type: string
+  addDownstreamCIs: 
+    type: array
+    items: 
+      type: object
+      properties: 
+        hostname: 
+          type: string
+          example: ma0.bllabd1.isp.sky.com
+        impactType:
+          type: string
+          example: "No Service Impact"
+          enum:
+            - "No Service Impact"
+            - "At Risk"
+            - "Full Outage"
+            - "Minor Degradation"
+            - "Moderate Degradation"
+            - "Reduced Resiliency"
+            - "Severe Degradation"
+        serviceTypes: 
+          type: array
+          minItems: 1
+          items: 
+            type: string
+            enum:
+              - UBB
+              - VOICE
+              - UM
+              - WSE
+              - ALL
+        mode: 
+          type: string
+          example: recursive
+          enum:
+            - recursive
+      required:
+        - hostname
+        - impactType
+        - serviceTypes
+        - mode
+required:
+  - createdBy     # Fix for Bug DNE-2558 (removed changeType from mandatory field)

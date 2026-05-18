@@ -1,0 +1,66 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+required:
+  - hostname
+  - deviceVendor
+  - deviceModel
+  - adminGroup
+  - owner
+  - status
+  - tacacsGroup
+  - tacacsSecret
+  - deviceType
+properties:
+  hostname:
+    type: string
+    example: "ta1.bllan.isp.sky.com"
+    pattern: '^(?=.{1,36}$)((ta|ma).*(((\.isp)|(\.it)(\.bb))\.sky\.com))$'
+  deviceVendor:
+    type: string
+    example: "cisco"
+    enum: ["cisco"]
+  deviceModel:
+    type: string
+    example: "NCS-5508"
+    enum: ["NCS-5508", "N540-ACC-SYS", "N540X-ACC-SYS", "NCS-540", "NCS-540X", "NCS540L", "N540-24Q2C2DD-SYS"]
+  os:
+    type: string
+    example: "ios-xr"
+    enum: ["ios-xr"]
+  osVersion:
+    type: string
+    example: "7.0.2"
+    pattern: '^(\d+((\.\d+){1,2})?)$'
+  adminGroup:
+    type: string
+    example: "sky"
+    enum: ["sky"]
+  owner:
+    type: string
+    example: "MD_IPCore"
+    enum: ["MD_IPCore"]
+  status:
+    type: string
+    example: "preproduction"
+    enum: ["preproduction", "development", "production"]
+  tacacsGroup:
+    type: string
+    example: "IP_OVN_CRS"
+    enum: ["IP_OVN_CRS"]
+  tacacsSecret:
+    type: string
+    example: "xfyg23sz6sf3rsa"
+    pattern: '^(?! )[A-Za-z0-9 ]{16}(?<! )$'
+  deviceType:
+    type: string
+    example: "Cisco"
+    enum: ["Cisco", "CiscoNCS"]

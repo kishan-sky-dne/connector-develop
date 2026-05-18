@@ -1,0 +1,12 @@
+{
+    "template": "geaOrderDetailsUpdate",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+    "requiredParams": "orderType, orderNumber, circuitId, ticketNumber, url,taskName",
+    "subject": "Order Details Updated for Circuit ID : {{ mappings.circuitId}}, Order type: {{ mappings.orderType }} and Order No: {{ mappings.orderNumber }}",
+    "title": "",
+    "subtitle": "<p>Hello,</p> Order Details have been updated for GEA circuit ID {{ mappings.circuitId}}. Modified details must be updated to respective sub-system such as PlanNet, INCA etc. Refer change ticket {{ mappings.ticketNumber}} or DNE order {{ mappings.orderNumber }} for change details.<br/>Order no: <b>{{ mappings.orderNumber }} </b><br/>Step: <b> {{ mappings.taskName }} <br/></b>Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a> with the order number {{mappings.orderNumber}} for more information. <br/><p>Thank You</p>",
+    "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

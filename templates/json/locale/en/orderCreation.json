@@ -1,0 +1,13 @@
+{
+    "template": "orderCreation",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType,orderNumber,hostname,siteId,scheduledDateTime,ticketNumber,url",
+        "subject": "{{mappings.orderType}} Order created for device {{ mappings.hostname }} for site {{ mappings.siteId }} with change ticket {{mappings.ticketNumber}}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> A {{mappings.orderType}} Order for device <b> {{ mappings.hostname }} </b> at site <b>{{ mappings.siteId}}</b> is created with DNE order no: <b> {{ mappings.orderNumber}} </b>with change ticket <b>{{mappings.ticketNumber}}</b>.It is scheduled for <b> {{ mappings.scheduledDateTime }} </b>.<br> <br>Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a> for more details <br>  <br><p>Thank You.</p>",
+        "footerText": "This is an automated email. Please do not reply to this email.<br>"
+    }
+}
+    

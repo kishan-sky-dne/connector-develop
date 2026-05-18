@@ -1,0 +1,64 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  status:
+    type: "string"
+    example: "SUCCESS"
+    enum:
+      - SUCCESS
+      - FAILURE
+      - PARTIAL-SUCCESS
+  successResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        customer:
+          type: string
+          example: "Amdocs"
+        message:
+          type: string
+          example: "TPCHGXXXXXXX (WHOLESALE PORTAL TASK CREATED)"
+  failedResponse:
+    type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "ERR-003-999-1001"
+        customer:
+          type: string
+          example: "Amdocs"
+        message:
+          type: string
+          example: "TPCHGXXXXXXX (WHOLESALE PORTAL TASK CREATED)"
+  errorCategory:
+    type: "string"
+    example: "FAILED"
+    enum:
+      - FAILED
+  errors:
+    type: array
+    items:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "ERR-003-999-1001"
+        message:
+          type: string
+          example: "Third party ticket creation has been failed with error"
+        customer:
+          type: string
+          example: "Amdocs"

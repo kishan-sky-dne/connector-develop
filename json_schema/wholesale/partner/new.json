@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Wholesale Request Schema For Partner new",
+  "required": [
+    "partner-code",
+    "partner-name",
+    "wholesale-service-type",
+    "uni-service-type"
+  ],
+  "properties": {
+    "partner-code": {
+      "$id": "#/properties/partner-code",
+      "type": "string",
+      "title": "partner-code",
+      "minLength": 1,
+      "maxLength": 20,
+      "example": "OFNL"
+    },
+    "partner-name": {
+      "$id": "#/properties/partner-name",
+      "type": "string",
+      "title": "partner-name",
+      "minLength": 1,
+      "maxLength": 200,
+      "example": "OFNL Wholesale"
+    },
+    "partner-parent-company-name": {
+      "$id": "#/properties/partner-parent-company-name",
+      "type": "string",
+      "title": "partner-parent-company-name",
+      "minLength": 1,
+      "maxLength": 50,
+      "example": "IFNL"
+    },
+    "wholesale-service-type": {
+      "$id": "#/properties/wholesale-service-type",
+      "type": "string",
+      "title": "Partner Wholesale Service Type",
+      "enum": [
+        "nonResilient",
+        "activeStandby",
+        "2active",
+        "4active"
+      ]
+    },
+    "uni-service-type": {
+      "$id": "#/properties/uni-service-type",
+      "type": "string",
+      "title": "uni-service-type",
+      "enum": [
+        "tagged",
+        "unTagged"
+      ]
+    },
+    "comment": {
+      "$id": "#/properties/comment",
+      "type": "string",
+      "title": "comment"
+    }
+  }
+}

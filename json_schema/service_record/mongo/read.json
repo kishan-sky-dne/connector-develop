@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft/2019-09/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "title": "Service Record Read Schema",
+  "required": [
+    "service",
+    "data",
+    "filters",
+    "sort"
+  ],
+  "properties": {
+    "service": {
+      "$id": "#/properties/service",
+      "type": "string",
+      "title": "service",
+      "enum": [
+        "deltaBase",
+        "dia",
+        "metroLink",
+        "metroRR",
+        "ubb",
+        "skyTalk",
+        "unifiedManagement",
+        "wholesale",
+        "verify-l2circuit"
+      ]
+    },
+    "data": {
+      "$id": "#/properties/data",
+      "type": "string",
+      "title": "Data",
+      "enum": [
+        "service",
+        "audit"
+      ]
+    },
+    "filters": {
+      "$id": "#/properties/filters",
+      "type": "array",
+      "title": "filters",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/filters_schema"
+      }
+    },
+    "sort": {
+      "$id": "#/properties/sort",
+      "type": "array",
+      "title": "sort",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/sort_schema"
+      }
+    },
+    "recordsPerPage": {
+      "$id": "#/properties/recordsPerPage",
+      "type": "integer",
+      "minimum": 1,
+      "multipleOf": 1,
+      "default": 10,
+      "title": "recordsPerPage"
+    },
+    "pageNumber": {
+      "$id": "#/properties/pageNumber",
+      "type": "integer",
+      "multipleOf": 1,
+      "default": 1,
+      "title": "pageNumber"
+    }
+  },
+  "$defs": {
+    "filters_schema": {
+      "type": "object",
+      "required": [
+        "param",
+        "operator",
+        "values"
+      ],
+      "properties": {
+        "param": {
+          "$id": "#/properties/filters/items/param",
+          "type": "string",
+          "example": "serviceId"
+        },
+        "operator": {
+          "$id": "#/properties/filters/items/operator",
+          "type": "string",
+          "title": "operator",
+          "enum": [
+            "eq",
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "ne",
+            "in",
+            "nin",
+            "regex"
+          ]
+        },
+        "values": {
+          "$id": "#/properties/filters/items/values",
+          "type": "array",
+          "title": "values",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "filterLogicalOperator": {
+          "$id": "#/properties/filters/items/filterLogicalOperator",
+          "type": "string",
+          "title": "filterLogicalOperator",
+          "enum": [
+            "and",
+            "or",
+            "nor"
+          ]
+        }
+      }
+    },
+    "sort_schema": {
+      "type": "object",
+      "required": [
+        "param",
+        "order"
+      ],
+      "properties": {
+        "param": {
+          "$id": "#/properties/sort/items/param",
+          "type": "string"
+        },
+        "order": {
+          "$id": "#/properties/sort/items/order",
+          "type": "string",
+          "title": "order",
+          "enum": [
+            "asc",
+            "dsc"
+          ]
+        }
+      }
+    }
+  }
+}

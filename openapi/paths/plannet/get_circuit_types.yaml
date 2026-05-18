@@ -1,0 +1,73 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: Retrieve Circuit Types details from plannet
+  description: Get meta data of circuit types from plannet connector plannet
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_circuit_types
+  parameters:
+    - name: 'type'
+      in: query
+      required: false
+      description: details to get type of circuit
+      example: intra
+      schema:
+        type: string
+        minLength: 1
+    - name: 'id'
+      in: query
+      required: false
+      description: ID for circuitType
+      example: 3
+      schema:
+        type: integer
+    - name: 'provider'
+      in: query
+      required: false
+      description: Get circuit types details based on provider value
+      schema:
+        type: string
+    - name: 'filter'
+      in: query
+      required: false
+      description: Get circuit types details based on filter value
+      schema:
+        type: string
+    - name: 'limit'
+      in: query
+      required: false
+      description: limit the number of response
+      example: 100
+      schema:
+        type: integer
+        default: 100
+        minimum: 1
+        maximum: 100
+    - name: 'offset'
+      in: query
+      required: false
+      description: skip the number of response from top
+      example: 0
+      schema:
+        type: integer
+        default: 0
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_circuit_types.yaml'
+      description: Expected response of plannet for /get_circuit_types call

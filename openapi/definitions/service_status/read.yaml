@@ -1,0 +1,201 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  orderId:
+    type: string
+    example: BPM-123
+  serviceStatusDtls:
+    type: object
+    properties:
+      deltaBase:
+        type: string
+        example: Failure
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+      metroRR:
+        type: string
+        example: Success
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+      ubbLogical:
+        type: string
+        example: Failure
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+      skyTalk:
+        type: string
+        example: Success
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+      unifiedManagement:
+        type: string
+        example: In Progress
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+      wholesale:
+        type: string
+        example: Partial Success
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+          - Partial Success
+      metroLogicalLink:
+        type: string
+        example: Partial Success
+        enum: 
+          - Success
+          - Failure
+          - Not Attempted
+          - In Progress
+          - Partial Success
+      wholesaleDtls:
+        type: object
+        properties:
+          success: 
+            type: array
+            items:
+              type: object
+              properties:
+                assetId: 
+                  type: string
+                  example: SKY-FLDA-130
+          failure: 
+            type: array
+            items:
+              type: object
+              properties:
+                assetId: 
+                  type: string
+                  example: SKY-FLDA-130
+      metroLogicalLinkDtls:
+          type: object
+          properties:      
+            success: 
+              type: array
+              items:
+                type: object
+                properties:
+                  service: 
+                    type: object
+                    properties:
+                      aEnd: 
+                        type: object
+                        properties:
+                          hostname:
+                            type: string
+                            example: ma0.eacol.isp.sky.com
+                          siteType:
+                            type: string
+                            example: T2   
+                          role:
+                            type: string
+                            example: head  
+                          p2pIPv4Address:
+                            type: string
+                            example: 10.235.12.92/31
+                          deviceRole:
+                            type: string
+                            example: m_agg  
+                          vlanId:
+                            type: integer
+                            example: 0             
+                      bEnd: 
+                        type: object
+                        properties:
+                          hostname:
+                            type: string
+                            example: ma2.eacol.isp.sky.com
+                          siteType:
+                            type: string
+                            example: T1    
+                          role:
+                            type: string
+                            example: child  
+                          p2pIPv4Address:
+                            type: string
+                            example: 10.235.12.90/31
+                          deviceRole:
+                            type: string
+                            example: m_agg  
+                          vlanId:
+                            type: integer
+                            example: 0     
+            failure: 
+              type: array
+              items:
+                type: object
+                properties:
+                  service: 
+                    type: object
+                    properties:
+                      aEnd: 
+                        type: object
+                        properties:
+                          hostname:
+                            type: string
+                            example: ma0.eacol.isp.sky.com
+                          siteType:
+                            type: string
+                            example: T2   
+                          role:
+                            type: string
+                            example: head  
+                          p2pIPv4Address:
+                            type: string
+                            example: 10.235.12.92/31
+                          deviceRole:
+                            type: string
+                            example: m_agg  
+                          vlanId:
+                            type: integer
+                            example: 0             
+                      bEnd: 
+                        type: object
+                        properties:
+                          hostname:
+                            type: string
+                            example: ma2.eacol.isp.sky.com
+                          siteType:
+                            type: string
+                            example: T1    
+                          role:
+                            type: string
+                            example: child  
+                          p2pIPv4Address:
+                            type: string
+                            example: 10.235.12.90/31
+                          deviceRole:
+                            type: string
+                            example: m_agg  
+                          vlanId:
+                            type: integer
+                            example: 0     
+
+

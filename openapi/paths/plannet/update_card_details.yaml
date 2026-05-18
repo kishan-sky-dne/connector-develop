@@ -1,0 +1,50 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+patch:
+  tags:
+    - plannet
+  summary: Update card type
+  description: Update the card type in a specified slot of a device
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.write"
+  operationId: udpate_card_details
+  requestBody:
+    description: Required details to update the card type in a slot of a device
+    content:
+      application/json:
+        schema:
+          required:
+            - hostname
+            - slot_name
+          properties:
+            hostname:
+              type: string
+              example: "olt2.test.bllab.it.bb.sky.com"
+              pattern: '^(.*(((\.isp)|(\.it)(\.bb))\.sky\.com))$'
+            slot_name:
+              type: string
+              example: 0/5
+              pattern: '^\d{1}\/\d{1,2}$'
+            card_type:
+              type: string
+              example: MA5800-H902GPSF05-16x2.5/1.25G-GPON
+            part_number:
+              type: string
+              example: H902GPSF
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/update_card_details.yaml'
+      description: Expected response of plannet for /update_card_details call

@@ -1,0 +1,12 @@
+{
+    "template": "invalidOrder",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber,url",
+        "subject": "Invalid Order details have been received for Order type: {{ mappings.orderType }} and Order No: {{ mappings.orderNumber }}",
+        "title": "",
+        "subtitle": "<p>Hello,</p>  Order in subject has failed validation and aborted. <br> Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a>  with the order number {{mappings.orderNumber}} for more information. </br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

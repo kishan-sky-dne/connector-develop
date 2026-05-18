@@ -1,0 +1,55 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  status:
+    type: "string"
+    example: "UNSUCCESSFUL"
+    enum:
+      - SUCCESSFUL,
+      - UNSUCCESSFUL
+  ticketNumber:
+    type: string
+    example: "CHG123456789"
+  startDate:
+    type: string
+    example: "1572794340"
+  endDate:
+    type: string
+    example: "1572794340"
+  templateName:
+    type: string
+    example: "UK: IPND - STD2371 - CORE Plug-up and Circuit test (IP T&D)"
+  attachmentError:
+    type: array
+    items:
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: "abc.xls"
+        errorMessage:
+          type: string
+          example: ""
+  ciAddError:
+      type: array
+      items:
+        type: object
+        properties:
+          ciName:
+            type: string
+            example: "ma0.test.bllab.it.bb.sky.com"
+          errorMessage:
+            type: string
+            example: ""
+required:
+  - status

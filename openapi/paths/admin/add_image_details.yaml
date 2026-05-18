@@ -1,0 +1,96 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - admin
+  summary: Add the image metadata information
+  description: This API is used to create the platform, region, OS version, OS status and image details
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.createImage"
+  operationId: create_image_details
+  requestBody:
+    description: Required details to add image metadata
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/admin/addImageDetailsRequest.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/addImageDetailsResponse.yaml'
+      description: Expected response for add image metadata information
+patch:
+  tags:
+    - IOS-XR
+  description: |
+      Used to update the image details records.
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  operationId: update_image_details
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.update"
+  parameters:
+    - name: 'osVersionDeviceRegionId'
+      in: query
+      required: true
+      description: To update Image details this ID should be passed.
+      schema:
+        type: integer
+        minimum: 1
+  requestBody:
+    description: "Update image details"
+    required: True
+    content:
+      application/json:
+        schema:
+          $ref: "../../definitions/admin/update_image_request.yaml"
+  responses:
+    '200':
+      description: "Response while DIAL works on reading the service."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/update_image_response.yaml'
+delete:
+  tags:
+    - admin
+  summary: Delete the image metadata information
+  description: This API is used to delete the platform, region, OS version, OS status and image details
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.admin.tasks.delete"
+  operationId: delete_image_details
+  parameters:
+    - name: 'osVersionDeviceRegionId'
+      in: query
+      required: true
+      description: |
+        To delete Image details this ID should be passed.
+        This id is given to the user as part of the query to upgrade details.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    '200':
+      description: Expected response of connector module for /delete call
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/activateResponse.yaml'
+    '400':
+      description: Bad Request
+    '401':
+      description: Unauthorized
+    '500':
+      description: Internal Server Error

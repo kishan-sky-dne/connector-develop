@@ -1,0 +1,151 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+'/healthcheck':
+  $ref: './healthcheck.yaml'
+'/dcs/getDevice/{hostname}':
+  $ref: './dcs/getDeviceDetails.yaml'
+'/dcs/dcsFetch/{hostname}':
+  $ref: './dcs/dcsFetch.yaml'
+'/anp/readTG':
+  $ref: './anp/readTG.yaml'
+'/anp/updateTG':
+  $ref: './anp/updateTG.yaml'
+'/itsm/ticket':
+  $ref: './itsm/ticket.yaml'
+'/itsm/attachments':
+  $ref: './itsm/attachment.yaml'
+'/itsm/worknotes':         # Fix for Bug DNE-2493
+  $ref: './itsm/worknotes.yaml'
+'/itsm/query':
+  $ref: './itsm/generic_custom_query.yaml'
+'/itsm/restrictions':
+  $ref: './itsm/change_restrictions.yaml'
+'/email':
+  $ref: './mailer/send.yaml'
+'/fileHandler':
+  $ref: './filehandler/read_write.yaml'
+'/dcs/devices':
+  $ref: './dcs/addDevice.yaml'
+'/ipam/ipv4-address':
+  $ref: './ipam/ipaddress.yaml'
+'/services/admin/golden-build/image-details':
+  $ref: './admin/image_details.yaml'
+'/services/admin/golden-build/image-details/{deviceOsVersionId}/activate':
+  $ref: './admin/activate.yaml'
+'/smart-license/token':
+  $ref: './cisco/smart_license.yaml'
+'/ipam/ipv4-address/{ID}':
+  $ref: './ipam/delete_ipaddress.yaml'
+'/ipam/prefixes':
+  $ref: './ipam/prefixes.yaml'
+'/ipam/prefixes/{ID}':
+  $ref: './ipam/delete_prefix.yaml'
+'/inventory/inca/circuits':
+  $ref: './inca/inca_details.yaml'
+'/inventory/inca/updateRfsStatus':
+  $ref: './inca/update_rfs_inca_details.yaml'
+'/inventory/inca/updateDeviceDecomm':
+  $ref: './inca/update_inca_device_decomm.yaml'
+'/inventory/plannet/circuitTypes':
+  $ref: './plannet/get_circuit_types.yaml'
+'/inventory/plannet/interfaceLinks':
+  $ref: './plannet/get_interface_links.yaml'
+'/inventory/plannet/nes':
+  $ref: './plannet/get_nes_details.yaml'
+'/inventory/plannet/cis':
+  $ref: './plannet/get_cis_details.yaml'
+'/inventory/plannet/circuits':
+  $ref: './plannet/get_circuit_info.yaml'
+'/inventory/plannet/deviceRoles':
+  $ref: './plannet/get_device_roles.yaml'
+'/itsm/thirdPartyTickets':
+  $ref: 'itsm/third_party_ticket.yaml'
+'/inventory/inca/state/{job-id}':
+  $ref: './inca/inca_state_info.yaml'
+'/inventory/inca/device':
+  $ref: './inca/inca_device_details.yaml'
+'/inventory/plannet/sites':
+  $ref: './plannet/get_sites.yaml'
+'/inventory/plannet/card':
+  $ref: './plannet/update_card_details.yaml'
+'/git/file':
+  $ref: './git/get_file.yaml'
+'/store/database/record':
+  $ref: './service_record/read.yaml'
+'/inventory/inca/wholesale':
+  $ref: './inca/wholesale_details.yaml'
+'/inventory/{hostname}/lookup':
+  $ref: './lookup/domain.yaml'
+'/dcs/updateDevice/{hostname}':
+  $ref: './dcs/updateDevice.yaml'
+'/dcs/getAllDevices':
+  $ref: './dcs/getAllDevices.yaml'
+'/cli-command-palette':
+  $ref: './cli_command_palette/get_commands.yaml'
+'/store/database/service/status':
+  $ref: './service_status/read.yaml'
+'/itsm/updateCiRelationship':
+  $ref: './itsm/update_ci_relationships.yaml'
+'/itsm/aio-query':
+  $ref: './itsm/generic_custom_aio_query.yaml'
+'/audit-now/start':
+  $ref: './audit_now/start_audit_now.yaml'
+'/audit-now/stop':
+  $ref: './audit_now/stop_audit_now.yaml'
+'/audit-now/status':
+  $ref: './audit_now/audit_now_status.yaml'
+'/dcs/getDeviceDetails':
+  $ref: './dcs/getAllDeviceDetails.yaml'
+'/admin/inventory_details':
+  $ref: './admin/get_inventory_details.yaml'
+'/admin/image-upgrade-details':
+  $ref: './admin/image_upgrade_details.yaml'
+'/admin/image-details':
+  $ref: './admin/add_image_details.yaml'
+'/admin/upgrade-details':
+  $ref: './admin/upgrade_details.yaml'
+'/radius/accounting/map-t/bmr':
+  $ref: './radius/bmr_details.yaml'
+'/radius/accounting/map-t/bmr/sync/status/{seqid}':
+  $ref: './radius/sync_bmr_details.yaml'
+'/events/orderstatus/publish':
+  $ref: './event_notification/publish_events.yaml'
+'/itsm/incident':
+  $ref: './itsm/incident.yaml'
+'/inventory/plannet/mux-mapping':
+  $ref: './plannet/get_dwdm_info.yaml'
+'/plannet/tgs/{id}':
+  $ref: './plannet/update_transition_group.yaml'
+'/inventory/horizon/deliverable/{order_id}':
+  $ref: './horizon/deliverable.yaml'  
+'/inventory/horizon/deliverable':
+  $ref: './horizon/get_deliverable.yaml'
+'/minio/upload':
+  $ref: './minio/file_upload.yaml'
+'/nap/inflight':
+  $ref: './nap/nap_details.yaml'
+'/nap/inflightSubmit':
+  $ref: './nap/update_nap_details.yaml'
+'/inventory/plannet/fhrps':
+  $ref: './plannet/get_fhrps.yaml'
+'/supported-hardware/vendor':
+  $ref: './dcs/get_supported_vendors.yaml'
+'/supported-hardware/vendor/{vendor}/platform':
+  $ref: './dcs/get_supported_platforms.yaml'
+'/supported-hardware/vendor/{vendor}/platform/{platform}/os':
+  $ref: './dcs/get_supported_os_versions.yaml'
+'/supported-hardware/vendor/{vendor}/platform/{platform}/os/{os_version}/chassis':
+  $ref: './dcs/get_supported_chassis.yaml'
+'/minio/filenames':
+  $ref: './minio/file_names.yaml'
+'/minio/download':
+  $ref: './minio/file_download.yaml'

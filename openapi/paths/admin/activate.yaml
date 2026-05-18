@@ -1,0 +1,36 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+patch:
+  tags:
+    - admin
+  summary: Updates the metadata information of a golden Image as Active
+  description: requests to updates the metadata information of a golden Image as Active
+  security:
+      - oAuth2ClientCredentials:
+        - connector:write
+  x-openapi-router-controller:  "connectors.webserver.admin.tasks.activate"
+  operationId: update_status
+  parameters:
+    - name: deviceOsVersionId
+      description: DeviceOsVersionId
+      example: 3
+      in: path
+      required: true
+      schema:
+        type: integer
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/admin/activateResponse.yaml'
+      description: Expected response for the updation of metadata information of a golden Image

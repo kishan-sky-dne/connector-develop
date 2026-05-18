@@ -1,0 +1,57 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  ipaddr:
+    type: string
+    example: 10.42.250.162
+  snmp_sysdescr:
+    type: string
+    example: Huawei Integrated Access Software
+  location:
+    type: string
+    example: MC3_brick_lane
+  owner:
+    type: string
+    example: MD_IPAccess
+  status:
+    type: string
+    example: development
+  vendor:
+    type: string
+    example: huawei
+  hostname:
+    type: string
+    example: olt2.test.bllab.it.bb.sky.com
+  device_type:
+    type: string
+    example: HuaweiOLT
+  admin_group:
+    type: string
+    example: Italia_SP
+  model:
+    example: NCS-5500
+    type: string
+  model_family:
+    example: null
+    type: string
+  os:
+    example: ios-xr
+    type: string
+  os_version:
+    example: 6.5.3
+    type: string
+required:
+  - ipaddr
+  - model
+  - os
+  - os_version

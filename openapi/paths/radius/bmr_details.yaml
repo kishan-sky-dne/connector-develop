@@ -1,0 +1,81 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - radius
+  summary: Add BMR Details to radius server
+  description: Thia API is used to create the bmr details to radius server
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.radius.tasks.write"
+  operationId: create_bmr
+  requestBody:
+    description: Required details to add bmr details
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/radius/addBMRRequest.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/radius/response.yaml'
+      description: Expected response for add bmr details
+get:
+  tags:
+    - radius
+  summary: Get bmr details based on ip
+  description: Request to get the bmr details based on ip
+  security:
+    - oAuth2ClientCredentials: [ connector:read ]
+  x-openapi-router-controller: "connectors.webserver.radius.tasks.read"
+  operationId: get_bmr_by_ip
+  parameters:
+    - name: 'ipv6Prefix'
+      in: query
+      required: true
+      description: ip address info to be retrieved.
+      schema:
+        type: string
+        minLength: 1
+  responses:
+    '200':
+      description: "Response while connector works on reading BMR Details."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/radius/response.yaml'
+delete:
+  tags:
+    - radius
+  summary: Delete bmr details based on ip
+  description: Request to Delete the bmr details based on ip
+  security:
+    - oAuth2ClientCredentials: [ connector:read ]
+  x-openapi-router-controller: "connectors.webserver.radius.tasks.write"
+  operationId: delete_bmr_by_ip
+  parameters:
+    - name: 'ipv6Prefix'
+      in: query
+      required: true
+      description: ip address info to be retrieved.
+      schema:
+        type: string
+        minLength: 1
+  responses:
+    '200':
+      description: "Response while connector works on deleting BMR Details."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/radius/response.yaml'

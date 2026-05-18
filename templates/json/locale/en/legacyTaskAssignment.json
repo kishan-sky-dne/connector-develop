@@ -1,0 +1,14 @@
+{
+    "template": "legacyTaskAssignment",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, url",
+        "subject": "{{ mappings.orderType }} Order Assignment (No: {{ mappings.orderNumber }})",
+        "title": "",
+        "subtitle": "<p>Hello,</p> <p>A order for <b> {{ mappings.orderType }} </b> has been raised which needs to be implemented in a non phase2B exchange. DNE will not be doing any automated activities to fulfill this order, however you are expected to progress this order workflow in DNE UI, which will feedback updates to SOM.</p> <br>Order no: <b>{{ mappings.orderNumber }}</b><br>Please check <a href={{ mappings.url }}>{{ mappings.url }}</a> with the order number for more details. </br>  <br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email.<br>"
+    }
+}
+
+

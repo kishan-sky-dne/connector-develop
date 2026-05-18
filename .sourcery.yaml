@@ -1,0 +1,133 @@
+# __author__ = "Sky UK Ltd"
+# Copyright © Sky CP Limited 2023. All rights reserved.
+# No part of this work may be reproduced, stored in a
+# retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+ignore:
+  - data/*
+  - .venv/*
+  - .tox/*
+
+coding_assistant:
+    enabled: False
+
+refactor:
+  include: []
+  skip: []
+  rule_types:
+    - refactoring
+    - suggestion
+    - comment
+  python_version: '3.10'
+
+
+metrics:
+  quality_threshold: 25.0
+
+clone_detection:
+  min_lines: 3
+  min_duplicates: 2
+  identical_clones_only: false
+
+rules:
+  - id: raise-not-implemented
+    description: NotImplemented is not an Exception, raise NotImplementedError instead
+    pattern: raise NotImplemented
+    replacement: raise NotImplementedError
+
+  - id: remove-print
+    description: Print statements should not be used, use logger
+    pattern: print
+    replacement: logger.debug
+
+  - id: sky-no-self-assign
+    pattern: '${a}: ${ann?} = ${a}'
+    description: Assigning a variable to itself does not do anything
+    explanation: There is no reason to re-assign a variable to itself. Either this statement is redundant and should be removed, or the re-assignment is a mistake and some other value or variable was intended for the assignment instead.
+
+  - id: sky-only-bare-raise-in-except-handler
+    pattern: '${raise_node|is_bare_raise(raise_node) and not in_except_handler(raise_node)}'
+    description: Bare "raise" statements should only be used in "except" blocks
+    explanation: |
+      A bare raise statement, i.e. a raise with no exception provided, will re-raise the last active exception in the current scope.
+      If the 'raise' statement is not in an except or finally block, no exception is active and a RuntimeError is raised instead.
+      In a finally block it only works where the exception is active and has not been caught, so this is also discouraged.
+
+  - id: sky-no-break-continue-return-in-finally
+    pattern: '${node|(is_return(node) or is_break(node) or is_continue(node)) and in_finally_block(node)}'
+    description: Do not use "break", "continue" or "return" statements in "finally" blocks
+    explanation: Using return, break or continue in a finally block suppresses the propagation of any unhandled exception which was raised in the try, else or except blocks. It will also ignore their return statements.
+
+  - id: sky-no-nested-if-exps
+    pattern: '${value} if ${cond} else ${default|is_ifexp(default) or is_ifexp(value) or is_ifexp(cond)}'
+    description: Do not nest if expressions inside each other
+    explanation: Nesting if expressions makes the code much harder to understand. It may be preferable to expand them out into full if-else conditions.
+
+  - id: sky-do-not-return-value-from-init
+    pattern: 'return ${value|not is_none_literal(value) and in_function(value, "__init__")}'
+    description: __init__ should not return a value
+    explanation: The __init__ method is required to return None. A TypeError will be raised if the __init__ method either yields or returns any expression other than None.
+
+  - id: sky-do-not-yield-value-from-init
+    pattern: 'yield ${value|not is_none_literal(value) and in_function(value, "__init__")}'
+    description: __init__ should not yield a value
+    explanation: The __init__ method is required to return None. A TypeError will be raised if the __init__ method either yields or returns any expression other than None.
+
+  - id: sky-docstrings-for-functions
+    pattern: |
+      def ${f}(...):
+        """!!!"""
+        ${body*}
+    description: Functions should have docstrings
+    explanation: |
+      A function must have a docstring, unless it meets all of the following criteria:
+        - not externally visible
+        - very short
+        - obvious
+    condition: not ((f.starts_with("_") and body.statement_count() < 5) or pattern.in_function_scope())
+    paths:
+      exclude:
+        - test/
+        - tests/
+
+  - id: require-parameter-annotation
+    pattern: |
+      def ${name}(..., ${arg}: !!!=${default?}, ...):
+          ...
+    condition: not arg.equals("self") and not arg.equals("cls")
+    paths:
+      exclude:
+        - test/
+        - tests/
+    description: Annotate parameter `${arg}` in public function/method `${name}` with
+      a type annotation
+    explanation: |
+      Adding type annotations has several benefits:
+      1. It improves the documentation of the function
+      2. It allows the function to be checked for correctness
+      3. It allows checking that the function callers are passing the correct params
+      These [mypy docs](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html#functions) describe how to
+      annotate function arguments and return types.
+      From Google Style Guide [2.21](https://google.github.io/styleguide/pyguide#221-type-annotated-code)
+
+  - id: require-return-annotation
+    pattern: |
+      def ${name}(...) -> !!!:
+          ...
+    paths:
+      exclude:
+        - test/
+        - tests/
+    description: Annotate public function/method `${name}` with a return type annotation
+    explanation: |
+      Adding type annotations has several benefits:
+      1. It improves the documentation of the function
+      2. It allows the function to be checked for correctness
+      3. It allows checking that the function callers are passing the correct params
+      These [mypy docs](https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html#functions) describe how to
+      annotate function arguments and return types.
+      From Google Style Guide [2.21](https://google.github.io/styleguide/pyguide#221-type-annotated-code)

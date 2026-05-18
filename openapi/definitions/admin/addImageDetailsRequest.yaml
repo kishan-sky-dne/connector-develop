@@ -1,0 +1,125 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: array
+items:
+  type: object
+  required:
+    - deviceVendor
+    - deviceModel
+    - region
+    - osLabel
+    - osStatus
+    - osVersion
+  properties:
+    region:
+      type: string
+      example: "UK"
+      enum: ["UK","IT", "DE", "IE"]
+      minLength: 1
+      maxLength: 10
+    deviceVendor:
+      type: string
+      example: "CISCO"
+      enum: ["CISCO", "NOKIA", "HUAWEI"]
+      minLength: 1
+      maxLength: 50
+    deviceModel:
+      type: string
+      example: "NCS5K"
+      enum: ["NCS5K", "ASR9K", "NCS540", "NCS1K", "NCS540L", "N540-24Q2C2DD-SYS"]
+      minLength: 1
+      maxLength: 50
+    osLabel:
+      type: string
+      example: "7.1.0-V1"
+      minLength: 1
+      maxLength: 50
+    osStatus:
+      type: string
+      example: "Deprecated"
+      enum: ["Deprecated", "Current", "Under_test", "Decommissioned", "Target"]
+      minLength: 1
+      maxLength: 50
+    osVersion:
+      type: string
+      example: "7.1.0"
+      pattern: '^(\d+((\.\d+){1,2})?)$'
+      minLength: 1
+      maxLength: 20
+    comments:
+      type: string
+      example: "Optional field for user comments on software images"
+      minLength: 1
+      maxLength: 2000
+    osDetails:
+      type: object
+      required:
+        - imageFiles
+      properties:
+        imageFiles:
+          type: array
+          items:
+            type: object
+            required:
+              - imageType
+              - fileName
+              - md5Value
+              - fileSize
+            properties:
+              imageType:
+                type: string
+                example: "tar"
+                enum: ["iso", "tar"]
+                minLength: 1
+                maxLength: 3
+              fileName:
+                type: string
+                example: "/bluebird/ios-xr/7.1.0/NCS5K/install-image.tar"
+                pattern: '(.*\.)(iso|tar)$'
+                minLength: 1
+                maxLength: 1000
+              md5Value:
+                type: string
+                example: "c05e19b77f977c2f3afe0b98f0b77aaa"
+                pattern: '^[a-zA-Z0-9]*$'
+                minLength: 32
+                maxLength: 32
+              fileSize:
+                type: string
+                example: "2742723234"
+                pattern: '^[0-9]*$'
+                minLength: 1
+                maxLength: 100
+          minItems: 1
+        packageDetails:
+          type: array
+          items:
+            type: object
+            required:
+              - type
+              - packages
+            properties:
+              type:
+                type: string
+                example: "XR"
+                enum: ["XR", "SYSADMIN-FIX", "SYSADMIN-MOD"]
+                minLength: 1
+                maxLength: 50
+              packages:
+                type: array
+                items:
+                  type: string
+                  example: "ncs540-sysadmin-shared-7.1.0.1-r712.CSCvx53252"
+                  minLength: 1
+                  maxLength: 1000
+          minItems: 1
+minItems: 1

@@ -1,0 +1,16 @@
+{
+   "fileType":"csv",
+   "fileName":"Patching Request Details ver 1.0.xls",
+   "sheets":[
+      {  "sheetIndex": 0,
+         "sections":[
+            {
+               "colmNum":19,
+               "merged":"No",
+               "startIndex":"C4",
+               "endIndex":"U50"
+            }
+         ]
+      }
+       ]
+}

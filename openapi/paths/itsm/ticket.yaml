@@ -1,0 +1,96 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - itsm
+  summary: Creates a new ticket into ServiceNow
+  description: requests to spark to create a new change ticket
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.ticketGenerator"
+  operationId: create_ticket
+  requestBody:
+    description: Required details to create the ticket
+    content:
+      'application/json':
+        schema:
+          $ref: '../../definitions/itsm/request/create_ticket.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/itsm/response/create_ticket.yaml'
+      description: Expected response from Spark
+get:
+  tags:
+    - itsm
+  summary: Gets details of a ticket
+  description: requests to spark to get the details of the given ticket number
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.ticketDetail"
+  operationId: get_ticket
+  parameters:
+    - name: 'ticketNumber'
+      in: query
+      required: true
+      description: 'A single or list of change tickets'
+      schema:
+        type: array
+        items:
+          type: string
+          description: "Change Ticket"
+    - name: 'parentChange'
+      in: query
+      required: false
+      description: 'Parent ticket for CTASK if required boolean field'
+      schema:
+        type: boolean
+        example: "true|false"
+    - name: 'return_fields'
+      in: query
+      description: 'Extra fields which needs to be added in response'
+      schema:
+        type: array
+        items:
+          type: string
+          example: 'number,u_related_ci_list'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/itsm/response/get_ticket.yaml'
+      description: Expected response from Spark
+patch:
+  tags:
+    - itsm
+  summary: Updates details of a ticket
+  description: requests to spark to update a change ticket
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.itsm.tasks.ticketUpdater"
+  operationId: update_ticket
+  requestBody:
+    description: Ticket number to update
+    content:
+      'application/json':
+        schema:
+          $ref: '../../definitions/itsm/request/update_ticket.yaml'
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/itsm/response/update_ticket.yaml'
+      description: Expected response from Spark

@@ -1,0 +1,66 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+required:
+  - deviceRole
+  - deviceVendor
+  - deviceModel
+  - os
+  - osVersion
+  - bootableFileDetails
+  - rpmPackageDetails
+properties:
+  deviceRole:
+    type: string
+    example: "t_agg"
+    enum: ["t_agg","m_agg"]
+  deviceVendor:
+    type: string
+    example: "Cisco"
+    enum: ["Cisco"]
+  deviceModel:
+    type: string
+    example: "NCS-5508"
+    enum: ["NCS-5508", "NCS-540X", "NCS540L", "N540-24Q2C2DD-SYS"]
+  os:
+    type: string
+    example: "ios-xr"
+    enum: ["ios-xr"]
+  osVersion:
+    type: string
+    example: "7.0.2"
+    pattern: '^(\d+((\.\d+){1,2})?)$'
+  bootableFileDetails:
+    type: "array"
+    items:
+      type: object
+      properties:
+        fileName:
+          type: string
+          example: boot/install-image.iso
+          pattern: '(.*\.)(iso|cfg|efi)$'
+        md5Value:
+          type: string
+          example: c05e19b77f977c2f3afe0b98f0b77aaa
+          pattern: '^[a-zA-Z0-9]*$'
+  rpmPackageDetails:
+    type: "array"
+    items:
+      type: object
+      properties:
+        packageName:
+          type: string
+          example: ncs5500-mpls-te-rsvp-3.1.0.0-r702.x86_64.rpm
+          pattern: '(.*\.)(rpm)$'
+        packageType:
+          type: string
+          enum: ["XR", "CALVADOS"]
+          example: XR

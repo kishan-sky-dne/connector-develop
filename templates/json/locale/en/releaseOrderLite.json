@@ -1,0 +1,12 @@
+{
+    "template": "releaseOrderLite",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderType, orderNumber, taskName, url",
+        "subject": "{{ mappings.orderType }} Order Sent Back To Team Pool - Action Required (No: {{ mappings.orderNumber }} & Step: {{ mappings.taskName }})",
+        "title": "",
+        "subtitle": "<p>Hello,</p>A <b>{{ mappings.orderType }}</b> order has been sent back to your team pool by a team member at {{ mappings.taskName }} step.</br><br>Order no: <b>{{ mappings.orderNumber }}</b></br></br>Please check <a href={{ mappings.url }}>{{ mappings.url }}</a> for more information. </br></br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

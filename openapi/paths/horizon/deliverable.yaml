@@ -1,0 +1,41 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+patch:
+  tags:
+    - horizon
+  summary: Update details of horizon deliverable
+  description: Horizon deliverable api
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  x-openapi-router-controller: "connectors.webserver.horizon.tasks.write"
+  operationId: update_horizon_deliverable
+  parameters:
+    - name: 'order_id'
+      in: path
+      required: true
+      description: DNE order-id(BPM) for Sky services
+      schema:
+        type: string
+  requestBody:
+    description: Details to update horizon deliverable
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/horizon/request/update_horizon_details.yaml'
+  responses:
+      '200':
+        description: OK
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: Hello world

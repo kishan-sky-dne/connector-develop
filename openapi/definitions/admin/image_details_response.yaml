@@ -1,0 +1,87 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+required:
+   - status
+   - deviceOsVersionDetails
+properties:
+   status:
+     type: string
+     example: failure
+     enum :
+       - success
+       - failure
+   deviceOsVersionDetails:
+     type: array
+     items:
+       type: object
+       properties:
+         deviceOsVersionId:
+           type: integer
+           example: 3
+         deviceRole:
+           type: string
+           example: t_agg
+         deviceVendor:
+           type: string
+           example: Cisco
+         deviceModel:
+           type: string
+           example: NCS-5508
+         os:
+           type: string
+           example: ios-xr
+         osVersion:
+           type: string
+           example: 7.0.2
+         status:
+           type: string
+           example: Active
+         bootableFileDetails:
+           type: array
+           items:
+             type: object
+             properties:
+               fileId:
+                 type: integer
+                 example: 3
+               fileName:
+                 type: string
+                 example: boot/install-image.iso
+               md5Value:
+                 type: string
+                 example: c05e19b77f977c2f3afe0b98f0b77aaa
+         rpmPackageDetails:
+           type: array
+           items:
+             type: object
+             properties:
+               packageId:
+                 type: integer
+                 example: 11
+               fileName:
+                 type: string
+                 example: ncs5500-mpls-te-rsvp-3.1.0.0-r702.x86_64.rpm
+               fileType:
+                 type: string
+                 example: XR
+         createdBy:
+           type: string
+           example: Mike
+         createdOn:
+             type: string
+             example: "2020-11-11 13:23:44"
+         modifiedBy:
+           type: string
+           example: John
+         modifiedOn:
+           type: string
+           example: "2020-12-11 13:20:44"

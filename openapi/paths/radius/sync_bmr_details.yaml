@@ -1,0 +1,35 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - radius
+  summary: Get bmr details based on ip
+  description: Request to get the bmr details based on ip
+  security:
+    - oAuth2ClientCredentials: [ connector:read ]
+  x-openapi-router-controller: "connectors.webserver.radius.tasks.read"
+  operationId: sync_bmr_by_seq_id
+  parameters:
+    - name: 'seqid'
+      in: path
+      required: true
+      description: ip address info to be retrieved.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    '200':
+      description: "Response while connector works on reading BMR Details."
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/radius/response.yaml'

@@ -1,0 +1,135 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  count:
+    type: integer
+    description: count of interface links
+    example: 0
+  results:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        interface_1:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "as102.clber.isp.sky.com 1/1/5 | TG17436 (07/09/2013) TG9999 (31/12/2099)"
+        interface_2:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "as2.clber.uk.easynet.net GigabitEthernet1/0/26 | TG14730 (07/09/2013) TG9999 (31/12/2099)"
+        ne_1:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "as102.clber.isp.sky.com"
+        ne_2:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "as2.clber.uk.easynet.net"
+        link_prev:
+          type: string
+          example: Null
+        atg:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "link_as102.clber.1/1/5_as2.clber.1/0/26: starting on 2014-11-11_enabled_2014-11-11"
+        dtg:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "link_as102.clber.1/1/5_as2.clber.1/0/26: starting on 2014-11-11_disabled_2099-12-31"
+        rate:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "1G"
+        link_type:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Ethernet Bearer"
+        circuit:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "EB_as102.clber:1/1/5_as2.clber:GigabitEthernet1/0/26"
+        parents:
+          type: array
+          items:
+            type: object
+        created:
+          type: string
+          example: "2021-04-23"
+        last_updated:
+          type: string
+          example: "2021-04-23T12:42:40.152554Z"
+        description:
+          type: string
+          example: "as102.clber.1/1/5_as2.clber.1/0/26: starting on 2014-11-11"
+        name:
+          type: string
+          example: "EB_as102.clber:1/1/5_as2.clber:GigabitEthernet1/0/26"
+        sub_rate:
+          type: string
+          example: Null
+        is_active:
+          type: string
+          example: Null
+    minItems: 1
+required:
+  - results
+  - count

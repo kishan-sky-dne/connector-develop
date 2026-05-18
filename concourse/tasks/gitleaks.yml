@@ -1,0 +1,19 @@
+---
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: zricethezav/gitleaks
+    tag: latest
+
+inputs:
+  - name: repo
+
+run:
+  path: sh
+  args:
+    - -c
+    - |
+      cd repo
+      gitleaks detect --no-git -vv

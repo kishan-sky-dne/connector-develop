@@ -1,0 +1,72 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - anp
+  summary: Reads the TGReference metadata and user space data
+  description: Requests to get the details of the given TGRef id
+  security:
+     - oAuth2ClientCredentials:
+        - connector:read
+  x-openapi-router-controller: "connectors.webserver.anp.tasks.read"
+  operationId: read_tg_reference
+  parameters:
+    - name: projectName
+      description: "Name of the project has to be selected"
+      example: Sacramento
+      in: query
+      required: true
+      schema:
+        enum:
+          - Sacramento
+        type: string
+    - name: tgReference
+      description: "TG reference id has to be provided"
+      example: TG9999
+      in: query
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    - name: domain
+      description: "Domain name has be to selected"
+      example: core
+      in: query
+      required: true
+      schema:
+        enum:
+          - metro
+          - cdn
+          - core
+          - enterprise
+          - voice
+          - supercore
+          - access
+          - resources
+        type: string
+    - name: userSpace
+      description: "Names of the user spaces to be selected"
+      example: [NDSS, Tx Design]
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+          minLength: 1
+          minItems: 1
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/anp/read/response.yaml'
+      description: Expected response

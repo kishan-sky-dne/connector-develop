@@ -1,0 +1,163 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+  properties: 
+    id: 
+      type: "number"
+      example: 48677
+    card_type: 
+      properties: 
+        id: 
+          type: "number"
+          example: 11
+        ne_types: 
+          type: "array"
+          items: 
+            type: "string"
+          example: 
+            - "https://plannet.cf.stage-paas.bskyb.com/api/dcim/ne-types/7"
+        if_formats: 
+          type: "array"
+          items: 
+            type: "string"
+          example: 
+            - "https://plannet.cf.stage-paas.bskyb.com/api/dcim/if-formats/8"
+        rates: 
+          type: "array"
+          items: 
+            type: "string"
+          example: 
+            - "https://plannet.cf.stage-paas.bskyb.com/api/dcim/rates/9"
+            - "https://plannet.cf.stage-paas.bskyb.com/api/dcim/rates/8"
+        manufacturer: 
+          type: "string"
+          example: "https://plannet.cf.stage-paas.bskyb.com/api/dcim/manufacturers/2"
+        created: 
+          type: "string"
+          example: "2021-03-18"
+        last_updated: 
+          type: "string"
+          example: "2021-03-18T15:41:03.389698Z"
+        name: 
+          type: "string"
+          example: "MA5800-H901GPSF04-16x2.5/1.25G-GPON"
+        is_transmission: 
+          type: "boolean"
+          example: false
+        slot_qty: 
+          type: "number"
+          example: 0
+        port_qty: 
+          type: "number"
+          example: 16
+        slot_span: 
+          type: "number"
+          example: 1
+        part_number: 
+          type: "string"
+          example: "H901GPSF"
+        card_role: 
+          type: "number"
+          example: 8
+        compatible_card_types: 
+          type: "array"
+          items: 
+            type: "number"
+          example: 
+            - 137
+      type: "object"
+    atg: 
+      properties: 
+        id: 
+          type: "number"
+          example: 5
+        name: 
+          type: "string"
+          example: "Bluebird SRFU Start"
+        name_str: 
+          type: "string"
+          example: "TG5 Bluebird SRFU Start (12/11/2019)"
+        date: 
+          type: "string"
+          example: "2019-11-12"
+        dependencies: 
+          type: "array"
+          items: 
+            type: "string"
+          example: []
+        domains: 
+          type: "array"
+          items: 
+            type: "string"
+          example: 
+            - "https://plannet.cf.stage-paas.bskyb.com/api/dcim/domains/2"
+        coordinator: 
+          type: "string"
+          example: "None"
+        nis_ref: 
+          type: "string"
+          example: "TG5786"
+      type: "object"
+    dtg: 
+      properties: 
+        id: 
+          type: "number"
+          example: 9999
+        name: 
+          type: "string"
+          example: "Default End Transition"
+        name_str: 
+          type: "string"
+          example: "TG9999 Default End Transition (31/12/2099)"
+        date: 
+          type: "string"
+          example: "2099-12-31"
+        dependencies: 
+          type: "array"
+          items: 
+            type: "string"
+          example: []
+        domains: 
+          type: "array"
+          items: 
+            type: "string"
+          example: []
+        nis_ref: 
+          type: "string"
+          example: "TG9999"
+      type: "object"
+    slot: 
+      properties: 
+        id: 
+          type: "number"
+          example: 453545
+        name: 
+          type: "string"
+          example: "0/4"
+        object_id: 
+          type: "number"
+          example: 71512
+        object_type: 
+          type: "string"
+          example: "ne"
+        path: 
+          type: "string"
+          example: "0/4"
+      type: "object"
+    name: 
+      type: "string"
+      example: "olt2.test.bllab.it.bb.sky.com MA5800-H901GPSF04-16x2.5/1.25G-GPON 0/4"
+    created: 
+      type: "string"
+      example: "2022-06-27"
+    last_updated: 
+      type: "string"
+      example: "2022-07-04T07:17:14.024266Z"

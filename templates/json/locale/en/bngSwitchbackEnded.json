@@ -1,0 +1,12 @@
+{
+    "template": "bngSwitchbackEnded",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "orderNumber, hostname,siteId,ticketNumber",
+        "subject": "The BNG Switchback Process has ended for BNG device {{ mappings.hostname }} at site {{ mappings.siteId }} - Change ticket {{mappings.ticketNumber}}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> The BNG Switchback Process has ended for BNG device <b>{{ mappings.hostname }}</b> at site <b>{{ mappings.siteId }}</b>.<br> <br> DNE order no: <b>{{ mappings.orderNumber }}</b> with change ticket <b>{{ mappings.ticketNumber }}</b> <br><br><p>Thank You</p>",
+        "footerText": "This is an automated email. Please do not reply to this email.<br>"
+    }
+}

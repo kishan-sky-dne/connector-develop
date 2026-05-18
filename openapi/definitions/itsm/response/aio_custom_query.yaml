@@ -1,0 +1,36 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  result:
+    type: array
+    items:
+      type: object
+      properties:
+        parentCI:
+          type: string
+          example: me0.mypon.isp.sky.com
+        relationshipType:
+          type: string
+          example: "Connects to::Connected by"
+        childCI:
+          type: string
+          example: "ONEA45266093"
+        getUrlPath:
+          type: string
+          example: "https://sparkproxyuat.azure-api.net//service3800/request?db_table=cmdb_rel_ci&query_filter=parent.name%3Dma0.bllabd4"
+        relationshipStatus:
+          type: string
+          example: "active"
+        action:
+          type: string
+          example: "read"

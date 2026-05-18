@@ -1,0 +1,171 @@
+---
+#============================================================
+# Connectors - Production Environment Pipeline
+# Manual trigger for production deployment
+#============================================================
+
+resources:
+  - name: repo-prod
+    type: git
+    icon: github
+    check_every: 1m
+    webhook_token: &webhook-token ((common-creds.webhook_token))
+    source: &git-source
+      uri: https://github.com/sky-uk/dne-connectors.git
+      username: ((common-creds.github_username))
+      password: ((common-creds.github_personal_access_token))
+      branch: master
+
+groups:
+  - name: all
+    jobs:
+      - gitleaks-scan
+      - build-docker
+      - deploy-cks-onx
+      - deploy-cks-sce
+
+x-params-prod-cks-deploy-base: &params-prod-cks-deploy-base
+  ENVIRONMENT: production
+  NAMESPACE: dne-prod
+  OAUTH_USERNAME: ((prod-secrets.oauth_username))
+  OAUTH_PASSWORD: ((prod-secrets.oauth_password))
+  SKY_VAULT_APP_ID: ((prod-secrets.sky_vault_app_id))
+  SKY_VAULT_CDN_RS_SAFE: ((prod-secrets.sky_vault_cdn_rs_safe))
+  CAUTH_USERNAME: ((prod-secrets.cauth_username))
+  CAUTH_PASSWORD: ((prod-secrets.cauth_password))
+  AD_USERNAME: ((prod-secrets.ad_username))
+  AD_PASSWORD: ((prod-secrets.ad_password))
+  ITSM_SUBSCRIPTION_KEY: ((prod-secrets.itsm_subscription_key))
+  PLANNET_USERNAME: ((prod-secrets.plannet_username))
+  PLANNET_PASSWORD: ((prod-secrets.plannet_password))
+  INCA_USERNAME: ((prod-secrets.inca_username))
+  INCA_PASSWORD: ((prod-secrets.inca_password))
+  NEXA_USERNAME: ((prod-secrets.nexa_username))
+  NEXA_PASSWORD: ((prod-secrets.nexa_password))
+  CONNECTORS_API_GW_URL: ((prod-connectors.CONNECTORS_API_GW_URL))
+  CONNECTORS_AUDITNOW_TOPIC: ((prod-connectors.CONNECTORS_AUDITNOW_TOPIC))
+  CONNECTORS_AZURE_AD_AUTH_AUTHORITY: ((prod-connectors.CONNECTORS_AZURE_AD_AUTH_AUTHORITY))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL: ((prod-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_ID: ((prod-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_ID))
+  CONNECTORS_AZURE_AD_AUTH_SCOPES: ((prod-connectors.CONNECTORS_AZURE_AD_AUTH_SCOPES))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID: ((prod-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET: ((prod-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET))
+  CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD: ((prod-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD))
+  CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME: ((prod-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME))
+  CONNECTORS_ELASTICSEARCH_NODES: ((prod-connectors.CONNECTORS_ELASTICSEARCH_NODES))
+  CONNECTORS_ELASTICSEARCH_PASSWORD: ((prod-connectors.CONNECTORS_ELASTICSEARCH_PASSWORD))
+  CONNECTORS_ELASTICSEARCH_USERNAME: ((prod-connectors.CONNECTORS_ELASTICSEARCH_USERNAME))
+  CONNECTORS_GIT_TOKEN: ((prod-connectors.CONNECTORS_GIT_TOKEN))
+  CONNECTORS_HORIZON_ENDPOINT: ((prod-connectors.CONNECTORS_HORIZON_ENDPOINT))
+  CONNECTORS_INCA_BASE_URL: ((prod-connectors.CONNECTORS_INCA_BASE_URL))
+  CONNECTORS_INCA_GEA_URL: ((prod-connectors.CONNECTORS_INCA_GEA_URL))
+  CONNECTORS_INCA_NEXA_PASSWORD: ((prod-connectors.CONNECTORS_INCA_NEXA_PASSWORD))
+  CONNECTORS_INCA_NEXA_USERNAME: ((prod-connectors.CONNECTORS_INCA_NEXA_USERNAME))
+  CONNECTORS_INCA_PASSWORD: ((prod-connectors.CONNECTORS_INCA_PASSWORD))
+  CONNECTORS_INCA_USERNAME: ((prod-connectors.CONNECTORS_INCA_USERNAME))
+  CONNECTORS_ITSM_ASSIGNED_TO: ((prod-connectors.CONNECTORS_ITSM_ASSIGNED_TO))
+  CONNECTORS_ITSM_CHECK_DURATION: ((prod-connectors.CONNECTORS_ITSM_CHECK_DURATION))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP: ((prod-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET: ((prod-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET))
+  CONNECTORS_ITSM_EVPN_CONFIG_GROUP: ((prod-connectors.CONNECTORS_ITSM_EVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_EVPN_PARENT_TICKET: ((prod-connectors.CONNECTORS_ITSM_EVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP: ((prod-connectors.CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP: ((prod-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET: ((prod-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP: ((prod-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET: ((prod-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_URL: ((prod-connectors.CONNECTORS_ITSM_URL))
+  CONNECTORS_KAFKA_BOOTSTRAP_SERVERS: ((prod-connectors.CONNECTORS_KAFKA_BOOTSTRAP_SERVERS))
+  CONNECTORS_KAFKA_SASL_PASSWORD: ((prod-connectors.CONNECTORS_KAFKA_SASL_PASSWORD))
+  CONNECTORS_KAFKA_SASL_PASSWORD_WRITE: ((prod-connectors.CONNECTORS_KAFKA_SASL_PASSWORD_WRITE))
+  CONNECTORS_KAFKA_SASL_USERNAME: ((prod-connectors.CONNECTORS_KAFKA_SASL_USERNAME))
+  CONNECTORS_KAFKA_SASL_USERNAME_WRITE: ((prod-connectors.CONNECTORS_KAFKA_SASL_USERNAME_WRITE))
+  CONNECTORS_MAILER_ALLOWED_DOMAINS: ((prod-connectors.CONNECTORS_MAILER_ALLOWED_DOMAINS))
+  CONNECTORS_MAILER_FEATURE_FLAG: ((prod-connectors.CONNECTORS_MAILER_FEATURE_FLAG))
+  CONNECTORS_MAILER_FROM_ADDRESS: ((prod-connectors.CONNECTORS_MAILER_FROM_ADDRESS))
+  CONNECTORS_MINIO_ACCESS_KEY: ((prod-connectors.CONNECTORS_MINIO_ACCESS_KEY))
+  CONNECTORS_MINIO_ENDPOINT: ((prod-connectors.CONNECTORS_MINIO_ENDPOINT))
+  CONNECTORS_MINIO_SECRET_KEY: ((prod-connectors.CONNECTORS_MINIO_SECRET_KEY))
+  CONNECTORS_MYSQLDB_DATABASE_NAME: ((prod-connectors.CONNECTORS_MYSQLDB_DATABASE_NAME))
+  CONNECTORS_MYSQLDB_HOST: ((prod-connectors.CONNECTORS_MYSQLDB_HOST))
+  CONNECTORS_MYSQLDB_PASSWORD: ((prod-connectors.CONNECTORS_MYSQLDB_PASSWORD))
+  CONNECTORS_MYSQLDB_PORT: ((prod-connectors.CONNECTORS_MYSQLDB_PORT))
+  CONNECTORS_MYSQLDB_USERNAME: ((prod-connectors.CONNECTORS_MYSQLDB_USERNAME))
+  CONNECTORS_OAUTH_URL: ((prod-connectors.CONNECTORS_OAUTH_URL))
+  CONNECTORS_OPTIONS_LOG_LEVEL: ((prod-connectors.CONNECTORS_OPTIONS_LOG_LEVEL))
+  CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION: ((prod-connectors.CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION))
+  CONNECTORS_ORDER_STATUS_TOPIC_MAPPER: ((prod-connectors.CONNECTORS_ORDER_STATUS_TOPIC_MAPPER))
+  CONNECTORS_ORDER_STATUS_URL: ((prod-connectors.CONNECTORS_ORDER_STATUS_URL))
+  CONNECTORS_PLANNET_ACCESS_TOKEN: ((prod-connectors.CONNECTORS_PLANNET_ACCESS_TOKEN))
+  CONNECTORS_PLANNET_BASE_URL: ((prod-connectors.CONNECTORS_PLANNET_BASE_URL))
+  CONNECTORS_POSTGRESDB_DATABASE_NAME: ((prod-connectors.CONNECTORS_POSTGRESDB_DATABASE_NAME))
+  CONNECTORS_POSTGRESDB_HOST: ((prod-connectors.CONNECTORS_POSTGRESDB_HOST))
+  CONNECTORS_POSTGRESDB_PASSWORD: ((prod-connectors.CONNECTORS_POSTGRESDB_PASSWORD))
+  CONNECTORS_POSTGRESDB_PORT: ((prod-connectors.CONNECTORS_POSTGRESDB_PORT))
+  CONNECTORS_POSTGRESDB_USERNAME: ((prod-connectors.CONNECTORS_POSTGRESDB_USERNAME))
+  CONNECTORS_RADIUS_BASE_URL: ((prod-connectors.CONNECTORS_RADIUS_BASE_URL))
+  CONNECTORS_RADIUS_PASSWORD: ((prod-connectors.CONNECTORS_RADIUS_PASSWORD))
+  CONNECTORS_RADIUS_SCOPE: ((prod-connectors.CONNECTORS_RADIUS_SCOPE))
+  CONNECTORS_RADIUS_USERNAME: ((prod-connectors.CONNECTORS_RADIUS_USERNAME))
+  CONNECTORS_RSA_PRIVATE_KEY: ((prod-connectors.CONNECTORS_RSA_PRIVATE_KEY))
+  CONNECTORS_RSA_PUBLIC_KEY: ((prod-connectors.CONNECTORS_RSA_PUBLIC_KEY))
+  CONNECTORS_SERVICEDB_PASSWORD: ((prod-connectors.CONNECTORS_SERVICEDB_PASSWORD))
+  CONNECTORS_SERVICEDB_USERNAME: ((prod-connectors.CONNECTORS_SERVICEDB_USERNAME))
+  CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT: ((prod-connectors.CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT))
+  DOCKERCONFIGJSON: ((common-creds.dockerconfigjson))
+
+jobs:
+  - name: gitleaks-scan
+    public: true
+    plan:
+      - get: repo-prod
+        trigger: true
+      - task: run-gitleaks
+        file: repo-prod/concourse/tasks/gitleaks.yml
+        input_mapping: {repo: repo-prod}
+
+  - name: build-docker
+    public: true
+    serial: true
+    plan:
+      - get: repo-prod
+        trigger: true
+        passed: [gitleaks-scan]
+      - task: build-and-push
+        privileged: true
+        file: repo-prod/concourse/tasks/build-docker.yml
+        input_mapping: {repo: repo-prod}
+        params:
+          HARBOR_USERNAME: ((common-creds.harbor_username))
+          HARBOR_PASSWORD: ((common-creds.harbor_password))
+          HARBOR_REGISTRY: ((common-creds.harbor_registry))
+          IMAGE_NAME: ipnd-dne/connectors
+          IMAGE_TAG: latest
+
+  - name: deploy-cks-onx
+    public: true
+    plan:
+      - get: repo-prod
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-onx
+        file: repo-prod/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-prod}
+        params:
+          <<: *params-prod-cks-deploy-base
+          DATACENTER: onx
+          KUBECONFIG_CONTENT: ((prod-onx-kubeconfig))
+
+  - name: deploy-cks-sce
+    public: true
+    plan:
+      - get: repo-prod
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-sce
+        file: repo-prod/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-prod}
+        params:
+          <<: *params-prod-cks-deploy-base
+          DATACENTER: sce
+          KUBECONFIG_CONTENT: ((prod-sce-kubeconfig))

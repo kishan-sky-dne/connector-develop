@@ -1,0 +1,171 @@
+---
+#============================================================
+# Connectors - Test Environment Pipeline
+# Manual trigger for test environment deployment
+#============================================================
+
+resources:
+  - name: repo-test
+    type: git
+    icon: github
+    check_every: 1m
+    webhook_token: &webhook-token ((common-creds.webhook_token))
+    source: &git-source
+      uri: https://github.com/sky-uk/dne-connectors.git
+      username: ((common-creds.github_username))
+      password: ((common-creds.github_personal_access_token))
+      branch: test
+
+groups:
+  - name: all
+    jobs:
+      - gitleaks-scan
+      - build-docker
+      - deploy-cks-onx
+      - deploy-cks-sce
+
+x-params-test-cks-deploy-base: &params-test-cks-deploy-base
+  ENVIRONMENT: test
+  NAMESPACE: dne-test
+  OAUTH_USERNAME: ((test-secrets.oauth_username))
+  OAUTH_PASSWORD: ((test-secrets.oauth_password))
+  SKY_VAULT_APP_ID: ((test-secrets.sky_vault_app_id))
+  SKY_VAULT_CDN_RS_SAFE: ((test-secrets.sky_vault_cdn_rs_safe))
+  CAUTH_USERNAME: ((test-secrets.cauth_username))
+  CAUTH_PASSWORD: ((test-secrets.cauth_password))
+  AD_USERNAME: ((test-secrets.ad_username))
+  AD_PASSWORD: ((test-secrets.ad_password))
+  ITSM_SUBSCRIPTION_KEY: ((test-secrets.itsm_subscription_key))
+  PLANNET_USERNAME: ((test-secrets.plannet_username))
+  PLANNET_PASSWORD: ((test-secrets.plannet_password))
+  INCA_USERNAME: ((test-secrets.inca_username))
+  INCA_PASSWORD: ((test-secrets.inca_password))
+  NEXA_USERNAME: ((test-secrets.nexa_username))
+  NEXA_PASSWORD: ((test-secrets.nexa_password))
+  CONNECTORS_API_GW_URL: ((test-connectors.CONNECTORS_API_GW_URL))
+  CONNECTORS_AUDITNOW_TOPIC: ((test-connectors.CONNECTORS_AUDITNOW_TOPIC))
+  CONNECTORS_AZURE_AD_AUTH_AUTHORITY: ((test-connectors.CONNECTORS_AZURE_AD_AUTH_AUTHORITY))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL: ((test-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_CREDENTIAL))
+  CONNECTORS_AZURE_AD_AUTH_CLIENT_ID: ((test-connectors.CONNECTORS_AZURE_AD_AUTH_CLIENT_ID))
+  CONNECTORS_AZURE_AD_AUTH_SCOPES: ((test-connectors.CONNECTORS_AZURE_AD_AUTH_SCOPES))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID: ((test-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_ID))
+  CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET: ((test-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_CLIENT_SECRET))
+  CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD: ((test-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_PASSWORD))
+  CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME: ((test-connectors.CONNECTORS_CISCO_SMART_ACCOUNT_USERNAME))
+  CONNECTORS_ELASTICSEARCH_NODES: ((test-connectors.CONNECTORS_ELASTICSEARCH_NODES))
+  CONNECTORS_ELASTICSEARCH_PASSWORD: ((test-connectors.CONNECTORS_ELASTICSEARCH_PASSWORD))
+  CONNECTORS_ELASTICSEARCH_USERNAME: ((test-connectors.CONNECTORS_ELASTICSEARCH_USERNAME))
+  CONNECTORS_GIT_TOKEN: ((test-connectors.CONNECTORS_GIT_TOKEN))
+  CONNECTORS_HORIZON_ENDPOINT: ((test-connectors.CONNECTORS_HORIZON_ENDPOINT))
+  CONNECTORS_INCA_BASE_URL: ((test-connectors.CONNECTORS_INCA_BASE_URL))
+  CONNECTORS_INCA_GEA_URL: ((test-connectors.CONNECTORS_INCA_GEA_URL))
+  CONNECTORS_INCA_NEXA_PASSWORD: ((test-connectors.CONNECTORS_INCA_NEXA_PASSWORD))
+  CONNECTORS_INCA_NEXA_USERNAME: ((test-connectors.CONNECTORS_INCA_NEXA_USERNAME))
+  CONNECTORS_INCA_PASSWORD: ((test-connectors.CONNECTORS_INCA_PASSWORD))
+  CONNECTORS_INCA_USERNAME: ((test-connectors.CONNECTORS_INCA_USERNAME))
+  CONNECTORS_ITSM_ASSIGNED_TO: ((test-connectors.CONNECTORS_ITSM_ASSIGNED_TO))
+  CONNECTORS_ITSM_CHECK_DURATION: ((test-connectors.CONNECTORS_ITSM_CHECK_DURATION))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP: ((test-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_CONFIG_GROUP))
+  CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET: ((test-connectors.CONNECTORS_ITSM_ETHERNETSEGMENT_PARENT_TICKET))
+  CONNECTORS_ITSM_EVPN_CONFIG_GROUP: ((test-connectors.CONNECTORS_ITSM_EVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_EVPN_PARENT_TICKET: ((test-connectors.CONNECTORS_ITSM_EVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP: ((test-connectors.CONNECTORS_ITSM_EXTERNAL_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP: ((test-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET: ((test-connectors.CONNECTORS_ITSM_MANAGEMENTEVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP: ((test-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_CONFIG_GROUP))
+  CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET: ((test-connectors.CONNECTORS_ITSM_SUBSCRIBEREVPN_PARENT_TICKET))
+  CONNECTORS_ITSM_URL: ((test-connectors.CONNECTORS_ITSM_URL))
+  CONNECTORS_KAFKA_BOOTSTRAP_SERVERS: ((test-connectors.CONNECTORS_KAFKA_BOOTSTRAP_SERVERS))
+  CONNECTORS_KAFKA_SASL_PASSWORD: ((test-connectors.CONNECTORS_KAFKA_SASL_PASSWORD))
+  CONNECTORS_KAFKA_SASL_PASSWORD_WRITE: ((test-connectors.CONNECTORS_KAFKA_SASL_PASSWORD_WRITE))
+  CONNECTORS_KAFKA_SASL_USERNAME: ((test-connectors.CONNECTORS_KAFKA_SASL_USERNAME))
+  CONNECTORS_KAFKA_SASL_USERNAME_WRITE: ((test-connectors.CONNECTORS_KAFKA_SASL_USERNAME_WRITE))
+  CONNECTORS_MAILER_ALLOWED_DOMAINS: ((test-connectors.CONNECTORS_MAILER_ALLOWED_DOMAINS))
+  CONNECTORS_MAILER_FEATURE_FLAG: ((test-connectors.CONNECTORS_MAILER_FEATURE_FLAG))
+  CONNECTORS_MAILER_FROM_ADDRESS: ((test-connectors.CONNECTORS_MAILER_FROM_ADDRESS))
+  CONNECTORS_MINIO_ACCESS_KEY: ((test-connectors.CONNECTORS_MINIO_ACCESS_KEY))
+  CONNECTORS_MINIO_ENDPOINT: ((test-connectors.CONNECTORS_MINIO_ENDPOINT))
+  CONNECTORS_MINIO_SECRET_KEY: ((test-connectors.CONNECTORS_MINIO_SECRET_KEY))
+  CONNECTORS_MYSQLDB_DATABASE_NAME: ((test-connectors.CONNECTORS_MYSQLDB_DATABASE_NAME))
+  CONNECTORS_MYSQLDB_HOST: ((test-connectors.CONNECTORS_MYSQLDB_HOST))
+  CONNECTORS_MYSQLDB_PASSWORD: ((test-connectors.CONNECTORS_MYSQLDB_PASSWORD))
+  CONNECTORS_MYSQLDB_PORT: ((test-connectors.CONNECTORS_MYSQLDB_PORT))
+  CONNECTORS_MYSQLDB_USERNAME: ((test-connectors.CONNECTORS_MYSQLDB_USERNAME))
+  CONNECTORS_OAUTH_URL: ((test-connectors.CONNECTORS_OAUTH_URL))
+  CONNECTORS_OPTIONS_LOG_LEVEL: ((test-connectors.CONNECTORS_OPTIONS_LOG_LEVEL))
+  CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION: ((test-connectors.CONNECTORS_OPTIONS_SPARK_CHECK_EXCEPTION))
+  CONNECTORS_ORDER_STATUS_TOPIC_MAPPER: ((test-connectors.CONNECTORS_ORDER_STATUS_TOPIC_MAPPER))
+  CONNECTORS_ORDER_STATUS_URL: ((test-connectors.CONNECTORS_ORDER_STATUS_URL))
+  CONNECTORS_PLANNET_ACCESS_TOKEN: ((test-connectors.CONNECTORS_PLANNET_ACCESS_TOKEN))
+  CONNECTORS_PLANNET_BASE_URL: ((test-connectors.CONNECTORS_PLANNET_BASE_URL))
+  CONNECTORS_POSTGRESDB_DATABASE_NAME: ((test-connectors.CONNECTORS_POSTGRESDB_DATABASE_NAME))
+  CONNECTORS_POSTGRESDB_HOST: ((test-connectors.CONNECTORS_POSTGRESDB_HOST))
+  CONNECTORS_POSTGRESDB_PASSWORD: ((test-connectors.CONNECTORS_POSTGRESDB_PASSWORD))
+  CONNECTORS_POSTGRESDB_PORT: ((test-connectors.CONNECTORS_POSTGRESDB_PORT))
+  CONNECTORS_POSTGRESDB_USERNAME: ((test-connectors.CONNECTORS_POSTGRESDB_USERNAME))
+  CONNECTORS_RADIUS_BASE_URL: ((test-connectors.CONNECTORS_RADIUS_BASE_URL))
+  CONNECTORS_RADIUS_PASSWORD: ((test-connectors.CONNECTORS_RADIUS_PASSWORD))
+  CONNECTORS_RADIUS_SCOPE: ((test-connectors.CONNECTORS_RADIUS_SCOPE))
+  CONNECTORS_RADIUS_USERNAME: ((test-connectors.CONNECTORS_RADIUS_USERNAME))
+  CONNECTORS_RSA_PRIVATE_KEY: ((test-connectors.CONNECTORS_RSA_PRIVATE_KEY))
+  CONNECTORS_RSA_PUBLIC_KEY: ((test-connectors.CONNECTORS_RSA_PUBLIC_KEY))
+  CONNECTORS_SERVICEDB_PASSWORD: ((test-connectors.CONNECTORS_SERVICEDB_PASSWORD))
+  CONNECTORS_SERVICEDB_USERNAME: ((test-connectors.CONNECTORS_SERVICEDB_USERNAME))
+  CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT: ((test-connectors.CONNECTORS_SOFTWARE_LIFECYCLE_MANAGEMENT))
+  DOCKERCONFIGJSON: ((common-creds.dockerconfigjson))
+
+jobs:
+  - name: gitleaks-scan
+    public: true
+    plan:
+      - get: repo-test
+        trigger: true
+      - task: run-gitleaks
+        file: repo-test/concourse/tasks/gitleaks.yml
+        input_mapping: {repo: repo-test}
+
+  - name: build-docker
+    public: true
+    serial: true
+    plan:
+      - get: repo-test
+        trigger: true
+        passed: [gitleaks-scan]
+      - task: build-and-push
+        privileged: true
+        file: repo-test/concourse/tasks/build-docker.yml
+        input_mapping: {repo: repo-test}
+        params:
+          HARBOR_USERNAME: ((common-creds.harbor_username))
+          HARBOR_PASSWORD: ((common-creds.harbor_password))
+          HARBOR_REGISTRY: ((common-creds.harbor_registry))
+          IMAGE_NAME: ipnd-dne/connectors
+          IMAGE_TAG: test
+
+  - name: deploy-cks-onx
+    public: true
+    plan:
+      - get: repo-test
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-onx
+        file: repo-test/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-test}
+        params:
+          <<: *params-test-cks-deploy-base
+          DATACENTER: onx
+          KUBECONFIG_CONTENT: ((test-onx-kubeconfig))
+
+  - name: deploy-cks-sce
+    public: true
+    plan:
+      - get: repo-test
+        trigger: false
+        passed: [build-docker]
+      - task: deploy-to-cks-sce
+        file: repo-test/concourse/tasks/deploy-cks.yml
+        input_mapping: {repo: repo-test}
+        params:
+          <<: *params-test-cks-deploy-base
+          DATACENTER: sce
+          KUBECONFIG_CONTENT: ((test-sce-kubeconfig))

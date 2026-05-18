@@ -1,0 +1,310 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: Retrieve interface links details from plannet
+  description: Get meta data of interface links from plannet connector plannet
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_interface_links
+  parameters:
+    - name: 'linkType'
+      in: query
+      required: true
+      description: Link Type passed to PlanNet
+      schema:
+        type: string
+        enum:
+          - None
+          - Ethernet Bearer
+          - Optical Bearer
+          - WDM OMS
+          - WDM OTS
+          - OTN OPU
+          - OTN OTU
+          - OTN ODU
+          - Superchannel
+          - OCh
+          - LAG
+          - Leased Line
+          - VLAN Segment Unrouted (QoS)
+          - VLAN Segment
+          - Fibre
+          - Dark Fibre
+          - MPLS PW
+          - Bridge
+          - GPON
+          - EVPN ELAN
+    - name: 'fromHostName'
+      in: query
+      required: false
+      description: Source NE name
+      example: me0.eacol
+      schema:
+        type: string
+    - name: 'toHostName'
+      in: query
+      required: false
+      description: Destination NE name
+      example: me1.eacol
+      schema:
+        type: string
+    - name: 'onHostName'
+      in: query
+      required: false
+      description: NE name for which list of circuit IDs is needed
+      example: ma2.clber.isp.sky.com
+      schema:
+        type: string
+    - name: 'circuitID'
+      in: query
+      required: false
+      description: The Circuit ID for which the A-end and B-end details is needed.
+      example: OGHP45758039
+      schema:
+        type: string
+    - name: 'date'
+      in: query
+      required: false
+      description: Get information of particular date
+      example: 2021-06-30
+      schema:
+        type: string
+    - name: 'id'
+      in: query
+      required: false
+      description: Get information of particular id
+      schema:
+        type: string
+    - name: 'name'
+      in: query
+      required: false
+      description: Get information of particular name
+      schema:
+        type: string
+    - name: 'interface1'
+      in: query
+      required: false
+      description: Get information based on interface 1 value
+      schema:
+        type: string
+    - name: 'interface2'
+      in: query
+      required: false
+      description: Get information based on interface 2 value
+      schema:
+        type: string
+    - name: 'ne1'
+      in: query
+      required: false
+      description: Get information based on ne1 id
+      schema:
+        type: string
+    - name: 'ne2'
+      in: query
+      required: false
+      description: Get information based on ne2 id
+      schema:
+        type: string
+    - name: 'isTransmission'
+      in: query
+      required: false
+      description: Get information based on is_transmission parameter value
+      schema:
+        type: string
+    - name: 'description'
+      in: query
+      required: false
+      description: Get information of particular description provided
+      schema:
+        type: string
+    - name: 'linkPrev'
+      in: query
+      required: false
+      description: Get information based on previous link value
+      schema:
+        type: string
+    - name: 'atg'
+      in: query
+      required: false
+      description: Get information of particular atg
+      schema:
+        type: string
+    - name: 'dtg'
+      in: query
+      required: false
+      description: Get information of particular dtg
+      schema:
+        type: string
+    - name: 'rate'
+      in: query
+      required: false
+      description: Get information of particular rate value
+      schema:
+        type: string
+    - name: 'onInterface'
+      in: query
+      required: false
+      description: Interface name for which interface details are required
+      schema:
+        type: string
+    - name: 'fromInterface'
+      in: query
+      required: false
+      description: Source interface name for which interface details are required
+      schema:
+        type: string
+    - name: 'toInterface'
+      in: query
+      required: false
+      description: Destination interface name for which interface details are required
+      schema:
+        type: string
+    - name: 'subrate'
+      in: query
+      required: false
+      description: Get information of particular subrate
+      schema:
+        type: number
+    - name: 'isActive'
+      in: query
+      required: false
+      description: Get information based on is_active flag
+      schema:
+        type: boolean
+    - name: 'pwId'
+      in: query
+      required: false
+      description: Get information of particular pw_id
+      schema:
+        type: number
+    - name: 'searchAtgId'
+      in: query
+      required: false
+      description: Get information based on ATG ID
+      schema:
+        type: string
+    - name: 'searchDtgId'
+      in: query
+      required: false
+      description: Get information based on DTG ID
+      schema:
+        type: string
+    - name: 'searchAtgDate'
+      in: query
+      required: false
+      description: Get information based on ATG date
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate'
+      in: query
+      required: false
+      description: Get information based on DTG date
+      schema:
+        type: string
+        format: date
+        example: 2099-12-31
+    - name: 'searchAtgDate0'
+      in: query
+      required: false
+      description: Get information based on ATG date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchAtgDate1'
+      in: query
+      required: false
+      description: Get information based on ATG date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate0'
+      in: query
+      required: false
+      description: Get information based on DTG date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchDtgDate1'
+      in: query
+      required: false
+      description: Get information based on DTG date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchLiveDateRange0'
+      in: query
+      required: false
+      description: Get information based on live date range lower value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'searchLiveDateRange1'
+      in: query
+      required: false
+      description: Get information based on live date range higher value
+      schema:
+        type: string
+        format: date
+        example: 2016-08-15
+    - name: 'filter'
+      in: query
+      required: false
+      description: Get information based on specified filter value
+      schema:
+        type: string
+    - name: 'pk'
+      in: query
+      required: false
+      description: Get information based on specified pk value
+      schema:
+        type: string
+    - name: 'child'
+      in: query
+      required: false
+      description: Get information based on child value
+      schema:
+        type: string
+    - name: 'offset'
+      in: query
+      required: false
+      description: The initial index from which to return the results
+      example: 0
+      schema:
+        type: integer
+        default: 0
+    - name: 'limit'
+      in: query
+      required: false
+      description: Number of results to return per page.
+      example: 0
+      schema:
+        type: integer
+        default: 50
+        minimum: 1
+        maximum: 100
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_interface_links.yaml'
+      description: Expected response of plannet for /getInterfaceLinks call

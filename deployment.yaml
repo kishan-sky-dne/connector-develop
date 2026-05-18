@@ -1,0 +1,148 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: connectors
+  name: connectors
+  namespace: ""
+spec:
+  ports:
+  - name: http
+    port: 5000
+  selector:
+    app: connectors
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    version: v1
+  name: connectors
+  namespace: ""
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connectors
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: connectors
+        version: v1
+    spec:
+      containers:
+      - env:
+        - name: CONNECTORS_OAUTH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: oauth_username
+              name: secrets
+              optional: false
+        - name: CONNECTORS_OAUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: oauth_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_CAUTH_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: cauth_username
+              name: secrets
+              optional: false
+        - name: CONNECTORS_CAUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: cauth_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_AD_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: ad_username
+              name: secrets
+              optional: false
+        - name: CONNECTORS_AD_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: ad_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_ITSM_SUBSCRIPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              key: itsm_subscription_key
+              name: secrets
+              optional: false
+        - name: CONNECTORS_PLANNET_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: plannet_username
+              name: secrets
+              optional: false
+        - name: CONNECTORS_PLANNET_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: ad_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_INCA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: inca_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_INCA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: inca_username
+              name: secrets
+              optional: false
+        - name: CONNECTORS_INCA_NEXA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: nexa_password
+              name: secrets
+              optional: false
+        - name: CONNECTORS_INCA_NEXA_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: nexa_username
+              name: secrets
+              optional: false
+        envFrom:
+        - configMapRef:
+            name: connectors-config
+            optional: false
+        image: ""
+        imagePullPolicy: Always
+        name: connectors
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /api/v1/healthcheck
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "echo Received SIGTERM Signal > /app/maintenance"]
+      terminationGracePeriodSeconds: 300
+      imagePullSecrets:
+      - name: fluidcloud-registry
+      - name: registry-cloud

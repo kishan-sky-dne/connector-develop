@@ -1,0 +1,36 @@
+{
+  "fileType": "csv",
+  "sheets": [
+    {
+      "sheetIndex": 0,
+      "sections": [
+        {
+          "startIndex": "A22",
+          "endIndex": "I34",
+          "headerFlag": true
+        }
+      ]
+    },
+    {
+      "sheetIndex": 1,
+      "sections": [
+        {
+          "startIndex": "A2",
+          "endIndex": "E8",
+          "headerFlag": true
+        }
+      ]
+    },
+    {
+      "sheetIndex": 2,
+      "sections": [
+        {
+          "startIndex": "A2",
+          "endIndex": "E8",
+          "headerFlag": true
+        }
+      ]
+    }
+  ],
+  "dbStorageFlag": false
+}

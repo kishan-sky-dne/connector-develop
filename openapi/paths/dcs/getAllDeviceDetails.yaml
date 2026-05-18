@@ -1,0 +1,54 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+post:
+  tags:
+    - dcs
+  description:  DNE connector services for getting all device details from DCS.
+  security:
+    - oAuth2ClientCredentials: [connector:write]
+  operationId: get_all_device_details
+  x-openapi-router-controller: "connectors.webserver.dcs.tasks.write"
+  parameters:
+    - name: 'pageNumber'
+      in: query
+      required: false
+      description: current page number
+      schema:
+        type: integer
+        minimum: 1
+    - name: 'limit'
+      in: query
+      required: false
+      description: Number of results to return per page.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+    - name: 'offset'
+      in: query
+      required: false
+      description: The initial index from which to return the results
+      schema:
+        type: integer
+  requestBody:
+    description: Required details to get all device details in dcs system
+    content:
+      application/json:
+        schema:
+          $ref: '../../definitions/dcs/request/getDeviceRequest.yaml'
+  responses:
+    '200':
+      description: Response to device details in dcs system
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/dcs/response/getAllDeviceDetails.yaml'

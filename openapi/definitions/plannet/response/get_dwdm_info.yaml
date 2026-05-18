@@ -1,0 +1,33 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: array
+items:
+  type: object
+  properties: 
+    channel_number: 
+      type: "number"
+      example: 60
+    frequency: 
+      type: "number"
+      example: 196
+    id: 
+      type: "number"
+      example: 36
+    interface: 
+      type: "string"
+      example: "C1"
+    ne_type: 
+      type: "string"
+      example: "16CSM-SFA"
+    wavelength: 
+      type: "number"
+      example: 1529.55

@@ -1,0 +1,26 @@
+{
+  "fileType": "xls",
+  "fileName": "Patching Request Details ver 1.0.xls",
+  "sheets": [
+    {
+      "sheetIndex": 0,
+      "sections": [
+        {
+          "merged": true,
+          "startIndex": "C3",
+          "endIndex": "K20"
+        },
+        {
+          "merged": true,
+          "startIndex": "L3",
+          "endIndex": "T20"
+        },
+        {
+          "merged": true,
+          "startIndex": "U3",
+          "endIndex": "U20"
+        }
+      ]
+    }
+  ]
+}

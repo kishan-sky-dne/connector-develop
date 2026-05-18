@@ -1,0 +1,12 @@
+{
+    "template": "geaRevisitRequired",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+    "requiredParams": "revisitType,orderType, orderNumber, circuitId, ticketNumber, url,taskName",
+    "subject": "{{mappings.revisitType}} requested for Circuit ID : {{ mappings.circuitId}}, Order type: {{ mappings.orderType }} and Order No: {{ mappings.orderNumber }}",
+    "title": "",
+    "subtitle": "<p>Hello,</p> {{mappings.revisitType}} has been requested for GEA circuit ID {{ mappings.circuitId}}.<br/>Order no: <b>{{ mappings.orderNumber }} </b><br/>Step: <b> {{ mappings.taskName }} <br/></b>Please check <a href= {{ mappings.url }}> {{ mappings.url }} </a> with the order number {{mappings.orderNumber}} for more information. <br/><p>Thank You</p>",
+    "footerText": "This is an automated email. Please do not reply to this email."
+    }
+}

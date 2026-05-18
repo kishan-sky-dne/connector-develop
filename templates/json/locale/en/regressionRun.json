@@ -1,0 +1,12 @@
+{
+    "template": "regressionRun",
+    "language": "en",
+    "htmlTemplate": "orderTemplate",
+    "glossary": {
+        "requiredParams": "tagType, executionDate, executionServer, environmentType, logsPointer, regressionLogs, genericText, RegressionTeam",
+        "subject": "DNE {{ mappings.tagType }} Regression results {{ mappings.executionDate }}",
+        "title": "",
+        "subtitle": "<p>Hello,</p> Please find the details of DNE Regression results. </br> <br>Execution Server: <b> {{ mappings.executionServer }} </b></br>Environment: <b> {{ mappings.environmentType }} </b></br>Logs Pointer: <b> {{ mappings.logsPointer }} </b></br>Regression Logs: <a href= {{ mappings.regressionLogs }}> {{ mappings.regressionLogs }} </a> </br></br>{{ mappings.genericText }}</br> <br>For any query or support please reach out to Regression Team <a href='mailto: {{ mappings.RegressionTeam }}'><b>{{ mappings.RegressionTeam }}</b></a> </br>  <br><p>Thank You</p> DNE Regression Team",
+        "footerText": "This is an automated email. Please do not reply to this email.<br>"
+    }
+}

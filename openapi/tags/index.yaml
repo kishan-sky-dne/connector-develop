@@ -1,0 +1,35 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+- description: Provies metadata information for the given device
+  name: dcs
+- description: Analytics and Planning portal tracker updates
+  name: anp
+- description: API Health Check
+  name: maintenance
+- description: Spark Service Now Connector
+  name: itsm
+- description: Notifications using Email
+  name: mailer
+- description: Ip address management
+  name: ipam
+- description: Admin Component
+  name: admin
+- description: Smart licensing with Cisco
+  name:  cisco
+- description: INCA related operation
+  name:  inca
+- description: PLANNET Inventory related operation
+  name:  plannet
+- description: Lookup Management
+  name: lookups
+- description: VOIP migration/Provision on Nexus
+  name: nap

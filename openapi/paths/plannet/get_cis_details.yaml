@@ -1,0 +1,49 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+get:
+  tags:
+    - plannet
+  summary: Retrieve ci details recursively from plannet
+  description: Get ci details recursively from plannet connector plannet
+  security:
+    - oAuth2ClientCredentials: [connector:read]
+  x-openapi-router-controller: "connectors.webserver.plannet.tasks.read"
+  operationId: get_cis_details
+  parameters:
+    - name: 'host'
+      in: query
+      required: true
+      description: Hostname of the device with domain
+      schema:
+        minLength: 1
+        pattern: ^[a-zA-Z0-9-]+\.[a-zA-Z0-9.-]*\.(it\.bb|isp)\.sky\.com$
+        type: string
+        example: "ma0.wwbarn.isp.sky.com"
+    - name: '_include'
+      in: query
+      required: False
+      description: fetch ne, circuits based on values passed
+      schema:
+        type: array
+        items:
+          type: string
+          minLength: 1
+          enum:
+            - nes
+            - circuits
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: '../../definitions/plannet/response/get_nes_details.yaml'
+      description: Expected response of plannet for /getNesDetails call

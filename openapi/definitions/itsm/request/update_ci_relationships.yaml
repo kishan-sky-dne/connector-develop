@@ -1,0 +1,71 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+type: object
+properties:
+  ciRelationships:
+    items:
+      properties:
+        serviceType:
+          example: ubbLogical
+          type: string
+          default: raw
+          enum:
+            - raw
+            - ubbLogical
+            - ubbLogicalMigrations
+            - skyTalk
+            - metroLogicalLink
+            - skyTalkMigrations
+            - unifiedManagement
+            - unifiedManagementMigrations
+            - wholesale
+            - wholesale-NNI
+            - wholesaleMigrations
+            - metroLogicalLinkMigrations
+        ciLookupType:
+          example: name
+          type: string
+          enum:
+             - name
+             - sys_id
+             - service_ci_id
+        action:
+          example: add
+          type: string
+          enum:
+             - add
+             - remove
+        parentCI:
+          example: "me0.mypon.isp.sky.com"
+          type: string
+          minLength: 1
+        relationshipType:
+          example: Depends on::Used by
+          type: string
+          default: "Depends on::Used by"
+          enum:
+             - "Connects to::Connected by"
+             - "Depends on::Used by"
+        childCI:
+          example: "ONEA45266093"
+          type: string
+          minLength: 1
+      type: object
+      required:
+        - action
+        - parentCI
+        - childCI
+    maxItems: 200
+    minItems: 1
+    type: array
+required:
+  - ciRelationships

@@ -1,0 +1,71 @@
+# """
+# __author__ = "Sky UK Ltd"
+# __copyright__ = Copyright © Sky CP Limited 2023.
+# All rights reserved. No part of this work may be reproduced,
+# stored in a retrieval system of any nature, or transmitted,
+# in any form or by any means including photocopying
+# and recording, without the prior written permission of Sky,
+# the copyright owner.
+# __licence__ = "subject to the terms of the licence with Sky UK Ltd'
+# __version__ = "1.0"
+# """
+properties:
+  templateName:
+    type: string
+    description: "Template name"
+    enum:
+      - "dnsCfgRequest"
+  templateAttribute:
+    properties:
+      previousTktNo:
+        type: string
+        description: "Previous change ticket number"
+        pattern: "^CHG[0-9]+"
+        example: "CHG12345"
+      deviceToDel:
+        properties:
+          hostName:
+            type: string
+            pattern: '^(.*(((\.isp)|(\.it)(\.bb))\.sky\.com))$'
+            example: "mr1-dvn.enlba.isp.sky.com"
+          ipaddress:
+            type: string
+            pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\/]([1-9]|[12][0-9]|3[0-2]))?$'
+            example: "89.200.128.62"
+        type: object
+        required:
+          - hostName
+          - ipaddress
+      configuration:
+        type: array
+        items:
+          type: object
+          properties:
+            record:
+              type: string
+              example: "mr1-dvn.enlba.isp.sky.com"
+              oneOf:
+                - pattern: '^(.*(((\.isp)|(\.it)(\.bb))\.sky\.com))$'
+                - pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\/]([1-9]|[12][0-9]|3[0-2]))?$'
+            value:
+              type: string
+              example: "89.200.128.62"
+              oneOf:
+                - pattern: '^(.*(((\.isp)|(\.it)(\.bb))\.sky\.com))$'
+                - pattern: '^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)([\/]([1-9]|[12][0-9]|3[0-2]))?$'
+            status:
+              type: string
+              enum:
+                - "NEW"
+                - "RE-VERIFY"
+          required:
+            - record
+            - value
+            - status
+        minItems: 1
+    type: object
+    required:
+      - configuration
+required:
+  - templateName
+  - templateAttribute
