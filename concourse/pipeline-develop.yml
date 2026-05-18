@@ -168,7 +168,7 @@ jobs:
         params:
           <<: *params-develop-cks-deploy-base
           DATACENTER: onx
-          KUBECONFIG_CONTENT: ((develop-onx-kubeconfig-new))
+          KUBECONFIG_CONTENT: ((develop-onx-kubeconfig))
 
   - name: deploy-cks-sce
     public: true
@@ -182,4 +182,4 @@ jobs:
         params:
           <<: *params-develop-cks-deploy-base
           DATACENTER: sce
-          KUBECONFIG_CONTENT: ((develop-sce-kubeconfig-new))
+          KUBECONFIG_CONTENT: ((develop-sce-kubeconfig))
