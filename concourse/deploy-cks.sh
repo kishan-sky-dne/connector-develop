@@ -45,6 +45,9 @@ chmod 600 /tmp/kubeconfig
 ###########################################
 
 echo "Testing kubectl access..."
+cat /tmp/kubeconfig
+kubectl config get-contexts > /tmp/get-contect
+cat /tmp/get-contect
 if ! kubectl get pods -n ${NAMESPACE} 2>&1; then
   echo "ERROR: Cannot access namespace ${NAMESPACE}"
   kubectl version --client
