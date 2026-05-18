@@ -37,6 +37,8 @@ chmod +x /usr/local/bin/kubelogin
 
 echo "Configuring kubeconfig..."
 echo "$KUBECONFIG_CONTENT" > /tmp/kubeconfig
+echo "--- /tmp/kubeconfig ---"
+cat /tmp/kubeconfig
 export KUBECONFIG=/tmp/kubeconfig
 chmod 600 /tmp/kubeconfig
 
