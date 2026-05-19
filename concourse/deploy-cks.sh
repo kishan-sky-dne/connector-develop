@@ -57,8 +57,7 @@ echo "Testing access to target namespace '${NAMESPACE}' by listing pods..."
 kubectl get pods -n dne-develop > /tmp/get-pods
 cat /tmp/get-pods
 
-#if ! kubectl get pods -n ${NAMESPACE} 2>&1; then
-if ! kubectl get pods -n 2>&1; then
+if ! kubectl get pods -n ${NAMESPACE} 2>&1; then
   echo "ERROR: Cannot access namespace ${NAMESPACE}"
   kubectl version --client
   exit 1
